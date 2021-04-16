@@ -72,6 +72,7 @@ public class LocationsClass {
         List<WebElement> elements = containerOfResults.findElements(By.className("pac-item"));
         elements.get(0).click();
         browser.findElement(By.xpath("/html/body/div[1]/div/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+        //select tags START
         Thread.sleep(200);
         WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]"));
         tagsContainer.click();
@@ -79,6 +80,8 @@ public class LocationsClass {
         Thread.sleep(200);
         List<WebElement> tagsInList = tagsList.findElements(By.className("v-list-item--link"));
         tagsInList.get(0).click();
+        //select tags END
+        
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
         Thread.sleep(12000);

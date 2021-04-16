@@ -26,6 +26,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class NewClass1 {
     final static int LOCATIONS = 1;
+    final static int SCHEMAS = 2;
     public static void main(String[] args) throws InterruptedException, IOException {
         // TODO code application logic here
         /*InputStreamReader isr = new InputStreamReader(System.in);
@@ -35,11 +36,15 @@ public class NewClass1 {
         if (res <1 || res > 100) {
             res = 1;
         }*/
-        int res = 1;
+        int res = 2;
         switch (res){
             case LOCATIONS:
                 LocationsClass locationsClass = new LocationsClass();
                 locationsClass.createLocation();
+                break;
+            case SCHEMAS:
+                SchemasClass schemasClass = new SchemasClass();
+                schemasClass.createSchema();
                 break;
             case 934:
                 TestClass testClass = new TestClass();
