@@ -82,33 +82,63 @@ public class SchemasClass {
         Thread.sleep(200);
         List<WebElement> tagsInList = tagsList.findElements(By.className("v-list-item--link"));
         tagsInList.get(0).click();
-        
-        
-        
-        
-        ///html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]/div/div[1]
-        
-        
-        //click of GENERAL INFO to reset dropdown
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-        
-        //Dropdown shemeowner
-        selectOneElementFromDropdown(browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]/div/div[1]")), browser);
         //select tags END
         
         
+        //РАЗОБРАТЬСЯ С ТЕМ НА КОГО КЛИКАТЬ, А КОГО ПЕРЕДАВАТЬ В ФУНКЦИЮ
+        //click to show dropdown
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();        
+        //Dropdown shemeowner
+        selectOneElementFromDropdown(browser);        
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+        Thread.sleep(500);
+        System.out.println("First element clicked finally");
+        //click to show dropdown
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
+        //Dropdown examenbureau
+        System.out.println("Second element clicked");
+        selectOneElementFromDropdown(browser);
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+        Thread.sleep(500);
+        
+        
+//        //click to show dropdown
+//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();        
+//        //Dropdown examebureau
+//        selectOneElementFromDropdown(browser.findElement(By.className("menuable__content__active")), browser);
+//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+//        Thread.sleep(500);
+//        
+//        //click to show dropdown
+//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]/div[2]/div")).click();        
+//        //Dropdown 
+//        selectOneElementFromDropdown(browser.findElement(By.className("menuable__content__active")), browser);
+//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+//        Thread.sleep(500);
+        //
+        Thread.sleep(30000);
+        
     }
     
-    //TODO
-    //ERROR!!!
-    public void selectOneElementFromDropdown(WebElement listContainerElement, WebDriver browser) throws InterruptedException
-    {
-        listContainerElement.click();
-        Thread.sleep(200);
+    public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException
+    {        
+        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
+        Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown starts"));   
+        Thread.sleep(1000);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        System.out.println("listElements.size=" + listElements.size());
-        int randomNumberOfElement = (int)(Math.random() * listElements.size());
-        System.out.println(listElements.get(randomNumberOfElement));
-        listElements.get(randomNumberOfElement).click();        
+        int randomNumberOfElement = (int)(Math.random() * listElements.size());        
+        Thread.sleep(500);
+        if (listElements.size() > 0) {
+        Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown click on element in list"));
+            listElements.get(randomNumberOfElement).click(); 
+            //listElements.get(1).click(); 
+            System.out.println("AFTER CLICK ON TAG"); 
+            Thread.sleep(500);
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
+        } else {
+            System.out.println("Error, listElements.size() = " + listElements.size());
+        }
     }
+    
+    
 }

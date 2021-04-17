@@ -26,7 +26,7 @@ public class LocationsClass {
         //WebDriver browser = new ChromeDriver();
         WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
-        String script00 = "(console.log('1111!!!');"; 
+        //String script00 = "(console.log('1111!!!');"; 
         //browser.manage().window().maximize();
         browser.get("https://perscriptum-dev.herokuapp.com/"); 
         WebElement login = browser.findElement(By.id("input-11"));
@@ -62,6 +62,7 @@ public class LocationsClass {
         inputForLocationName.sendKeys("TestNameLocation");
         browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
         
+        
         Thread.sleep(2000);
         WebElement mapInput = browser.findElement(By.id("map"));
         mapInput.click();
@@ -69,38 +70,24 @@ public class LocationsClass {
         Thread.sleep(200);
         WebElement containerOfResults = browser.findElement(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
         Thread.sleep(200);
-        List<WebElement> elements = containerOfResults.findElements(By.className("pac-item"));
-        elements.get(0).click();
+        selectOneElementFromDropdownAddress(containerOfResults, browser);
+        
         browser.findElement(By.xpath("/html/body/div[1]/div/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         //select tags START
-        Thread.sleep(200);
-        WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]"));
+        Thread.sleep(500);
+        WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]"));
         tagsContainer.click();
+        Thread.sleep(500);        
         WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'menuable__content__active v-autocomplete__content')]"));
-        Thread.sleep(200);
-        List<WebElement> tagsInList = tagsList.findElements(By.className("v-list-item--link"));
-        tagsInList.get(0).click();
+        selectOneElementFromDropdown(tagsList, browser);
+        Thread.sleep(200);        
         //select tags END
         
+        //click on main text on top div
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+        //save button click
         browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
-        Thread.sleep(12000);
-        
-        
-        try{
-            
-            Logger.global.log(new LogRecord(Level.INFO, "try to click button"));//
-            //browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text > span")).click();
-            //browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]")).click();
-            Thread.sleep(14000);
-        } catch(Exception ex) {
-            Logger.global.log(new LogRecord(Level.INFO, "Exception"));
-            System.out.println("----------- Exception!");
-            System.out.println(ex.getMessage());
-        } finally {
-            Logger.global.log(new LogRecord(Level.INFO, "finally"));                         
-            browser.close();
-        }
+        Thread.sleep(12000); 
     }
     
     public static void startThread(String commandJs, JavascriptExecutor js)
@@ -118,5 +105,44 @@ public class LocationsClass {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int randomNumberOfChar = (int)(Math.random() * alphabet.length());
         return String.valueOf(alphabet.charAt(randomNumberOfChar));
+    }
+    
+    public void selectOneElementFromDropdown(WebElement listContainerElement, WebDriver browser) throws InterruptedException
+    {        
+        listContainerElement.click();
+        Thread.sleep(1000);
+        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
+        System.out.println("listElements.size=" + listElements.size());
+        Thread.sleep(500);
+        int randomNumberOfElement = (int)(Math.random() * listElements.size());        
+        Thread.sleep(500);
+        if (listElements.size() > 0) {
+            System.out.println("BEFORE CLICK ON TAG");
+            listElements.get(randomNumberOfElement); 
+            System.out.println("AFTER CLICK ON TAG"); 
+            //Thread.sleep(500);
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
+        } else {
+            System.out.println("Error, listElements.size() = " + listElements.size());
+        }   
+    }
+    
+    public void selectOneElementFromDropdownAddress(WebElement listContainerElement, WebDriver browser) throws InterruptedException
+    {
+        listContainerElement.click();
+        Thread.sleep(500);
+        List<WebElement> listElements = listContainerElement.findElements(By.className("pac-item"));
+        Thread.sleep(500);
+        System.out.println("listElements.size=" + listElements.size());
+        Thread.sleep(500);
+        int randomNumberOfElement = (int)(Math.random() * listElements.size());
+        Thread.sleep(500);
+        System.out.println(listElements.get(randomNumberOfElement));
+        Thread.sleep(500);
+        if (listElements.size() > 0) {
+            listElements.get(randomNumberOfElement).click();        
+        } else {
+            System.out.println("Error, listElements.size() = " + listElements.size());
+        }
     }
 }
