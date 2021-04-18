@@ -29,14 +29,17 @@ public class NewClass1 {
     final static int SCHEMAS = 2;
     public static void main(String[] args) throws InterruptedException, IOException {
         // TODO code application logic here
-        /*InputStreamReader isr = new InputStreamReader(System.in);
+        InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        System.out.print("Test Locations - enter number:");
+        System.out.println("Test Locations - 1");
+        System.out.println("Test Schemas - 2");
+        System.out.println("Enter digit and press Enter");
+        System.out.println("");
         int res = Integer.parseInt(br.readLine());
-        if (res <1 || res > 100) {
+        if (res < 1 || res > 100) {
             res = 1;
-        }*/
-        int res = 2;
+        }
+        //int res = 2;
         switch (res){
             case LOCATIONS:
                 LocationsClass locationsClass = new LocationsClass();

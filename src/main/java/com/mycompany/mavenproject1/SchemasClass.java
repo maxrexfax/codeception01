@@ -11,6 +11,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,7 +37,7 @@ public class SchemasClass {
         //WebDriver browser = new ChromeDriver();
         WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
-        //browser.manage().window().maximize();
+        browser.manage().window().maximize();
         browser.get("https://perscriptum-dev.herokuapp.com/"); 
         WebElement login = browser.findElement(By.id("input-11"));
         WebElement passwd = browser.findElement(By.id("input-14"));
@@ -46,22 +47,21 @@ public class SchemasClass {
         Thread.sleep(500);
         btnLogin.click();
         Thread.sleep(1500);  
-        Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
-        
+        Logger.global.log(new LogRecord(Level.INFO, "Login complete"));        
         
         browser.get("https://perscriptum-dev.herokuapp.com/schemes");
         Thread.sleep(1000);
         
-        /*WebElement createBtn = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
+        WebElement createBtn = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
         createBtn.click();
         Thread.sleep(400);
         WebElement inputForLocationName = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
         Thread.sleep(400);
         inputForLocationName.sendKeys(SchemaName);
         browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
-        Thread.sleep(2000);*/
+        Thread.sleep(2000);
         
-        browser.get("https://perscriptum-dev.herokuapp.com/schemes/20");
+        //browser.get("https://perscriptum-dev.herokuapp.com/schemes/20");//only testing
         //Section name
         browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > input")).sendKeys(SchemaSectionName);
         //Code
@@ -85,7 +85,6 @@ public class SchemasClass {
         //select tags END
         
         
-        //РАЗОБРАТЬСЯ С ТЕМ НА КОГО КЛИКАТЬ, А КОГО ПЕРЕДАВАТЬ В ФУНКЦИЮ
         //click to show dropdown
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();        
         //Dropdown shemeowner
@@ -96,28 +95,46 @@ public class SchemasClass {
         //click to show dropdown
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
         //Dropdown examenbureau
-        System.out.println("Second element clicked");
+        selectOneElementFromDropdown(browser);
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+        Thread.sleep(500);
+        //Dropdown Validity choise
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]")).click();
         selectOneElementFromDropdown(browser);
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         Thread.sleep(500);
         
+        //end result
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();
+       
+        selectOneElementFromDropdown(browser);
+        Thread.sleep(500);
+        WebElement alternativeSertif = null;
+        try {
+            System.out.println("TRY");
+            Thread.sleep(500);//
+            alternativeSertif = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]"));
+            if (alternativeSertif != null) {
+                alternativeSertif.click();
+                selectOneElementFromDropdown(browser);  
+                System.out.println("alternativeSertif non null");
+            }
+        }
+        catch(NoSuchElementException nex) {
+            System.out.println("====================Sertificate element not found");
+            System.out.println(nex.getMessage());
+        }
+        catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         
-//        //click to show dropdown
-//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();        
-//        //Dropdown examebureau
-//        selectOneElementFromDropdown(browser.findElement(By.className("menuable__content__active")), browser);
-//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-//        Thread.sleep(500);
-//        
-//        //click to show dropdown
-//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]/div[2]/div")).click();        
-//        //Dropdown 
-//        selectOneElementFromDropdown(browser.findElement(By.className("menuable__content__active")), browser);
-//        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-//        Thread.sleep(500);
-        //
-        Thread.sleep(30000);
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/iframe")).sendKeys("Test text to iframe");
+         //
         
+        
+        
+        Thread.sleep(3000);
+        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/header/div/button[2]")).click();
     }
     
     public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException
