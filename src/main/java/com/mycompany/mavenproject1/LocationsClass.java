@@ -37,7 +37,7 @@ public class LocationsClass {
         Thread.sleep(500);
         btnLogin.click();
         Thread.sleep(1500);  
-        Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
+        //Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
         //String script02 = "console.log(\"2222!!!\");";
         //startThread(script02, js);    
         /*String urlExpected = "https://perscriptum-dev.herokuapp.com/";

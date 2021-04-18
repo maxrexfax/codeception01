@@ -47,7 +47,7 @@ public class SchemasClass {
         Thread.sleep(500);
         btnLogin.click();
         Thread.sleep(1500);  
-        Logger.global.log(new LogRecord(Level.INFO, "Login complete"));        
+        //Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
         
         browser.get("https://perscriptum-dev.herokuapp.com/schemes");
         Thread.sleep(1000);
@@ -140,13 +140,13 @@ public class SchemasClass {
     public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException
     {        
         WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
-        Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown starts"));   
+        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown starts"));
         Thread.sleep(1000);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
         int randomNumberOfElement = (int)(Math.random() * listElements.size());        
         Thread.sleep(500);
         if (listElements.size() > 0) {
-        Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown click on element in list"));
+        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown click on element in list"));
             listElements.get(randomNumberOfElement).click(); 
             //listElements.get(1).click(); 
             System.out.println("AFTER CLICK ON TAG"); 
