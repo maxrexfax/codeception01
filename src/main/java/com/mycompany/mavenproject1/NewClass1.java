@@ -34,7 +34,6 @@ public class NewClass1 {
         System.out.println("Test Locations - 1");
         System.out.println("Test Schemas - 2");
         System.out.println("Enter digit and press Enter");
-        System.out.println("");
         int res = Integer.parseInt(br.readLine());
         if (res < 1 || res > 100) {
             res = 1;

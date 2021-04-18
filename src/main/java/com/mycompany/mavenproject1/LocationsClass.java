@@ -67,8 +67,8 @@ public class LocationsClass {
         WebElement mapInput = browser.findElement(By.id("map"));
         mapInput.click();
         mapInput.sendKeys(getRandChar());
-        Thread.sleep(200);
-        WebElement containerOfResults = browser.findElement(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
+        Thread.sleep(1000);
+        List<WebElement> containerOfResults = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
         Thread.sleep(200);
         selectOneElementFromDropdownAddress(containerOfResults, browser);
         
@@ -112,14 +112,14 @@ public class LocationsClass {
         listContainerElement.click();
         Thread.sleep(1000);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        System.out.println("listElements.size=" + listElements.size());
+        //System.out.println("listElements.size=" + listElements.size());
         Thread.sleep(500);
         int randomNumberOfElement = (int)(Math.random() * listElements.size());        
         Thread.sleep(500);
         if (listElements.size() > 0) {
-            System.out.println("BEFORE CLICK ON TAG");
+            //System.out.println("BEFORE CLICK ON TAG");
             listElements.get(randomNumberOfElement); 
-            System.out.println("AFTER CLICK ON TAG"); 
+           // System.out.println("AFTER CLICK ON TAG"); 
             //Thread.sleep(500);
             browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
         } else {
@@ -127,11 +127,10 @@ public class LocationsClass {
         }   
     }
     
-    public void selectOneElementFromDropdownAddress(WebElement listContainerElement, WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownAddress(List<WebElement> listContainerElement, WebDriver browser) throws InterruptedException
     {
-        listContainerElement.click();
-        Thread.sleep(500);
-        List<WebElement> listElements = listContainerElement.findElements(By.className("pac-item"));
+        Thread.sleep(500);        
+        List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));
         Thread.sleep(500);
         System.out.println("listElements.size=" + listElements.size());
         Thread.sleep(500);
@@ -140,6 +139,7 @@ public class LocationsClass {
         System.out.println(listElements.get(randomNumberOfElement));
         Thread.sleep(500);
         if (listElements.size() > 0) {
+            //listElements.get(randomNumberOfElement);   
             listElements.get(randomNumberOfElement).click();        
         } else {
             System.out.println("Error, listElements.size() = " + listElements.size());
