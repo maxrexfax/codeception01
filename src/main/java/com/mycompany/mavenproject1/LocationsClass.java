@@ -30,7 +30,7 @@ public class LocationsClass {
         //WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
         //String script00 = "(console.log('1111!!!');"; 
-        //browser.manage().window().maximize();
+        browser.manage().window().maximize();
         browser.get("https://perscriptum-dev.herokuapp.com/"); 
         WebElement login = browser.findElement(By.id("input-11"));
         WebElement passwd = browser.findElement(By.id("input-14"));
