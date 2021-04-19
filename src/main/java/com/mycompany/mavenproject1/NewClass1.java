@@ -31,22 +31,31 @@ public class NewClass1 {
     final static int LOCATIONS = 1;
     final static int SCHEMAS = 2;
     final static int CANDIDATES = 3;
-    public static void main(String[] args) throws InterruptedException, IOException {
+    final static int COMPANIES = 4;
+    public static String[] typeNames = new String[15];
+    
+    public static void main(String[] args) throws InterruptedException, IOException 
+    {
+        fillClassData();
         // TODO code application logic here
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         System.out.println("Test Locations creation - 1");
         System.out.println("Test Schemas creation - 2");
         System.out.println("Test Candidates creation - 3");
+        System.out.println("Test Company creation - 4");
         System.out.println("Enter digit and press Enter");
         int res = Integer.parseInt(br.readLine());
-        int[] values = {1, 2, 3, 934};
+        int[] values = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, 0};
         
         if (!contains(values, res)) {
             res = 1;
+            System.out.println("Error data, choise set to 1!");
+        } else {
+            System.out.println("Chosen number:" + res + " and type of testing: " + typeNames[res]);
         }
         
-        //int res = 2;
+        
         switch (res){
             case LOCATIONS:
                 LocationsClass locationsClass = new LocationsClass();
@@ -60,7 +69,11 @@ public class NewClass1 {
                 CandidatesClass candidatesClass = new CandidatesClass();
                 candidatesClass.createCandidate();
                 break;
-            case 934:
+            case COMPANIES:
+                CompaniesClass companiesClass = new CompaniesClass();
+                companiesClass.createCompany();
+                break;
+            case 0:
                 TestClass testClass = new TestClass();
                 testClass.testFunction();
                 break;
@@ -69,10 +82,18 @@ public class NewClass1 {
         
     }
     
-    public static boolean contains(final int[] arr, final int key) {
+    public static boolean contains(final int[] arr, final int key) 
+    {
         return Arrays.stream(arr).anyMatch(i -> i == key);
     }
     
-
+    public static void fillClassData()
+    {
+        typeNames[0] = "Testing";
+        typeNames[1] = "Locations";
+        typeNames[2] = "Schemas";
+        typeNames[3] = "Candidates";
+        typeNames[4] = "Company";
+    }
     
 }

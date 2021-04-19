@@ -5,6 +5,8 @@
  */
 package com.mycompany.mavenproject1;
 
+import static com.mycompany.mavenproject1.HelperClass.getRandChar;
+import static com.mycompany.mavenproject1.HelperClass.selectOneElementFromDropdownInHeper;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -13,6 +15,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -23,8 +26,8 @@ public class LocationsClass {
     public void createLocation() throws InterruptedException
     {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        //WebDriver browser = new ChromeDriver();
-        WebDriver browser = new FirefoxDriver();
+        WebDriver browser = new ChromeDriver();
+        //WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
         //String script00 = "(console.log('1111!!!');"; 
         //browser.manage().window().maximize();
@@ -78,8 +81,8 @@ public class LocationsClass {
         WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]"));
         tagsContainer.click();
         Thread.sleep(500);        
-        WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'menuable__content__active v-autocomplete__content')]"));
-        selectOneElementFromDropdown(tagsList, browser);
+       // WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'menuable__content__active v-autocomplete__content')]"));
+        selectOneElementFromDropdownInHeper(browser);
         Thread.sleep(200);        
         //select tags END
         
@@ -88,43 +91,6 @@ public class LocationsClass {
         //save button click
         browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
         Thread.sleep(12000); 
-    }
-    
-    public static void startThread(String commandJs, JavascriptExecutor js)
-    {
-        Thread thread = new Thread(){
-            public void run(){
-              System.out.println("Thread Running and sending to JS:" + commandJs);
-              js.executeAsyncScript(commandJs);
-            }
-        };
-        thread.start();
-    }
-    
-    private static String getRandChar() {
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int randomNumberOfChar = (int)(Math.random() * alphabet.length());
-        return String.valueOf(alphabet.charAt(randomNumberOfChar));
-    }
-    
-    public void selectOneElementFromDropdown(WebElement listContainerElement, WebDriver browser) throws InterruptedException
-    {        
-        listContainerElement.click();
-        Thread.sleep(1000);
-        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        //System.out.println("listElements.size=" + listElements.size());
-        Thread.sleep(500);
-        int randomNumberOfElement = (int)(Math.random() * listElements.size());        
-        Thread.sleep(500);
-        if (listElements.size() > 0) {
-            //System.out.println("BEFORE CLICK ON TAG");
-            listElements.get(randomNumberOfElement); 
-           // System.out.println("AFTER CLICK ON TAG"); 
-            //Thread.sleep(500);
-            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
-        } else {
-            System.out.println("Error, listElements.size() = " + listElements.size());
-        }   
     }
     
     public void selectOneElementFromDropdownAddress(List<WebElement> listContainerElement, WebDriver browser) throws InterruptedException

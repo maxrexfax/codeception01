@@ -6,12 +6,15 @@
 package com.mycompany.mavenproject1;
 
 import static com.mycompany.mavenproject1.HelperClass.getRandChar;
+import static com.mycompany.mavenproject1.HelperClass.getRandomDigit;
 import static com.mycompany.mavenproject1.HelperClass.selectOneElementFromDropdownInHeper;
+import static com.mycompany.mavenproject1.HelperClass.selectOneElementFromDropdownAddressInHelper;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -21,11 +24,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class CandidatesClass {
     
     public int phoneNumber = 1234567890;
+    public int numberOfCandidate = 0;
     public void createCandidate() throws InterruptedException{
         //login to site START
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        //WebDriver browser = new ChromeDriver();
-        WebDriver browser = new FirefoxDriver();
+        WebDriver browser = new ChromeDriver();
+        //WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
         browser.manage().window().maximize();
         browser.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -51,6 +55,9 @@ public class CandidatesClass {
         Thread.sleep(500);
         browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[1]/label")).click();
         Thread.sleep(500);
+        numberOfCandidate = getRandomDigit(1, 4);        
+        browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
+        Thread.sleep(500);
         //System.out.println("Click to check if menu Add person contact info");
         browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
         Thread.sleep(500);
@@ -75,13 +82,13 @@ public class CandidatesClass {
         mapInput.click();
         mapInput.sendKeys(getRandChar());
         Thread.sleep(1000);
-        List<WebElement> containerOfResults = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
-        Thread.sleep(200);
-        selectOneElementFromDropdownAddress(containerOfResults, browser);
+        selectOneElementFromDropdownAddressInHelper(browser);
         Thread.sleep(500);
         browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > input")).sendKeys("1234");
         Thread.sleep(500);
         browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
+        Thread.sleep(500);
+        setInfoInThirdStage(numberOfCandidate, browser);
         Thread.sleep(500);
         browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
         Thread.sleep(500);
@@ -90,29 +97,39 @@ public class CandidatesClass {
         Thread.sleep(500);
         WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
         Thread.sleep(500);
-        selectOneElementFromDropdownInHeper(tagsList, browser);        
-        Thread.sleep(5000);
+        selectOneElementFromDropdownInHeper(browser);        
+        Thread.sleep(1000);
         browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
         Thread.sleep(500);
-        //
+        browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/header/div/button[2]")).click();
+        
     }
-    
-    public void selectOneElementFromDropdownAddress(List<WebElement> listContainerElement, WebDriver browser) throws InterruptedException
-    {
-        Thread.sleep(500);        
-        List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));
-        Thread.sleep(500);
-        System.out.println("Address listElements.size=" + listElements.size());
-        Thread.sleep(500);
-        int randomNumberOfElement = (int)(Math.random() * listElements.size());
-        Thread.sleep(500);
-        System.out.println(listElements.get(randomNumberOfElement));
-        Thread.sleep(500);
-        if (listElements.size() > 0) {
-            //listElements.get(randomNumberOfElement);   
-            listElements.get(randomNumberOfElement).click();        
-        } else {
-            System.out.println("Error, listElements.size() = " + listElements.size());
+
+    private void setInfoInThirdStage(int numberOfCandidate, WebDriver browser) throws InterruptedException {
+        switch (numberOfCandidate) {
+            case 1:
+                //
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div:nth-child(1) > div > div.v-input__slot > div > input")).sendKeys("TestRefData_" + getRandomDigit(99,999));
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.v-input--is-label-active.v-input--is-dirty.theme--light.v-text-field.v-text-field--is-booted.v-select")).click();
+                selectOneElementFromDropdownInHeper(browser);
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
+                break;
+            case 2:
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div")).click();
+                selectOneElementFromDropdownInHeper(browser);
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
+                break;
+            case 3:
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div > div.v-input__slot > div > input")).sendKeys("TestData_" + getRandomDigit(99,999));
+                break;
+            case 4:
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div.v-input.mt-5.v-input--dense.theme--light.v-text-field.v-text-field--single-line.v-text-field--is-booted.v-text-field--enclosed.v-text-field--outlined.v-select.v-select--chips.v-select--chips--small.v-select--is-multi.v-autocomplete")).click();
+                selectOneElementFromDropdownInHeper(browser);
+                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
+                break;
         }
     }
+    
+    
 }

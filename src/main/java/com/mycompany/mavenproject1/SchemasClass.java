@@ -5,6 +5,7 @@
  */
 package com.mycompany.mavenproject1;
 
+import static com.mycompany.mavenproject1.HelperClass.selectOneElementFromDropdownInHeper;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -14,6 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -34,8 +36,8 @@ public class SchemasClass {
     public void createSchema() throws InterruptedException
     {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        //WebDriver browser = new ChromeDriver();
-        WebDriver browser = new FirefoxDriver();
+        WebDriver browser = new ChromeDriver();
+        //WebDriver browser = new FirefoxDriver();
         JavascriptExecutor js = (JavascriptExecutor)browser;
         browser.manage().window().maximize();
         browser.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -88,26 +90,26 @@ public class SchemasClass {
         //click to show dropdown
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();        
         //Dropdown shemeowner
-        selectOneElementFromDropdown(browser);        
+        selectOneElementFromDropdownInHeper(browser);        
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         Thread.sleep(500);
         System.out.println("First element clicked finally");
         //click to show dropdown
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
         //Dropdown examenbureau
-        selectOneElementFromDropdown(browser);
+        selectOneElementFromDropdownInHeper(browser);
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         Thread.sleep(500);
         //Dropdown Validity choise
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]")).click();
-        selectOneElementFromDropdown(browser);
+        selectOneElementFromDropdownInHeper(browser);
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
         Thread.sleep(500);
         
         //end result
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();
        
-        selectOneElementFromDropdown(browser);
+        selectOneElementFromDropdownInHeper(browser);
         Thread.sleep(500);
         WebElement alternativeSertif = null;
         try {
@@ -116,7 +118,7 @@ public class SchemasClass {
             alternativeSertif = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]"));
             if (alternativeSertif != null) {
                 alternativeSertif.click();
-                selectOneElementFromDropdown(browser);  
+                selectOneElementFromDropdownInHeper(browser);  
                 System.out.println("alternativeSertif non null");
             }
         }
@@ -137,25 +139,25 @@ public class SchemasClass {
         browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/header/div/button[2]")).click();
     }
     
-    public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException
-    {        
-        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
-        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown starts"));
-        Thread.sleep(1000);
-        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        int randomNumberOfElement = (int)(Math.random() * listElements.size());        
-        Thread.sleep(500);
-        if (listElements.size() > 0) {
-        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown click on element in list"));
-            listElements.get(randomNumberOfElement).click(); 
-            //listElements.get(1).click(); 
-            System.out.println("AFTER CLICK ON TAG"); 
-            Thread.sleep(500);
-            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
-        } else {
-            System.out.println("Error, listElements.size() = " + listElements.size());
-        }
-    }
+//    public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException
+//    {        
+//        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
+//        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown starts"));
+//        Thread.sleep(1000);
+//        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
+//        int randomNumberOfElement = (int)(Math.random() * listElements.size());        
+//        Thread.sleep(500);
+//        if (listElements.size() > 0) {
+//        //Logger.global.log(new LogRecord(Level.INFO, "selectOneElementFromDropdown click on element in list"));
+//            listElements.get(randomNumberOfElement).click(); 
+//            //listElements.get(1).click(); 
+//            System.out.println("AFTER CLICK ON TAG"); 
+//            Thread.sleep(500);
+//            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div")).click();
+//        } else {
+//            System.out.println("Error, listElements.size() = " + listElements.size());
+//        }
+//    }
     
     
 }

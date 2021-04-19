@@ -20,8 +20,40 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class TestClass {
     
+    public enum Ids {
+        Locations(1), 
+        Schemas(2), 
+        Candidates(3), 
+        Company(4), 
+        Testing(934);
+
+        private int value;    
+
+        private Ids(int value) {
+          this.value = value;
+        }
+
+        public int getValue() {
+          return value;
+        }
+    }
+    
+    public String[] typeNames = new String[15];
+    
     public void testFunction() throws InterruptedException{
-        //for(int i = 0; i < 20; i++) {
+    typeNames[1] = "Locations";
+    typeNames[2] = "Schemas";
+    typeNames[3] = "Candidates";
+    typeNames[4] = "Company";
+    typeNames[0] = "Testing";
+        System.out.println("ENUM");
+        for(int i = 0; i < 5; i++) {
+            System.out.println("Test message N" + i);
+        }
+    }   
+    
+public void backupCode() throws InterruptedException{
+//for(int i = 0; i < 20; i++) {
             System.out.println("Try to find inputs");
         //}
         
@@ -68,8 +100,6 @@ public class TestClass {
 //            System.out.println("Input id=test1 not found AFTER CLICK PLUS NEW BROWSER");
 //            System.out.println(nex.getMessage());
 //        }
-    }   
-    
-
+}
     
 }
