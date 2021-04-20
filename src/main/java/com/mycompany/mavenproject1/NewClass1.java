@@ -30,61 +30,71 @@ public class NewClass1 {
     final static int CANDIDATES = 3;
     final static int COMPANIES = 4;
     final static int PROFILE_EDIT = 5;
-    public static String[] typeNames = new String[15];
+    final static int DELETE_USER = 6;
+    final static int EXIT = 19;
+    public static String[] typeNames = new String[20];
     
     public static void main(String[] args) throws InterruptedException, IOException 
     {
         fillClassData();
+        int res = 0;
         // TODO code application logic here
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        System.out.println("Testing of Locations creation - 1");
-        System.out.println("Testing of Schemas creation - 2");
-        System.out.println("Testing of Candidates creation - 3");
-        System.out.println("Testing of Company creation - 4");
-        System.out.println("Testing of Profile editing - 5");
-        System.out.println("Enter digit and press Enter");
-        int res = Integer.parseInt(br.readLine());
-        int[] allowedNumbers  = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, 0};
-        
-        if (!contains(allowedNumbers, res)) {
-            res = 1;
-            System.out.println("Error data, choise set to 1!");
-        } else {
-            System.out.println("Chosen number:" + res + " and type of testing: " + typeNames[res]);
-        }
-        
-        try {
-            switch (res){
-                case LOCATIONS:
-                    LocationsClass locationsClass = new LocationsClass();
-                    locationsClass.createLocation();
-                    break;
-                case SCHEMAS:
-                    SchemasClass schemasClass = new SchemasClass();
-                    schemasClass.createSchema();
-                    break;
-                case CANDIDATES:
-                    CandidatesClass candidatesClass = new CandidatesClass();
-                    candidatesClass.createCandidate();
-                    break;
-                case COMPANIES:
-                    CompaniesClass companiesClass = new CompaniesClass();
-                    companiesClass.createCompany();
-                    break;
-                case PROFILE_EDIT:
-                    ProfileEditClass profileEditClass = new ProfileEditClass();
-                    profileEditClass.editProfile();
-                    break;
-                case 0:
-                    TestClass testClass = new TestClass();
-                    testClass.testFunction();
-                    break;
+        do {
+            System.out.println("Testing of Locations creation - 1");
+            System.out.println("Testing of Schemas creation - 2");
+            System.out.println("Testing of Candidates creation - 3");
+            System.out.println("Testing of Company creation - 4");
+            System.out.println("Testing of Profile editing - 5");
+            System.out.println("Testing of User delete - 6");
+            System.out.println("EXIT - 19");
+            System.out.println("Enter digit and press Enter");
+            res = Integer.parseInt(br.readLine());
+            int[] allowedNumbers  = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, EXIT, 0,};
+
+            if (!contains(allowedNumbers, res)) {
+                res = 1;
+                System.out.println("Error data, choise set to 1!");
+            } else {
+                System.out.println("Chosen number:" + res + " and type of testing: " + typeNames[res]);
             }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        
+
+            try {
+                switch (res){
+                    case LOCATIONS:
+                        LocationsClass locationsClass = new LocationsClass();
+                        locationsClass.createLocation();
+                        break;
+                    case SCHEMAS:
+                        SchemasClass schemasClass = new SchemasClass();
+                        schemasClass.createSchema();
+                        break;
+                    case CANDIDATES:
+                        CandidatesClass candidatesClass = new CandidatesClass();
+                        candidatesClass.createCandidate();
+                        break;
+                    case COMPANIES:
+                        CompaniesClass companiesClass = new CompaniesClass();
+                        companiesClass.createCompany();
+                        break;
+                    case PROFILE_EDIT:
+                        ProfileEditClass profileEditClass = new ProfileEditClass();
+                        profileEditClass.editProfile();
+                        break;
+                    case DELETE_USER:
+                        DeleteCandidatesClass deleteCandidatesClass = new DeleteCandidatesClass();
+                        deleteCandidatesClass.deleteUser();
+                        break;
+                    case 0:
+                        TestClass testClass = new TestClass();
+                        testClass.testFunction();
+                        break;
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } while (res != EXIT);
         
     }
     
@@ -111,6 +121,8 @@ public class NewClass1 {
         typeNames[3] = "Candidates";
         typeNames[4] = "Company";
         typeNames[5] = "Profile editing";
+        typeNames[6] = "Delete user(s)";
+        typeNames[19] = "EXIT!";
     }
     
 }

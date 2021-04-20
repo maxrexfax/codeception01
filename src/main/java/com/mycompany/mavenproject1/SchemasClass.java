@@ -47,7 +47,8 @@ public class SchemasClass {
             //WebDriver browser = new FirefoxDriver();
             JavascriptExecutor js = (JavascriptExecutor)browser;
             browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            browser.get("https://perscriptum-dev.herokuapp.com/");
+            Thread.sleep(1500); 
             WebElement login = browser.findElement(By.id("input-11"));
             WebElement passwd = browser.findElement(By.id("input-14"));
             WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));

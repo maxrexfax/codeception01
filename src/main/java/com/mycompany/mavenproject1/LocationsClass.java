@@ -41,20 +41,23 @@ public class LocationsClass {
             //String script00 = "(console.log('1111!!!');"; 
             browser.manage().window().maximize();
             browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            Thread.sleep(1500);
             //WebElement login = browser.findElement(By.id("input-11"));
-            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
             //WebElement passwd = browser.findElement(By.id("input-14"));
-            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
             //WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
+            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
             WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
 
-            login.sendKeys("test2@pernexus.org");
-            passwd.sendKeys("testtest2");
+            //login.sendKeys("test2@pernexus.org");
+            //passwd.sendKeys("testtest2");
+            //btnLogin.click();
+            helperClass.safeFillInput(login, "test2@pernexus.org");
+            helperClass.safeFillInput(passwd, "testtest2");
             Thread.sleep(500);
 
-            //btnLogin.click();
             helperClass.safeClickOnElement(btnLogin);
-            Thread.sleep(1500);  
+            Thread.sleep(2500);  
             //Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
             //String script02 = "console.log(\"2222!!!\");";
             //startThread(script02, js);    

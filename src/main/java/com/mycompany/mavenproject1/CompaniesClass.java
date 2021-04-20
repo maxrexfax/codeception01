@@ -38,6 +38,7 @@ public class CompaniesClass {
             JavascriptExecutor js = (JavascriptExecutor)browser;
             browser.manage().window().maximize();
             browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            Thread.sleep(1500);
             WebElement login = browser.findElement(By.id("input-11"));
             WebElement passwd = browser.findElement(By.id("input-14"));
             WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
@@ -60,10 +61,6 @@ public class CompaniesClass {
             browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > input")).sendKeys("1234567890");
             Thread.sleep(500);
             browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > input")).sendKeys("1234");
-            Thread.sleep(500);
-            WebElement mapInput = browser.findElement(By.id("map"));
-            mapInput.click();
-            mapInput.sendKeys(helperClass.getRandChar());
             Thread.sleep(1000);
             helperClass.selectOneElementFromDropdownAddressInHelper(browser);
             Thread.sleep(500);

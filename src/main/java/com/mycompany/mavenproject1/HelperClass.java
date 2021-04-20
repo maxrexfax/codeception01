@@ -19,7 +19,9 @@ import org.openqa.selenium.WebElement;
  * @author user
  */
 public class HelperClass {
-    public String getRandChar() {
+    
+    public String getRandChar() 
+    {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int randomNumberOfChar = (int)(Math.random() * alphabet.length());
         return String.valueOf(alphabet.charAt(randomNumberOfChar));
@@ -59,6 +61,11 @@ public class HelperClass {
     
     public void selectOneElementFromDropdownAddressInHelper(WebDriver browser) throws InterruptedException
     {
+        WebElement mapInput = browser.findElement(By.id("map"));
+        mapInput.click();
+        Thread.sleep(500);        
+        mapInput.sendKeys(getRandChar());  
+        Thread.sleep(500);                  
         List<WebElement> listContainerElement = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
         Thread.sleep(500);        
         List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));
@@ -93,7 +100,10 @@ public class HelperClass {
                     break;
                 case "className":
                     foundedElement = browser.findElement(By.className(identifier));
-                    break;                
+                    break;
+                case "tagName":
+                    foundedElement = browser.findElement(By.tagName(identifier));
+                    break;
             }
         }
         catch(NoSuchElementException eex) {
@@ -112,16 +122,40 @@ public class HelperClass {
                 elementToClick.click();
             }
             catch(ElementNotInteractableException eex) {
+                System.out.println("Error click!(1)");
                 System.out.println(eex.getMessage());
             }
             catch(Exception ex) {
+                System.out.println("Error click!(2)");
                 System.out.println(ex.getMessage());
             }
-        }
-        
+        } else {
+            System.out.println("Error! Element is null!");
+        }   
     }
     
-    public int getRandomDigit(int min, int max){
+    public void safeFillInput(WebElement elementToFill, String dataToFill)
+    {
+        //System.out.println(elementToFill.getTagName());
+        if (elementToFill != null /*&& elementToFill.getTagName() == "input"*/) {
+            try {
+                elementToFill.sendKeys(dataToFill);
+            }
+            catch(ElementNotInteractableException eex) {
+                System.out.println("Error sending data to input!(1)");
+                System.out.println(eex.getMessage());
+            }
+            catch(Exception ex) {
+                System.out.println("Error sending data to input!(2)");
+                System.out.println(ex.getMessage());
+            }
+        }   else {
+            System.out.println("Error! Element is null or not input!");
+        } 
+    }
+    
+    public int getRandomDigit(int min, int max)
+    {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

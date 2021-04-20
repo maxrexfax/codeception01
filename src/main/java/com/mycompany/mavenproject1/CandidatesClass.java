@@ -39,7 +39,8 @@ public class CandidatesClass {
             //WebDriver browser = new FirefoxDriver();
             JavascriptExecutor js = (JavascriptExecutor)browser;
             browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            browser.get("https://perscriptum-dev.herokuapp.com/");
+            Thread.sleep(1500); 
             WebElement login = browser.findElement(By.id("input-11"));
             WebElement passwd = browser.findElement(By.id("input-14"));
             WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
@@ -84,11 +85,7 @@ public class CandidatesClass {
             browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div > input")).sendKeys("123456789");
             Thread.sleep(500);
             browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input")).sendKeys("email@email.com");
-            Thread.sleep(500);
-            WebElement mapInput = browser.findElement(By.id("map"));
-            mapInput.click();
-            mapInput.sendKeys(helperClass.getRandChar());
-            Thread.sleep(1000);
+            Thread.sleep(500);            
             helperClass.selectOneElementFromDropdownAddressInHelper(browser);
             Thread.sleep(500);
             browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > input")).sendKeys("1234");

@@ -6,9 +6,11 @@
 package com.mycompany.mavenproject1;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -16,6 +18,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author user
  */
 public class TestClass {
+    
+    public HelperClass helperClass = new HelperClass();
     
     public enum Ids {
         Locations(1), 
@@ -38,14 +42,41 @@ public class TestClass {
     public String[] typeNames = new String[15];
     
     public void testFunction() throws InterruptedException{
-    typeNames[1] = "Locations";
-    typeNames[2] = "Schemas";
-    typeNames[3] = "Candidates";
-    typeNames[4] = "Company";
-    typeNames[0] = "Testing";
-        System.out.println("ENUM");
-        for(int i = 0; i < 5; i++) {
-            System.out.println("Test message N" + i);
+        String osName = System.getProperty("os.name");
+        if (osName.contains("Linux")) {
+            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
+        } else if (osName.contains("Windows 10")) {
+            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+        }
+        WebDriver browser = null;
+        try {
+            browser = new ChromeDriver();
+            //WebDriver browser = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)browser;
+            browser.manage().window().maximize();
+            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            Thread.sleep(1500);
+            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
+            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+            helperClass.safeFillInput(login, "test2@pernexus.org");
+            helperClass.safeFillInput(passwd, "testtest2");
+            Thread.sleep(500);
+            helperClass.safeClickOnElement(btnLogin);
+            Thread.sleep(2500);  
+            //login to site END
+            
+            
+            
+            Thread.sleep(5000);
+            
+            } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            browser.close();
+            browser.quit();
         }
     }   
     
