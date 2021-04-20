@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import junit.framework.Assert;
 import org.openqa.selenium.By;
@@ -32,6 +29,7 @@ public class NewClass1 {
     final static int SCHEMAS = 2;
     final static int CANDIDATES = 3;
     final static int COMPANIES = 4;
+    final static int PROFILE_EDIT = 5;
     public static String[] typeNames = new String[15];
     
     public static void main(String[] args) throws InterruptedException, IOException 
@@ -40,43 +38,51 @@ public class NewClass1 {
         // TODO code application logic here
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        System.out.println("Test Locations creation - 1");
-        System.out.println("Test Schemas creation - 2");
-        System.out.println("Test Candidates creation - 3");
-        System.out.println("Test Company creation - 4");
+        System.out.println("Testing of Locations creation - 1");
+        System.out.println("Testing of Schemas creation - 2");
+        System.out.println("Testing of Candidates creation - 3");
+        System.out.println("Testing of Company creation - 4");
+        System.out.println("Testing of Profile editing - 5");
         System.out.println("Enter digit and press Enter");
         int res = Integer.parseInt(br.readLine());
-        int[] values = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, 0};
+        int[] allowedNumbers  = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, 0};
         
-        if (!contains(values, res)) {
+        if (!contains(allowedNumbers, res)) {
             res = 1;
             System.out.println("Error data, choise set to 1!");
         } else {
             System.out.println("Chosen number:" + res + " and type of testing: " + typeNames[res]);
         }
         
-        
-        switch (res){
-            case LOCATIONS:
-                LocationsClass locationsClass = new LocationsClass();
-                locationsClass.createLocation();
-                break;
-            case SCHEMAS:
-                SchemasClass schemasClass = new SchemasClass();
-                schemasClass.createSchema();
-                break;
-            case CANDIDATES:
-                CandidatesClass candidatesClass = new CandidatesClass();
-                candidatesClass.createCandidate();
-                break;
-            case COMPANIES:
-                CompaniesClass companiesClass = new CompaniesClass();
-                companiesClass.createCompany();
-                break;
-            case 0:
-                TestClass testClass = new TestClass();
-                testClass.testFunction();
-                break;
+        try {
+            switch (res){
+                case LOCATIONS:
+                    LocationsClass locationsClass = new LocationsClass();
+                    locationsClass.createLocation();
+                    break;
+                case SCHEMAS:
+                    SchemasClass schemasClass = new SchemasClass();
+                    schemasClass.createSchema();
+                    break;
+                case CANDIDATES:
+                    CandidatesClass candidatesClass = new CandidatesClass();
+                    candidatesClass.createCandidate();
+                    break;
+                case COMPANIES:
+                    CompaniesClass companiesClass = new CompaniesClass();
+                    companiesClass.createCompany();
+                    break;
+                case PROFILE_EDIT:
+                    ProfileEditClass profileEditClass = new ProfileEditClass();
+                    profileEditClass.editProfile();
+                    break;
+                case 0:
+                    TestClass testClass = new TestClass();
+                    testClass.testFunction();
+                    break;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         
         
@@ -89,11 +95,22 @@ public class NewClass1 {
     
     public static void fillClassData()
     {
+        //String osName = System.getProperty("os.name");
+        //System.out.println("---" + osName + "---");
+        //System.setProperty("webdriver.chrome.driver", "chromedriver"); 
+//        if (osName.contains("Linux")) {
+//            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
+//            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
+//        } else if (osName.contains("Windows 10")) {
+//            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
+//            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+//        }
         typeNames[0] = "Testing";
         typeNames[1] = "Locations";
         typeNames[2] = "Schemas";
         typeNames[3] = "Candidates";
         typeNames[4] = "Company";
+        typeNames[5] = "Profile editing";
     }
     
 }

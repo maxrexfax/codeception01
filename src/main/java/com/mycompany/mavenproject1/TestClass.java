@@ -5,9 +5,6 @@
  */
 package com.mycompany.mavenproject1;
 
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -78,13 +75,11 @@ public void backupCode() throws InterruptedException{
         
         try {
             System.out.println("Try to find id=test1 AFTER CLICK");
-            Logger.global.log(new LogRecord(Level.INFO, "Try to find id=test1 AFTER CLICK"));
             //WebElement input01 = browser.findElement(By.id("test1"));////*/html/body/input[2]
             WebElement input01 = browser.findElement(By.xpath("/html/body/input[2]"));
             input01.sendKeys("test data 11");
         Thread.sleep(2000);
         }catch(NoSuchElementException nex) {
-            Logger.global.log(new LogRecord(Level.INFO, "Input id=test1 not found AFTER CLICK"));
             System.out.println("Input id=test1 not found AFTER CLICK");
             System.out.println(nex.getMessage());
         Thread.sleep(2000);

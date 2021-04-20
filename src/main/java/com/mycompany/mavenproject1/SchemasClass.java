@@ -5,11 +5,7 @@
  */
 package com.mycompany.mavenproject1;
 
-import static com.mycompany.mavenproject1.HelperClass.selectOneElementFromDropdownInHeper;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -32,111 +28,126 @@ public class SchemasClass {
     public static String SchemaDescription = "TestShemaDescription";
     public static String SchemaExamName = "TestShemaExamName";
     public static String SchemaTextInIframe = "Test_Text_Text_Text";
+    public HelperClass helperClass = new HelperClass();
     
     public void createSchema() throws InterruptedException
     {
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        WebDriver browser = new ChromeDriver();
-        //WebDriver browser = new FirefoxDriver();
-        JavascriptExecutor js = (JavascriptExecutor)browser;
-        browser.manage().window().maximize();
-        browser.get("https://perscriptum-dev.herokuapp.com/"); 
-        WebElement login = browser.findElement(By.id("input-11"));
-        WebElement passwd = browser.findElement(By.id("input-14"));
-        WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
-        login.sendKeys("test2@pernexus.org");
-        passwd.sendKeys("testtest2");
-        Thread.sleep(500);
-        btnLogin.click();
-        Thread.sleep(1500);  
-        //Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
-        
-        browser.get("https://perscriptum-dev.herokuapp.com/schemes");
-        Thread.sleep(1000);
-        
-        WebElement createBtn = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
-        createBtn.click();
-        Thread.sleep(400);
-        WebElement inputForLocationName = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
-        Thread.sleep(400);
-        inputForLocationName.sendKeys(SchemaName);
-        browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
-        Thread.sleep(2000);
-        
-        //browser.get("https://perscriptum-dev.herokuapp.com/schemes/20");//only testing
-        //Section name
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > input")).sendKeys(SchemaSectionName);
-        //Code
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > input")).sendKeys(SchemaCode);
-        //Number
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > input")).sendKeys(SchemaNumber);
-        //Validity
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.row > div.col.col-2 > div > div > div.v-input__slot > div.v-text-field__slot > input")).sendKeys(SchemaValidity);
-        //Description
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.v-input.v-textarea.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > textarea")).sendKeys(SchemaDescription);
-        //ExamName
-        browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(2) > div.v-input.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > input")).sendKeys(SchemaExamName);
-        //select tags START
-        Thread.sleep(200);
-        WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]"));
-        tagsContainer.click();
-        WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'menuable__content__active v-autocomplete__content')]"));
-        Thread.sleep(200);
-        List<WebElement> tagsInList = tagsList.findElements(By.className("v-list-item--link"));
-        tagsInList.get(0).click();
-        //select tags END
-        
-        
-        //click to show dropdown
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();        
-        //Dropdown shemeowner
-        selectOneElementFromDropdownInHeper(browser);        
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-        Thread.sleep(500);
-        System.out.println("First element clicked finally");
-        //click to show dropdown
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
-        //Dropdown examenbureau
-        selectOneElementFromDropdownInHeper(browser);
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-        Thread.sleep(500);
-        //Dropdown Validity choise
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]")).click();
-        selectOneElementFromDropdownInHeper(browser);
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
-        Thread.sleep(500);
-        
-        //end result
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();
-       
-        selectOneElementFromDropdownInHeper(browser);
-        Thread.sleep(500);
-        WebElement alternativeSertif = null;
+
+        String osName = System.getProperty("os.name");
+        if (osName.contains("Linux")) {
+            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
+        } else if (osName.contains("Windows 10")) {
+            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+        }
+        WebDriver browser = null;
         try {
-            System.out.println("TRY");
-            Thread.sleep(500);//
-            alternativeSertif = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]"));
-            if (alternativeSertif != null) {
-                alternativeSertif.click();
-                selectOneElementFromDropdownInHeper(browser);  
-                System.out.println("alternativeSertif non null");
+            browser = new ChromeDriver();
+            //WebDriver browser = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)browser;
+            browser.manage().window().maximize();
+            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            WebElement login = browser.findElement(By.id("input-11"));
+            WebElement passwd = browser.findElement(By.id("input-14"));
+            WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
+            login.sendKeys("test2@pernexus.org");
+            passwd.sendKeys("testtest2");
+            Thread.sleep(500);
+            btnLogin.click();
+            Thread.sleep(1500);  
+            //Logger.global.log(new LogRecord(Level.INFO, "Login complete"));
+
+            browser.get("https://perscriptum-dev.herokuapp.com/schemes");
+            Thread.sleep(1000);
+
+            WebElement createBtn = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
+            createBtn.click();
+            Thread.sleep(400);
+            WebElement inputForLocationName = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
+            Thread.sleep(400);
+            inputForLocationName.sendKeys(SchemaName);
+            browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
+            Thread.sleep(2000);
+
+            //browser.get("https://perscriptum-dev.herokuapp.com/schemes/20");//only testing
+            //Section name
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > input")).sendKeys(SchemaSectionName);
+            //Code
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > input")).sendKeys(SchemaCode);
+            //Number
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > input")).sendKeys(SchemaNumber);
+            //Validity
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.row > div.col.col-2 > div > div > div.v-input__slot > div.v-text-field__slot > input")).sendKeys(SchemaValidity);
+            //Description
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.v-input.v-textarea.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > textarea")).sendKeys(SchemaDescription);
+            //ExamName
+            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(2) > div.v-input.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > input")).sendKeys(SchemaExamName);
+            //select tags START
+            Thread.sleep(200);
+            WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]"));
+            tagsContainer.click();
+            WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'menuable__content__active v-autocomplete__content')]"));
+            Thread.sleep(200);
+            List<WebElement> tagsInList = tagsList.findElements(By.className("v-list-item--link"));
+            tagsInList.get(0).click();
+            //select tags END
+
+
+            //click to show dropdown
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();        
+            //Dropdown shemeowner
+            helperClass.selectOneElementFromDropdownInHeper(browser);        
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+            Thread.sleep(500);
+            System.out.println("First element clicked finally");
+            //click to show dropdown
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
+            //Dropdown examenbureau
+            helperClass.selectOneElementFromDropdownInHeper(browser);
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+            Thread.sleep(500);
+            //Dropdown Validity choise
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]")).click();
+            helperClass.selectOneElementFromDropdownInHeper(browser);
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+            Thread.sleep(500);
+
+            //end result
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();
+
+            helperClass.selectOneElementFromDropdownInHeper(browser);
+            Thread.sleep(500);
+            WebElement alternativeSertif = null;
+            try {
+                System.out.println("TRY");
+                Thread.sleep(500);//
+                alternativeSertif = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]"));
+                if (alternativeSertif != null) {
+                    alternativeSertif.click();
+                    helperClass.selectOneElementFromDropdownInHeper(browser);  
+                    System.out.println("alternativeSertif non null");
+                }
             }
-        }
-        catch(NoSuchElementException nex) {
-            System.out.println("====================Sertificate element not found");
-            System.out.println(nex.getMessage());
-        }
-        catch(Exception ex) {
+            catch(NoSuchElementException nex) {
+                System.out.println(nex.getMessage());
+            }
+            catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/iframe")).sendKeys("Test text to iframe");
+            
+            Thread.sleep(1000);
+            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/header/div/button[2]")).click();
+            
+            Thread.sleep(5000);
+            } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        } finally {
+            browser.close();
+            browser.quit();
         }
-        
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/iframe")).sendKeys("Test text to iframe");
-         //
-        
-        
-        
-        Thread.sleep(3000);
-        browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/header/div/button[2]")).click();
     }
     
 //    public void selectOneElementFromDropdown(WebDriver browser) throws InterruptedException

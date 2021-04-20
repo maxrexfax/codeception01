@@ -8,7 +8,9 @@ package com.mycompany.mavenproject1;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -17,7 +19,7 @@ import org.openqa.selenium.WebElement;
  * @author user
  */
 public class HelperClass {
-    public static String getRandChar() {
+    public String getRandChar() {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int randomNumberOfChar = (int)(Math.random() * alphabet.length());
         return String.valueOf(alphabet.charAt(randomNumberOfChar));
@@ -34,7 +36,7 @@ public class HelperClass {
         thread.start();
     }
     
-    public static void selectOneElementFromDropdownInHeper(WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownInHeper(WebDriver browser) throws InterruptedException
     {     
         //WebElement listContainerElement = browser.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
         WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
@@ -55,7 +57,7 @@ public class HelperClass {
         }   
     }
     
-    public static void selectOneElementFromDropdownAddressInHelper(WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownAddressInHelper(WebDriver browser) throws InterruptedException
     {
         List<WebElement> listContainerElement = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
         Thread.sleep(500);        
@@ -75,7 +77,51 @@ public class HelperClass {
         }
     }
     
-    public static int getRandomDigit(int min, int max){
+    public WebElement safeFindElement(WebDriver browser, String identifier, String type)
+    {
+        WebElement foundedElement = null;
+        try {
+            switch (type){
+                case "id":
+                    foundedElement = browser.findElement(By.id(identifier));
+                    break;
+                case "xpath":
+                    foundedElement = browser.findElement(By.xpath(identifier));
+                    break;
+                case "cssSelector":
+                    foundedElement = browser.findElement(By.cssSelector(identifier));
+                    break;
+                case "className":
+                    foundedElement = browser.findElement(By.className(identifier));
+                    break;                
+            }
+        }
+        catch(NoSuchElementException eex) {
+            System.out.println(eex.getMessage());
+        }
+        catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return foundedElement;
+    }
+    
+    public void safeClickOnElement(WebElement elementToClick)
+    {
+        if (elementToClick != null) {
+            try {
+                elementToClick.click();
+            }
+            catch(ElementNotInteractableException eex) {
+                System.out.println(eex.getMessage());
+            }
+            catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+    }
+    
+    public int getRandomDigit(int min, int max){
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }
