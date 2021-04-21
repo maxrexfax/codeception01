@@ -31,6 +31,8 @@ public class NewClass1 {
     final static int COMPANIES = 4;
     final static int PROFILE_EDIT = 5;
     final static int DELETE_USER = 6;
+    final static int SORT_USER = 7;
+    final static int SEARCH_USER = 8;
     final static int EXIT = 19;
     public static String[] typeNames = new String[20];
     
@@ -48,10 +50,12 @@ public class NewClass1 {
             System.out.println("Testing of Company creation - 4");
             System.out.println("Testing of Profile editing - 5");
             System.out.println("Testing of User delete - 6");
+            System.out.println("Testing of User sorting - 7");
+            System.out.println("Testing of User search - 8");
             System.out.println("EXIT - 19");
             System.out.println("Enter digit and press Enter");
             res = Integer.parseInt(br.readLine());
-            int[] allowedNumbers  = {LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, EXIT, 0,};
+            int[] allowedNumbers  = {0, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, EXIT};
 
             if (!contains(allowedNumbers, res)) {
                 res = 1;
@@ -86,9 +90,20 @@ public class NewClass1 {
                         DeleteCandidatesClass deleteCandidatesClass = new DeleteCandidatesClass();
                         deleteCandidatesClass.deleteUser();
                         break;
+                    case SORT_USER:
+                        SortCandidatesClass sortCandidatesClass = new SortCandidatesClass();
+                        sortCandidatesClass.sortCandidates();
+                        break;
+                    case SEARCH_USER:
+                        SearchCandidateClass searchCandidateClass = new SearchCandidateClass();
+                        searchCandidateClass.searchCandidate();
+                        break;
                     case 0:
                         TestClass testClass = new TestClass();
                         testClass.testFunction();
+                        break;
+                    default:
+                        System.out.println("Something went wrong in NewClass1 switch...");
                         break;
                 }
             } catch (Exception ex) {
@@ -122,6 +137,8 @@ public class NewClass1 {
         typeNames[4] = "Company";
         typeNames[5] = "Profile editing";
         typeNames[6] = "Delete user(s)";
+        typeNames[7] = "Sort user(s)";
+        typeNames[8] = "Search user(s)";
         typeNames[19] = "EXIT!";
     }
     

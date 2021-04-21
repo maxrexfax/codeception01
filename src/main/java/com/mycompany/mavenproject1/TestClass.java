@@ -5,6 +5,10 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -42,6 +46,32 @@ public class TestClass {
     public String[] typeNames = new String[15];
     
     public void testFunction() throws InterruptedException{
+        //testWeb();
+        
+        String[] array1 = {"11","12","14","17","20","21","29"};
+        List <String> testList = new ArrayList<>();
+        testList.add("11");
+        testList.add("12");
+        testList.add("13");
+        System.out.println(testList.size());
+        System.out.println(testList.get(1));
+        
+    }   
+    
+    public void printArray1(String[] arrayToPrint)
+    {
+        String dataToPrint = "";
+        for (int i = 0; i < arrayToPrint.length; i++) {
+            dataToPrint.concat(arrayToPrint[i]);
+            dataToPrint.concat(" - ");
+            System.out.print(arrayToPrint[i] + " - ");
+        }
+       // System.out.println(dataToPrint);
+        System.out.println();
+    }
+    
+    public void testWeb()
+    {
         String osName = System.getProperty("os.name");
         if (osName.contains("Linux")) {
             System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
@@ -78,7 +108,7 @@ public class TestClass {
             browser.close();
             browser.quit();
         }
-    }   
+    }
     
 public void backupCode() throws InterruptedException{
 //for(int i = 0; i < 20; i++) {

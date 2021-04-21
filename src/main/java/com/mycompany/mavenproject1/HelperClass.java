@@ -59,6 +59,32 @@ public class HelperClass {
         }   
     }
     
+    public void selectOneElementFromDropdownInHeperAlt(WebDriver browser, int index) throws InterruptedException
+    {     
+        int indexToClick;
+        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
+        Thread.sleep(500);
+        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
+        System.out.println("H_listElements.size=" + listElements.size());
+        Thread.sleep(500);
+        if (index == 0) {
+            indexToClick = listElements.size() - 1;
+        } else if (index > listElements.size()) {
+            indexToClick = (int)(Math.random() * listElements.size());
+        } else {
+            indexToClick = index;
+        }
+
+        Thread.sleep(500);
+        if (listElements.size() > 0) {
+            listElements.get(indexToClick).click();
+            Thread.sleep(500);
+            
+        } else {
+            System.out.println("H_alt_Error, listElements.size() = " + listElements.size());
+        }   
+    }
+    
     public void selectOneElementFromDropdownAddressInHelper(WebDriver browser) throws InterruptedException
     {
         WebElement mapInput = browser.findElement(By.id("map"));
