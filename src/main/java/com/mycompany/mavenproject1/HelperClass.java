@@ -5,6 +5,11 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.openqa.selenium.By;
@@ -38,20 +43,57 @@ public class HelperClass {
         thread.start();
     }
     
+    public static void writeStringToFileInThread1(File fileToWriteLogsOfTesting, String dataToWrite)//не использовать в потоке сообщений - записывает в хаотическом порядке!
+    {
+        Thread thread = new Thread(){
+            public void run(){
+              System.out.println("Thread is trying to write in file:" + dataToWrite);
+              //File fileToWriteLogsOfTesting = new File("./logs/myLogFile" + fileNamePostfix);
+              //writeStringToFile(fileToWriteLogsOfTesting.getAbsolutePath(), dataToWrite);
+              try
+                {
+                    FileWriter myWriter = new FileWriter(fileToWriteLogsOfTesting.getAbsolutePath());
+                    myWriter.append(dataToWrite);
+                    //myWriter.write(dataToWrite);
+                    myWriter.close();
+                    System.out.println("Successfully edit the file with path " + fileToWriteLogsOfTesting.getAbsolutePath());
+                } 
+                catch (IOException e) 
+                {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
+                }
+        };
+        thread.start();
+    }
+    
+    public static void writeStringToFile(File fileToWriteLogsOfTesting, String content) 
+        {
+            try(FileWriter fw = new FileWriter(fileToWriteLogsOfTesting.getAbsolutePath(), true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter out = new PrintWriter(bw))
+            {
+                out.println(content);
+            } catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }
+        }
+    
     public void selectOneElementFromDropdownInHeper(WebDriver browser) throws InterruptedException
     {     
         //WebElement listContainerElement = browser.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
         WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
         Thread.sleep(500);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        System.out.println("H_listElements.size=" + listElements.size());
+        //System.out.println("H_listElements.size=" + listElements.size());
         Thread.sleep(500);
         int randomNumberOfElement = (int)(Math.random() * listElements.size());        
         Thread.sleep(500);
         if (listElements.size() > 0) {
-            System.out.println("H_BEFORE CLICK ON ELEMENT");
+            //System.out.println("H_BEFORE CLICK ON ELEMENT");
             listElements.get(randomNumberOfElement).click(); 
-            System.out.println("H_AFTER CLICK ON ELEMENT"); 
+            //System.out.println("H_AFTER CLICK ON ELEMENT"); 
             Thread.sleep(500);
             
         } else {
@@ -65,7 +107,7 @@ public class HelperClass {
         WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
         Thread.sleep(500);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
-        System.out.println("H_listElements.size=" + listElements.size());
+        //System.out.println("H_listElements.size=" + listElements.size());
         Thread.sleep(500);
         if (index == 0) {
             indexToClick = listElements.size() - 1;
@@ -96,7 +138,7 @@ public class HelperClass {
         Thread.sleep(500);        
         List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));
         Thread.sleep(500);
-        System.out.println("Address listElements.size=" + listElements.size());
+        //System.out.println("Address listElements.size=" + listElements.size());
         Thread.sleep(500);
         int randomNumberOfElement = (int)(Math.random() * listElements.size());
         Thread.sleep(500);

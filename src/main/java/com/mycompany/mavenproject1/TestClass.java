@@ -5,6 +5,11 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,38 +29,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class TestClass {
     
     public HelperClass helperClass = new HelperClass();
-    
-    public enum Ids {
-        Locations(1), 
-        Schemas(2), 
-        Candidates(3), 
-        Company(4), 
-        Testing(934);
-
-        private int value;    
-
-        private Ids(int value) {
-          this.value = value;
-        }
-
-        public int getValue() {
-          return value;
-        }
-    }
-    
     public String[] typeNames = new String[15];
     
-    public void testFunction() throws InterruptedException{
+    public void testFunction() throws InterruptedException, IOException{
         //testWeb();
-        
-        String[] array1 = {"11","12","14","17","20","21","29"};
-        List <String> testList = new ArrayList<>();
-        testList.add("11");
-        testList.add("12");
-        testList.add("13");
-        System.out.println(testList.size());
-        System.out.println(testList.get(1));
-        
+        int randomDay = helperClass.getRandomDigit(1,8);
+        String rndDay = (randomDay < 10) ? "0"+randomDay : String.valueOf(randomDay);
+        System.out.println("=======rndDay=" + rndDay);
+        System.out.println();
     }   
     
     public void printArray1(String[] arrayToPrint)
@@ -157,5 +138,21 @@ public void backupCode() throws InterruptedException{
 //            System.out.println(nex.getMessage());
 //        }
 }
-    
+    public enum Ids {
+        Locations(1), 
+        Schemas(2), 
+        Candidates(3), 
+        Company(4), 
+        Testing(934);
+
+        private int value;    
+
+        private Ids(int value) {
+          this.value = value;
+        }
+
+        public int getValue() {
+          return value;
+        }
+    }
 }

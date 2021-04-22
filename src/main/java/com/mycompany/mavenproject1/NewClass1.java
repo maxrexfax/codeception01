@@ -9,6 +9,7 @@ import com.google.common.primitives.Ints;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -34,7 +35,7 @@ public class NewClass1 {
     final static int SORT_USER = 7;
     final static int SEARCH_USER = 8;
     final static int EXIT = 19;
-    public static String[] typeNames = new String[20];
+    public static String[] typeNames = new String[20];    
     
     public static void main(String[] args) throws InterruptedException, IOException 
     {
@@ -44,6 +45,7 @@ public class NewClass1 {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         do {
+            System.out.println(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
             System.out.println("Testing of Locations creation - 1");
             System.out.println("Testing of Schemas creation - 2");
             System.out.println("Testing of Candidates creation - 3");
@@ -54,7 +56,13 @@ public class NewClass1 {
             System.out.println("Testing of User search - 8");
             System.out.println("EXIT - 19");
             System.out.println("Enter digit and press Enter");
-            res = Integer.parseInt(br.readLine());
+            try {
+                res = Integer.parseInt(br.readLine());
+            } catch (Exception ex) {
+                System.out.println("Error");
+                System.out.println(ex.getMessage());
+                res = 0;
+            }
             int[] allowedNumbers  = {0, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, EXIT};
 
             if (!contains(allowedNumbers, res)) {

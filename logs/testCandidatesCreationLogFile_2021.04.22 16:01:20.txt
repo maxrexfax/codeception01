@@ -1,0 +1,7 @@
+Candidate creation testing starts at: 2021.04.22 16:01:20 OS: Linux
+Work: go to url https://perscriptum-dev.herokuapp.com
+Work: trying to login with email "test2@pernexus.org" and password "***" 
+Work: go to url https://perscriptum-dev.herokuapp.com/candidates
+Work: trying to fill first name with data ---FirstName_760---
+Work: check filling of the data ---FirstName_760--- result: Input filled successfully
+Work: END

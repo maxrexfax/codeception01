@@ -1,0 +1,21 @@
+Candidate creation testing starts at: 2021.04.22 16:54:50 OS: Linux
+Work: go to url https://perscriptum-dev.herokuapp.com
+Work: trying to login with email "test2@pernexus.org" and password "***" 
+Work: go to url https://perscriptum-dev.herokuapp.com/candidates
+Work: trying to fill first name with data ---FirstName_499---
+Work: check filling of the data ---FirstName_499--- result: Input filled successfully
+Work: trying to fill first name with data ---SecondName_545---
+Work: check filling of the data ---SecondName_545--- result: Input filled successfully
+Work: trying to fill first name with data ---LastName_149---
+Work: check filling of the data ---LastName_149--- result: Input filled successfully
+Work: trying to fill first name with data ---II_612---
+Work: check filling of the data ---II_612--- result: Input filled successfully
+Work: trying to fill first name with data ---22-5-1960---
+Work: check filling of the data ---22-5-1960--- result: Input text is different
+Work: trying to fill first name with data ---City_623---
+Work: check filling of the data ---City_623--- result: Input filled successfully
+Work: trying to fill first name with data ---123456789---
+Work: check filling of the data ---123456789--- result: Input filled successfully
+Work: trying to fill first name with data ---email_812mail.com---
+Work: check filling of the data ---email_812mail.com--- result: Input filled successfully
+Work: trying to fill first name with data ---1466---

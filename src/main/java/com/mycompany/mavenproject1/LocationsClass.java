@@ -42,6 +42,8 @@ public class LocationsClass {
             browser.manage().window().maximize();
             browser.get("https://perscriptum-dev.herokuapp.com/"); 
             Thread.sleep(1500);
+            helperClass.safeFindElement(browser, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
+            Thread.sleep(2500);
             //WebElement login = browser.findElement(By.id("input-11"));
             //WebElement passwd = browser.findElement(By.id("input-14"));
             //WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
