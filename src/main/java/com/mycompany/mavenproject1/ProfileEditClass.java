@@ -20,9 +20,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ProfileEditClass {
     
     public HelperClass helperClass = new HelperClass();
+    public CredentialsClass credentialsClass;
     
     public void editProfile()
     {
+        credentialsClass = new CredentialsClass();
         String osName = System.getProperty("os.name");
         if (osName.contains("Linux")) {
             System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
@@ -42,8 +44,8 @@ public class ProfileEditClass {
             WebElement login = browser.findElement(By.id("input-11"));
             WebElement passwd = browser.findElement(By.id("input-14"));
             WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
-            login.sendKeys("test2@pernexus.org");
-            passwd.sendKeys("testtest2");
+            login.sendKeys(credentialsClass.emailToLogin);
+            passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
             btnLogin.click();
             Thread.sleep(2500);  

@@ -1,0 +1,58 @@
+Work: go to url https://perscriptum-dev.herokuapp.com
+Work: trying to login with email "test2@pernexus.org" and password "***" 
+Work: go to url https://perscriptum-dev.herokuapp.com/candidates
+Work: start to create type of user: candidates
+Work: label text First name
+Work: trying to fill input with data ---FirstName_626---
+Work: check filling of the data ---FirstName_626--- result: Input filled successfully
+
+Work: label text Insertion
+Work: trying to fill input with data ---17:41:33---
+Work: check filling of the data ---17:41:33--- result: Input filled successfully
+
+Work: label text Last name
+Work: trying to fill input with data ---LastName_956---
+Work: check filling of the data ---LastName_956--- result: Input filled successfully
+
+Work: label text Initials
+Work: trying to fill input with data ---II_181---
+Work: check filling of the data ---II_181--- result: Input filled successfully
+
+Work: label text Date of birth
+Work: trying to fill input with data ---11-11-1963---
+Work: check filling of the data ---11-11-1963--- result: Input filled successfully
+
+Work: label text City of birth
+Work: trying to fill input with data ---City_877---
+Work: check filling of the data ---City_877--- result: Input filled successfully
+
+Work: label text Mobile number
+Work: trying to fill input with data ---123456789---
+Work: check filling of the data ---123456789--- result: Input filled successfully
+
+Work: label text Emailaddress
+Work: trying to fill input with data ---email_571@mail.com---
+Work: check filling of the data ---email_571@mail.com--- result: Input filled successfully
+
+Work: text in placeholder ---type_address---
+Work: filling random address using external service
+Work: filled address is: Zeilstraat, 1075 SZ Amsterdam, Nederland
+
+Work: label text Number
+Work: trying to fill input with data ---2394---
+Work: check filling of the data ---2394--- result: Input filled successfully
+
+Work: label text Country of birth
+Work: random selectin 
+Work: filled data: ---Aruba---
+
+Work: label text Nationality
+Work: random selectin 
+Work: filled data: ---Bhutanese---
+
+Work: pressed button save, checking if saving successfully
+Work: Redirencting to https://perscriptum-dev.herokuapp.com/candidates
+Work: filling user credentials: ---LastName_956, FirstName_626 17:41:33--- into the search field...
+Work: Trying to find on page user with credentials: ---LastName_956, FirstName_626 17:41:33--- to check is data saved id DB...
+Work: User saved successfully!
+Work: END

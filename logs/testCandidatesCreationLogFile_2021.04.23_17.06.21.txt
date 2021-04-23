@@ -1,0 +1,54 @@
+Work: go to url https://perscriptum-dev.herokuapp.com
+Work: trying to login with email "test2@pernexus.org" and password "***" 
+Work: go to url https://perscriptum-dev.herokuapp.com/candidates
+Work: start to create type of user: contacts
+Work: label text First name
+Work: trying to fill input with data ---FirstName_252---
+Work: check filling of the data ---FirstName_252--- result: Input filled successfully
+ 
+Work: label text Insertion
+Work: trying to fill input with data ---17:06:43---
+Work: check filling of the data ---17:06:43--- result: Input filled successfully
+ 
+Work: label text Last name
+Work: trying to fill input with data ---LastName_510---
+Work: check filling of the data ---LastName_510--- result: Input filled successfully
+ 
+Work: label text Initials
+Work: trying to fill input with data ---II_422---
+Work: check filling of the data ---II_422--- result: Input filled successfully
+ 
+Work: label text Date of birth
+Work: trying to fill input with data ---24-02-1998---
+Work: check filling of the data ---24-02-1998--- result: Input filled successfully
+ 
+Work: label text City of birth
+Work: trying to fill input with data ---City_271---
+Work: check filling of the data ---City_271--- result: Input filled successfully
+ 
+Work: label text Mobile number
+Work: trying to fill input with data ---123456789---
+Work: check filling of the data ---123456789--- result: Input filled successfully
+ 
+Work: label text Emailaddress
+Work: trying to fill input with data ---email_220@mail.com---
+Work: check filling of the data ---email_220@mail.com--- result: Input filled successfully
+ 
+Work: text in placeholder type_address
+Work: filling address using external service
+ 
+Work: filled address is: Blaak, Rotterdam, Nederland
+Work: label text Number
+Work: trying to fill input with data ---4630---
+Work: check filling of the data ---4630--- result: Input filled successfully
+ 
+Work: label text Country of birth
+ 
+Work: label text Nationality
+ 
+Work: pressed button save, checking if saving successfully
+Work: Redirencting to https://perscriptum-dev.herokuapp.com/contacts
+Work: filling user credentials: ---LastName_510, FirstName_252 17:06:43--- into the search field...
+Work: Trying to find on page user with credentials: ---LastName_510, FirstName_252 17:06:43---
+Work: User saved successfully!
+Work: END

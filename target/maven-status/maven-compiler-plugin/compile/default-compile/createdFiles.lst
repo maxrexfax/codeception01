@@ -1,4 +1,5 @@
 com/mycompany/mavenproject1/CompaniesClass.class
+com/mycompany/mavenproject1/CredentialsClass.class
 com/mycompany/mavenproject1/SortCandidatesClass.class
 com/mycompany/mavenproject1/SchemasClass.class
 com/mycompany/mavenproject1/NewClass1.class
@@ -9,7 +10,6 @@ com/mycompany/mavenproject1/HelperClass$2.class
 com/mycompany/mavenproject1/SearchCandidateClass.class
 com/mycompany/mavenproject1/TestClass.class
 com/mycompany/mavenproject1/CandidatesClass.class
-com/mycompany/mavenproject1/TestClass$Ids.class
 com/mycompany/mavenproject1/SearchCandidateClass$1.class
 com/mycompany/mavenproject1/LocationsClass.class
 com/mycompany/mavenproject1/ProfileEditClass.class

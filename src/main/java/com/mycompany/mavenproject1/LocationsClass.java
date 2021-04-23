@@ -21,9 +21,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class LocationsClass {
     
     public HelperClass helperClass = new HelperClass();
+    public CredentialsClass credentialsClass;
     
     public void createLocation() throws InterruptedException
     {
+        credentialsClass = new CredentialsClass();
         HelperClass helperClass = new HelperClass();
         String osName = System.getProperty("os.name");
         if (osName.contains("Linux")) {
@@ -54,8 +56,8 @@ public class LocationsClass {
             //login.sendKeys("test2@pernexus.org");
             //passwd.sendKeys("testtest2");
             //btnLogin.click();
-            helperClass.safeFillInput(login, "test2@pernexus.org");
-            helperClass.safeFillInput(passwd, "testtest2");
+            login.sendKeys(credentialsClass.emailToLogin);
+            passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
 
             helperClass.safeClickOnElement(btnLogin);

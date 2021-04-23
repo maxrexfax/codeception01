@@ -1,0 +1,39 @@
+Work: go to url https://perscriptum-dev.herokuapp.com
+Work: trying to login with email "test2@pernexus.org" and password "***" 
+Work: go to url https://perscriptum-dev.herokuapp.com/candidates
+Work: start to create type of user: assessors
+Work: label text First name
+Work: trying to fill input with data ---FirstName_918---
+Work: check filling of the data ---FirstName_918--- result: Input filled successfully
+
+Work: label text Insertion
+Work: trying to fill input with data ---17:25:38---
+Work: check filling of the data ---17:25:38--- result: Input filled successfully
+
+Work: label text Last name
+Work: trying to fill input with data ---LastName_539---
+Work: check filling of the data ---LastName_539--- result: Input filled successfully
+
+Work: label text Initials
+Work: trying to fill input with data ---II_597---
+Work: check filling of the data ---II_597--- result: Input filled successfully
+
+Work: label text Date of birth
+Work: trying to fill input with data ---08-04-1964---
+Work: check filling of the data ---08-04-1964--- result: Input filled successfully
+
+Work: label text City of birth
+Work: trying to fill input with data ---City_431---
+Work: check filling of the data ---City_431--- result: Input filled successfully
+
+Work: label text Mobile number
+Work: trying to fill input with data ---123456789---
+Work: check filling of the data ---123456789--- result: Input filled successfully
+
+Work: label text Emailaddress
+Work: trying to fill input with data ---email_134@mail.com---
+Work: check filling of the data ---email_134@mail.com--- result: Input filled successfully
+
+Work: text in placeholder ---type_address---
+Work: filling address using external service 
+

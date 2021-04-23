@@ -33,22 +33,30 @@ public class SearchCandidateClass {
     public boolean isTestGoOn;
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
+    public CredentialsClass credentialsClass;
     
     public void searchCandidate()
-    {
+    {        
+        credentialsClass = new CredentialsClass();
+        dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
+        String fileName = "";
         
-        dateTimeOfSession = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new java.util.Date());
-        String fileName = "./logs/testSearchCandidatesLogFile_" + dateTimeOfSession + ".txt";
-        fileToWriteLogsOfTesting = new File(fileName);
-        
+        //login to site START
         String osName = System.getProperty("os.name");
         if (osName.contains("Linux")) {
             System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
             System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        } else if (osName.contains("Windows 10")) {
+            fileName = "./logs/testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
+        } else if (osName.contains("Windows")) {
             System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
             System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+            fileName = "C:\\logs\\testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
+        } else {
+            System.out.println("ERROR checking OS type"); 
         }
+        
+        fileToWriteLogsOfTesting = new File(fileName);
+        
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
         try {
             browser = new ChromeDriver();
@@ -60,8 +68,8 @@ public class SearchCandidateClass {
             WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
             WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
             WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
-            helperClass.safeFillInput(login, "test2@pernexus.org");
-            helperClass.safeFillInput(passwd, "testtest2");
+            login.sendKeys(credentialsClass.emailToLogin);
+            passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
             helperClass.safeClickOnElement(btnLogin);
             Thread.sleep(2500);  

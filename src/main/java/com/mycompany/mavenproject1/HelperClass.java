@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.openqa.selenium.By;
@@ -68,6 +69,7 @@ public class HelperClass {
         thread.start();
     }
     
+    
     public static void writeStringToFile(File fileToWriteLogsOfTesting, String content) 
         {
             try(FileWriter fw = new FileWriter(fileToWriteLogsOfTesting.getAbsolutePath(), true);
@@ -76,7 +78,13 @@ public class HelperClass {
             {
                 out.println(content);
             } catch (IOException e) {
-                //exception handling left as an exercise for the reader
+                System.out.println("IOException in writeStringToFile function");
+                System.out.println("Failed to write data ---" + content + "---");
+                System.out.println(e.getMessage());
+            } catch (Exception ex) {
+                System.out.println("Exception in writeStringToFile function");
+                System.out.println("Failed to write data ---" + content + "---");
+                System.out.println(ex.getMessage());
             }
         }
     
@@ -99,6 +107,11 @@ public class HelperClass {
         } else {
             System.out.println("H_Error, listElements.size() = " + listElements.size());
         }   
+    }
+    
+    public String getDateInStringForWindowsLinux()
+    {
+        return new SimpleDateFormat("yyyy.MM.dd_HH.mm.ss").format(new java.util.Date());
     }
     
     public void selectOneElementFromDropdownInHeperAlt(WebDriver browser, int index) throws InterruptedException
@@ -142,7 +155,7 @@ public class HelperClass {
         Thread.sleep(500);
         int randomNumberOfElement = (int)(Math.random() * listElements.size());
         Thread.sleep(500);
-        System.out.println(listElements.get(randomNumberOfElement));
+        //System.out.println(listElements.get(randomNumberOfElement));
         Thread.sleep(500);
         if (listElements.size() > 0) {
             //listElements.get(randomNumberOfElement);   

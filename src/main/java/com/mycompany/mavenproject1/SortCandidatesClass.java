@@ -27,9 +27,11 @@ public class SortCandidatesClass {
     public HelperClass helperClass = new HelperClass();
     final boolean DEFAULT = true;
     final boolean REVERSED = false;
+    public CredentialsClass credentialsClass;
     
     public void sortCandidates()
     {
+        credentialsClass = new CredentialsClass();
         String osName = System.getProperty("os.name");
         if (osName.contains("Linux")) {
             System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
@@ -49,8 +51,8 @@ public class SortCandidatesClass {
             WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
             WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
             WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
-            helperClass.safeFillInput(login, "test2@pernexus.org");
-            helperClass.safeFillInput(passwd, "testtest2");
+            login.sendKeys(credentialsClass.emailToLogin);
+            passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
             helperClass.safeClickOnElement(btnLogin);
             Thread.sleep(2500);  
