@@ -49,8 +49,9 @@ public class SearchCandidateClass {
             fileName = "./logs/testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
         } else if (osName.contains("Windows")) {
             System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
+            System.out.println("All logs will be stored at folder C:\\users\\public\\documents\\logs"); 
             System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
-            fileName = "C:\\logs\\testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
+            fileName = "C:\\users\\public\\documents\\logs\\testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
         } else {
             System.out.println("ERROR checking OS type"); 
         }

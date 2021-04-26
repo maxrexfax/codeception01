@@ -174,7 +174,7 @@ public class NewClass1 {
             theDir.mkdirs();
         } else if (osName.contains("Windows")) {
             System.out.println("OS Windows detected, try to create log folder in C:\\logs");
-            theDir = new File("C:\\logs");
+            theDir = new File("C:\\users\\public\\documents\\logs");
             theDir.mkdirs();
         }
 //        try {            

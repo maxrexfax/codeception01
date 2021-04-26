@@ -33,21 +33,28 @@ public class ManyRequestsClass {
     public File fileToWriteErrorLogOfTesting;
     public WebDriver browser = null;
     public String mainUrl = "https://perscriptum-dev.herokuapp.com/";
+    //public String mainUrl = "http://maxbarannyk.ru/laravel/public/index.php/login";
     public String urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
-    //public String urlToTest = "http://maxbarannyk.ru/";
+    //public String urlToTest = "http://maxbarannyk.ru/laravel/public/index.php/users/list";
     //public String mainUrl = "http://maxbarannyk.ru/";
     public CredentialsClass credentialsClass;
     public int typeOfTest;
     public StringBuffer strBuffer = new StringBuffer("");
+    public String inputLoginData = "input-11";
+    public String inputLoginData1 = "email";
+    public String inputPasswordData = "input-14";
+    public String inputPasswordData1 = "password";
+    public String buttonToLoginPath = "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button";
+    public String buttonToLoginPath1 = "/html/body/div[1]/main/div/div/div/div/div[2]/form/div[4]/div/button";
     
     public void startTest() throws IOException {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         System.out.println("This test determines how many page elements have been loaded after a specified time when the web page is constantly refreshed.");
-        
+        System.out.println("We recommend at first to start ascending test (step 100ms) than you can use optimal time from it result to start LOOP test");
         System.out.println("Do you want to start step ascending test? (step 100ms)");
-        System.out.println("Yes - 1");
-        System.out.println("No - 2");
+        System.out.println("Ascending time - 1");
+        System.out.println("User defined - 2");
         typeOfTest = Integer.parseInt(br.readLine());
         if(typeOfTest < 1 || typeOfTest >2) {
             typeOfTest = 1;
@@ -60,20 +67,24 @@ public class ManyRequestsClass {
                 loops = 10;
                 System.out.println("Wrong input, set to 10");
             }
-            System.out.println("Set millisecondsToWait 10 - 10000");
+            System.out.println("Set milliseconds of pause 10 - 10000 - use ascending test to see best result of full page load");
             millisecondsToWait = Integer.parseInt(br.readLine());
             if (millisecondsToWait < 10 || millisecondsToWait > 10000) {
                 millisecondsToWait = 100;            
                 System.out.println("Wrong input, set to 100");
             }
         }
-//        System.out.println("Set url, default" + mainUrl);
-//        String urlToTest = br.readLine();
-        loginFunction();
+//        System.out.println("Set url, default is " + mainUrl);
+//        urlToTest = br.readLine();
+//        if (urlToTest.length() < 5) {
+//            urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
+//        }
+        loginAndTestInternalUrlFunction();
+        //visitOneUrl();
         
     }
     
-    private void loginFunction() {
+    private void preLoader() {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
@@ -88,10 +99,11 @@ public class ManyRequestsClass {
             fileName = "./logs/testPageloadLogFile_" + dateTimeOfSession + ".txt";
             fileNameERRORS = "./logs/testPageload_ERRORS_LogFile_" + dateTimeOfSession + ".txt";
         } else if (osName.contains("Windows")) {
-            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
-            fileName = "C:\\logs\\testPageloadLogFile_" + dateTimeOfSession + ".txt";
-            fileNameERRORS = "C:\\logs\\testPageload_ERRORS_LogFile_" + dateTimeOfSession + ".txt";
+            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");            
+            System.out.println("All logs will be stored at folder C:\\users\\public\\documents\\logs"); 
+            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
+            fileName = "C:\\users\\public\\documents\\logs\\testPageloadLogFile_" + dateTimeOfSession + ".txt";
+            fileNameERRORS = "C:\\users\\public\\documents\\logs\\testPageload_ERRORS_LogFile_" + dateTimeOfSession + ".txt";
         } else {
             System.out.println("ERROR checking OS type");             
             fileName = "./testPageloadLogFile_" + dateTimeOfSession + ".txt";            
@@ -105,8 +117,12 @@ public class ManyRequestsClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Page load testing starts at: " + dateTimeOfSession +" OS: " + osName);
+    }
+    
+    private void loginAndTestInternalUrlFunction() {
         
+        preLoader();
         try {
             browser = new ChromeDriver();
             //WebDriver browser = new FirefoxDriver();
@@ -117,13 +133,15 @@ public class ManyRequestsClass {
             Thread.sleep(1500); 
             helperClass.safeFindElement(browser, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
             Thread.sleep(2500);
-            WebElement login = browser.findElement(By.id("input-11"));
-            WebElement passwd = browser.findElement(By.id("input-14"));
-            WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
+            WebElement login = browser.findElement(By.id(inputLoginData));
+            WebElement passwd = browser.findElement(By.id(inputPasswordData));
+            WebElement btnLogin = browser.findElement(By.xpath(buttonToLoginPath));
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
+//            login.sendKeys("max@ya.ru");
+//            passwd.sendKeys("1234");
             Thread.sleep(500);            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to login with email \"test2@pernexus.org\" and password \"***\" ");
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to login");
             btnLogin.click();
             Thread.sleep(2500);
             //first get to url and get it length
@@ -131,53 +149,54 @@ public class ManyRequestsClass {
             Thread.sleep(3500);
             //browser.getPageSource();
             final int normalLengthOfPage = browser.getPageSource().length();
-            String message0 = "On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
-            System.out.println(message0);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message0);
+            String message = "On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
+            System.out.println(message);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
             Thread.sleep(1500);  
             
             
             String message2 = "URL TO TEST " + urlToTest;
             System.out.println(message2);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, message2);
-            //int[] arrayOfLengths = new int[loops];
+            testLoopLoadFunction(normalLengthOfPage);            
             
-            //test page load START
-//            System.out.println("START: " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()));
-//            browser.get(urlToTest);
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-//            Thread.sleep(100);
-//            System.out.println("Time  " + new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date()) + "  length=" + browser.getPageSource().length());
-            //test page load END
-            switch (typeOfTest) {
-            case 1: 
-                startAscendingTimingTest(normalLengthOfPage);
-                break;
-            case 2:
-                testByUserData(normalLengthOfPage);
-                break;
-        }
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Accumulated message: \r" + strBuffer.toString());
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");     
+            Thread.sleep(5000);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                } finally {
+                    browser.close();
+                    browser.quit();
+                }
+    }
+    
+    private void visitOneUrl() {
+        preLoader();
+        urlToTest = "http://maxbarannyk.ru/laravel/public/index.php";
+        try {
+            browser = new ChromeDriver();
+            //WebDriver browser = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)browser;
+            browser.manage().window().maximize();
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url " + urlToTest);
             
-            //System.out.println(strBuffer.toString()); 
+            //first get to url and get it length
+            browser.get(urlToTest);
+            Thread.sleep(3500);
+            //browser.getPageSource();
+            final int normalLengthOfPage = browser.getPageSource().length();
+            String message = "On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
+            System.out.println(message);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
+            Thread.sleep(1500);  
+            
+            
+            String message2 = "URL TO TEST " + urlToTest;
+            System.out.println(message2);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message2);
+            testLoopLoadFunction(normalLengthOfPage);            
+            
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Accumulated message: \r" + strBuffer.toString());
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");     
             Thread.sleep(5000);
@@ -189,46 +208,36 @@ public class ManyRequestsClass {
                 }
     }
 
-    private void testByUserData(int normalLengthOfPage) throws InterruptedException {
-        String message1 = "STARTING TEST WITH NUMBER OF LOOPS:" + loops + "  AND PAUSES:" + millisecondsToWait + "MS";
-        System.out.println(message1);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, message1);
+    private void testLoopLoadFunction(int normalLengthOfPage) throws InterruptedException {
+        String message = "";
+        if (typeOfTest == 1) {
+            message = "STARTING ASCENDING TEST WITH NUMBER OF LOOPS: 20; FIRST PAUSE: 100MS AND INCREASING STEP 100MS";  
+            loops = 20;
+            millisecondsToWait = 100;          
+        } else if (typeOfTest == 2) {
+            message = "STARTING TEST WITH NUMBER OF LOOPS:" + loops + "  AND PAUSES:" + millisecondsToWait + "MS";
+        }
+        System.out.println(message);
+        helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
         String timeOfStart, timeAfterSleep;
         for (int i = 0; i < loops; i++ ){
                 timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
                 browser.get(urlToTest);
+                System.out.println("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
+                strBuffer.append("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
                 Thread.sleep(millisecondsToWait);
+                if (typeOfTest == 1) {
+                    millisecondsToWait += 100;
+                }
                 timeAfterSleep = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
                 int currentLengthOfPage = browser.getPageSource().length();
                 String tmpInfo = "Start time=" + timeOfStart + " read time=" + timeAfterSleep + "  Sample length was=" + normalLengthOfPage 
-                        + "  get length now=" + currentLengthOfPage +  "  difference abs=" + (normalLengthOfPage-currentLengthOfPage) + " or "+ (currentLengthOfPage*100/normalLengthOfPage) + "%'";
+                        + "  get length now=" + currentLengthOfPage +  "  difference abs=" + (normalLengthOfPage-currentLengthOfPage) + " or "+ ((normalLengthOfPage-currentLengthOfPage)*100/normalLengthOfPage) + "%";
                 System.out.println(tmpInfo);
                 strBuffer.append(tmpInfo);
                 strBuffer.append("\r");
             }
     }
 
-    private void startAscendingTimingTest(int normalLengthOfPage) throws InterruptedException {
-        String message1 = "STARTING ASCENDING TEST WITH NUMBER OF LOOPS: 20; FIRST PAUSE: 100MS AND INCREASING STEP 100MS";
-        System.out.println(message1);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, message1);
-        String timeOfStart, timeAfterSleep;
-        int pause = 100;
-        for (int i = 0; i < 20; i++ ){
-                timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                browser.get(urlToTest);
-                Thread.sleep(pause);
-                System.out.println("N " + i+1 + " Pause=" + pause + "MS  ");
-                strBuffer.append("Pause=" + pause + "MS");
-                pause += 100;
-                timeAfterSleep = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                int currentLengthOfPage = browser.getPageSource().length();
-                String tmpInfo = "Start time=" + timeOfStart + " read time=" + timeAfterSleep + "  Sample length was=" + normalLengthOfPage 
-                        + "  get length now=" + currentLengthOfPage +  "  difference abs=" + (normalLengthOfPage-currentLengthOfPage) + " or "+ ((normalLengthOfPage-currentLengthOfPage)*100/normalLengthOfPage) + "%'";
-                System.out.println(tmpInfo);
-                strBuffer.append(tmpInfo);
-                strBuffer.append("\r");
-            }
-    }
    
 }
