@@ -29,17 +29,28 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 /**
  *
  * @author user
+ *  typeNames[0] = "Testing";
+        typeNames[1] = "Candidates";
+        typeNames[2] = "ALL Candidates(s)";
+        typeNames[3] = "Locations";
+        typeNames[4] = "Company";
+        typeNames[5] = "Profile editing";
+        typeNames[6] = "Delete user(s)";
+        typeNames[7] = "Sort user(s)";
+        typeNames[8] = "Search user(s)";
+        typeNames[9] = "Schemas";
  */
 public class NewClass1 {
-    final static int LOCATIONS = 1;
-    final static int SCHEMAS = 2;
-    final static int CANDIDATES = 3;
+    final static int CANDIDATES = 1;
+    final static int ALL_CANDIDATES = 2;
+    final static int LOCATIONS = 3;
     final static int COMPANIES = 4;
     final static int PROFILE_EDIT = 5;
     final static int DELETE_USER = 6;
     final static int SORT_USER = 7;
     final static int SEARCH_USER = 8;
-    final static int ALL_CANDIDATES = 9;
+    final static int SCHEMAS = 9;
+    final static int MANY = 10;
     final static int EXIT = 19;
     public static String[] typeNames = new String[20];    
     
@@ -52,15 +63,16 @@ public class NewClass1 {
         BufferedReader br = new BufferedReader(isr);
         do {
             System.out.println(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-            System.out.println("Testing of Locations creation - 1");
-            System.out.println("Testing of Schemas creation - 2");
-            System.out.println("Testing of One random Candidates creation - 3");
+            System.out.println("Testing of One random Candidates creation - 1");
+            System.out.println("Testing of ALL 4 TYPES Candidates creation - 2");
+            System.out.println("Testing of Locations creation - 3");
             System.out.println("Testing of Company creation - 4");
             System.out.println("Testing of Profile editing - 5");
             System.out.println("Testing of User delete - 6");
             System.out.println("Testing of User sorting - 7");
             System.out.println("Testing of User search - 8");
-            System.out.println("Testing of ALL 4 TYPES Candidates creation - 9");
+            System.out.println("Testing of Schemas creation - 9");
+            System.out.println("Send many requests to site - 10");
             System.out.println("EXIT - 19");
             System.out.println("Enter digit and press Enter");
             try {
@@ -70,7 +82,7 @@ public class NewClass1 {
                 System.out.println(ex.getMessage());
                 res = 0;
             }
-            int[] allowedNumbers  = {0, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, ALL_CANDIDATES, EXIT};
+            int[] allowedNumbers  = {0, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, ALL_CANDIDATES, MANY, EXIT};
 
             if (!contains(allowedNumbers, res)) {
                 res = 1;
@@ -81,17 +93,20 @@ public class NewClass1 {
 
             try {
                 switch (res){
-                    case LOCATIONS:
-                        LocationsClass locationsClass = new LocationsClass();
-                        locationsClass.createLocation();
-                        break;
-                    case SCHEMAS:
-                        SchemasClass schemasClass = new SchemasClass();
-                        schemasClass.createSchema();
-                        break;
                     case CANDIDATES:
                         CandidatesClass candidatesClass = new CandidatesClass();
                         candidatesClass.createCandidate();
+                        break;
+                    case ALL_CANDIDATES:
+                        CandidatesClass[] candidatesClassArr = new CandidatesClass[4];
+                        for (int i = 1; i < 5; i++) {
+                            candidatesClassArr[i] = new CandidatesClass(i);
+                            candidatesClassArr[i].createCandidate();
+                        }
+                        break;
+                    case LOCATIONS:
+                        LocationsClass locationsClass = new LocationsClass();
+                        locationsClass.createLocation();
                         break;
                     case COMPANIES:
                         CompaniesClass companiesClass = new CompaniesClass();
@@ -113,14 +128,14 @@ public class NewClass1 {
                         SearchCandidateClass searchCandidateClass = new SearchCandidateClass();
                         searchCandidateClass.searchCandidate();
                         break;
-                    case ALL_CANDIDATES:
-                        CandidatesClass[] candidatesClassArr = new CandidatesClass[4];
-                        for (int i = 1; i < 5; i++) {
-                            candidatesClassArr[i] = new CandidatesClass(i);
-                            candidatesClassArr[i].createCandidate();
-                        }
+                    case SCHEMAS:
+                        SchemasClass schemasClass = new SchemasClass();
+                        schemasClass.createSchema();
                         break;
-
+                    case MANY:
+                        ManyRequestsClass manyRequestsClass = new ManyRequestsClass();
+                        manyRequestsClass.startTest();
+                        break;
                     case 0:
                         TestClass testClass = new TestClass();
                         testClass.testFunction();
@@ -175,26 +190,18 @@ public class NewClass1 {
 //            System.out.println("Exception in fillClassData function");
 //            System.out.println(ex.getMessage());
 //        }
-        //String osName = System.getProperty("os.name");
-        //System.out.println("---" + osName + "---");
-        //System.setProperty("webdriver.chrome.driver", "chromedriver"); 
-//        if (osName.contains("Linux")) {
-//            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
-//            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-//        } else if (osName.contains("Windows 10")) {
-//            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-//            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
-//        }
+       
         typeNames[0] = "Testing";
-        typeNames[1] = "Locations";
-        typeNames[2] = "Schemas";
-        typeNames[3] = "Candidates";
+        typeNames[1] = "Candidates";
+        typeNames[2] = "ALL Candidates(s)";
+        typeNames[3] = "Locations";
         typeNames[4] = "Company";
         typeNames[5] = "Profile editing";
         typeNames[6] = "Delete user(s)";
         typeNames[7] = "Sort user(s)";
         typeNames[8] = "Search user(s)";
-        typeNames[9] = "ALL Candidates(s)";
+        typeNames[9] = "Schemas";
+        typeNames[10] = "Many requests";
         typeNames[19] = "EXIT!";
     }
     
