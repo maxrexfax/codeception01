@@ -23,6 +23,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class SearchCandidateClass {
     
+    public int numberOfLoops;
+    public int counter;
     public HelperClass helperClass = new HelperClass();
     public WebDriver browser = null;
     public String[] iDs;
@@ -34,31 +36,42 @@ public class SearchCandidateClass {
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
     public CredentialsClass credentialsClass;
+    private String pathToLogFileFolder;
+    private String osName;
+    InputStreamReader isr;
+    BufferedReader br;
+            
+    public SearchCandidateClass(String pathToFileFolderIn, String osNameIn) {
+        this.pathToLogFileFolder = pathToFileFolderIn;
+        this.osName = osNameIn;
+    }
     
     public void searchCandidate()
     {        
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
+        counter = 1;
         
-        //login to site START
-        String osName = System.getProperty("os.name");
-        if (osName.contains("Linux")) {
-            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
-            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-            fileName = "./logs/testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
-        } else if (osName.contains("Windows")) {
-            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-            System.out.println("All logs will be stored at folder C:\\users\\public\\documents\\logs"); 
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
-            fileName = "C:\\users\\public\\documents\\logs\\testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
-        } else {
-            System.out.println("ERROR checking OS type"); 
-        }
+        fileName = this.pathToLogFileFolder + "testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
+        System.out.println("Path to logfile:" + fileName);
         
         fileToWriteLogsOfTesting = new File(fileName);
         
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        System.out.println("Set number of loops - 1");
+        System.out.println("Dont set number of loops (by default=100) - 2");
+        isr = new InputStreamReader(System.in);
+        br = new BufferedReader(isr);
+        int res = tryToGetInt();
+        
+        if (res == 1) {
+            System.out.println("Enter number of loops: 1 - 10000");
+            numberOfLoops = tryToGetInt();
+        } else {
+            numberOfLoops = 100;
+        }
+        
         try {
             browser = new ChromeDriver();
             //WebDriver browser = new FirefoxDriver();
@@ -102,15 +115,15 @@ public class SearchCandidateClass {
             //printArray(Names);
             
             isTestGoOn = true;
-            startThread();
-            InputStreamReader isr = new InputStreamReader(System.in);
-            BufferedReader br = new BufferedReader(isr);
+            //startThread(); 
             System.out.println("Results of testing will be stored in file " + fileName);
-            System.out.println("Press Enter to quit");
-            String answ = br.readLine();
-            if (answ != null) {
-                isTestGoOn = false;
-            }
+            checkDataOnThePage();
+//            
+//            System.out.println("Press Enter to quit");
+//            String answ = br.readLine();
+//            if (answ != null) {
+//                isTestGoOn = false;
+//            }
             
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");   
             Thread.sleep(5000);            
@@ -129,22 +142,54 @@ public class SearchCandidateClass {
         System.out.println();
     }
     
+    private int tryToGetInt(){
+        int res = 0;
+        try {
+                res = Integer.parseInt(br.readLine());
+            } catch (Exception ex) {
+                System.out.println("Error");
+                System.out.println(ex.getMessage());
+                res = 2;
+            }
+        if(res < 1 || res > 100000) {
+            res = 10;
+        }
+        return res;
+    }
+    
     public void startThread()
     {
         Thread thread = new Thread(){
-            public void run(){
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
+            public void run(){            
+            }
+        };
+        thread.start();
+    }
+    
+    public String getCurrentTime()
+    {
+        return new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+    }
+
+    private void checkDataOnThePage() {
+        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
             //System.out.println("Search testing starting now");
             WebElement searchInput = helperClass.safeFindElement(browser, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
             WebElement containerOnThePage;
             List <WebElement> resultTrsOnThePage;
-            do {
+            do {      
+                
+                if (counter > numberOfLoops) {
+                    isTestGoOn = false;
+                }
                 try{
                     Thread.sleep(1000);
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 }
                 if(isTestGoOn){
+                    System.out.println("Test N:" + counter + " of:" + numberOfLoops);
+                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Test N:" + counter + " from:" + numberOfLoops);
                     int type = helperClass.getRandomDigit(1,2);
                     int index = helperClass.getRandomDigit(1, (iDs.length - 1));
                     String dataToSend = "";
@@ -193,17 +238,10 @@ public class SearchCandidateClass {
                             //System.out.println("Data ---" + dataToSend + "--- not found");
                         }
                     }
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "\r\n");
-                }                  
+                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "\r");
+                }
+                counter++;
               } while (isTestGoOn); 
-            }
-        };
-        thread.start();
-    }
-    
-    public String getCurrentTime()
-    {
-        return new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
     
 }

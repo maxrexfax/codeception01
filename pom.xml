@@ -52,6 +52,12 @@
             <version>4.0.0-alpha-7</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,7 +74,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.mycompany.mavenproject1.NewClass1</mainClass>
+                            <mainClass>com.mycompany.mavenproject1.StartClass</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

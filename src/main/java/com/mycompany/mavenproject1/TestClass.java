@@ -34,13 +34,13 @@ public class TestClass {
     public CredentialsClass credentialsClass;
     
     public TestClass(){
-        System.out.println("Empty constructor");
+        System.out.println("TestClass Empty constructor ");
         this.testValue = 0;
     }
     
     public TestClass(int value1){
         this.testValue = value1;
-        System.out.println("Constructor with parameters" + this.testValue + " " + value1);
+        System.out.println("TestClass Constructor with parameters" + this.testValue + " " + value1);
     }
     
     public void testFunction() throws InterruptedException, IOException{

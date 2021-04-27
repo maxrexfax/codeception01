@@ -6,6 +6,7 @@
 package com.mycompany.mavenproject1;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -26,17 +27,33 @@ public class DeleteCandidatesClass {
     public WebDriver browser = null;
     public CredentialsClass credentialsClass;
     
+    public File fileToWriteLogsOfTesting;
+    public String dateTimeOfSession;
+    private String pathToLogFileFolder;
+    private String osName;
+    
+    public DeleteCandidatesClass(String pathToFileFolderIn, String osNameIn) {
+        this.pathToLogFileFolder = pathToFileFolderIn;
+        this.osName = osNameIn;
+    }
+    
     public void deleteUser()
     {
         credentialsClass = new CredentialsClass();
-        String osName = System.getProperty("os.name");
-        if (osName.contains("Linux")) {
-            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
-            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        } else if (osName.contains("Windows 10")) {
-            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+        dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
+        
+        String fileName = this.pathToLogFileFolder + "DeleteCandidateLogFile_" + dateTimeOfSession + ".txt";
+        System.out.println("Path to logfile:" + fileName);
+        
+        try {
+            fileToWriteLogsOfTesting = new File(fileName);
+            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+        } catch (Exception exx) {
+            System.out.println(exx.getMessage());
+            System.out.println("Error file creation, testing log will be only in terminal");
         }
+        
+        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Delete Candidate testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
             browser = new ChromeDriver();
@@ -73,8 +90,9 @@ public class DeleteCandidatesClass {
                     break;
             }
             
-            
-            Thread.sleep(15000);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
+            System.out.println("Work: END");
+            Thread.sleep(5000);
             
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -166,7 +184,7 @@ public class DeleteCandidatesClass {
         System.out.println();
         System.out.println();
         System.out.println();
-        Thread.sleep(10000);
+        Thread.sleep(5000);
     }
 
     private void deleteUserByData() throws IOException, InterruptedException {

@@ -1,0 +1,7 @@
+Page load testing starts at: 2021.04.27_11.10.44 OS: Linux
+Work: go to url http://maxbarannyk.ru/laravel/public/index.php
+On the url http://maxbarannyk.ru/laravel/public/index.php found length 15932 after delay 3500MS
+URL TO TEST http://maxbarannyk.ru/laravel/public/index.php
+STARTING ASCENDING TEST WITH NUMBER OF LOOPS: 5 FIRST PAUSE: 100MS AND INCREASING STEP: 100MS
+Work: Accumulated message: N 1 Pause=100MS  Start time=11.10.52.125 read time=11.10.52.597  Sample length was=15932  get length now=15932  difference abs=0 or 0%N 2 Pause=200MS  Start time=11.10.52.655 read time=11.10.53.211  Sample length was=15932  get length now=15932  difference abs=0 or 0%N 3 Pause=300MS  Start time=11.10.53.242 read time=11.10.53.883  Sample length was=15932  get length now=15932  difference abs=0 or 0%N 4 Pause=400MS  Start time=11.10.53.907 read time=11.10.54.674  Sample length was=15932  get length now=15932  difference abs=0 or 0%N 5 Pause=500MS  Start time=11.10.54.700 read time=11.10.55.589  Sample length was=15932  get length now=15932  difference abs=0 or 0%
+Work: END

@@ -70,7 +70,7 @@ public class HelperClass {
     }
     
     
-    public static void writeStringToFile(File fileToWriteLogsOfTesting, String content) 
+    public void writeStringToFile(File fileToWriteLogsOfTesting, String content) 
         {
             try(FileWriter fw = new FileWriter(fileToWriteLogsOfTesting.getAbsolutePath(), true);
                 BufferedWriter bw = new BufferedWriter(fw);

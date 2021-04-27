@@ -5,6 +5,7 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.io.File;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -21,18 +22,33 @@ public class CompaniesClass {
     public HelperClass helperClass = new HelperClass();
     public CredentialsClass credentialsClass;
     
+    public File fileToWriteLogsOfTesting;
+    public String dateTimeOfSession;
+    private String pathToLogFileFolder;
+    private String osName;
+    
+    public CompaniesClass(String pathToFileFolderIn, String osNameIn) {
+        this.pathToLogFileFolder = pathToFileFolderIn;
+        this.osName = osNameIn;
+    }
+    
     public void createCompany() throws InterruptedException{
         //login to site START
         credentialsClass = new CredentialsClass();
+        dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
-        String osName = System.getProperty("os.name");
-        if (osName.contains("Linux")) {
-            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
-            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-        } else if (osName.contains("Windows 10")) {
-            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
+        String fileName = this.pathToLogFileFolder + "CreateCompanyLogFile_" + dateTimeOfSession + ".txt";
+        System.out.println("Path to logfile:" + fileName);
+        
+        try {
+            fileToWriteLogsOfTesting = new File(fileName);
+            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+        } catch (Exception exx) {
+            System.out.println(exx.getMessage());
+            System.out.println("Error file creation, testing log will be only in terminal");
         }
+        
+        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Create Company testing starts at: " + dateTimeOfSession +" OS: " + osName);
         WebDriver browser = null;
         try {
             browser = new ChromeDriver();
@@ -67,6 +83,8 @@ public class CompaniesClass {
             helperClass.selectOneElementFromDropdownAddressInHelper(browser);
             Thread.sleep(500);
             browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/header/div/button[2]")).click();
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
+            System.out.println("Work: END");
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

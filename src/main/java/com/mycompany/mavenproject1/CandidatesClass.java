@@ -33,12 +33,16 @@ public class CandidatesClass {
     public String mainUrl = "https://perscriptum-dev.herokuapp.com/";
     public String[] candidateTypes = {"", "candidates", "assessors", "employees", "contacts"};
     public CredentialsClass credentialsClass;
+    private String pathToLogFileFolder;
+    private String osName;
     
-    public CandidatesClass() {
-        this.numberOfCandidate = 0;
+    public CandidatesClass(String pathToFileFolderIn, String osNameIn) {
+        this.pathToLogFileFolder = pathToFileFolderIn;
+        this.osName = osNameIn;
     }
     
-    public CandidatesClass(int typeOfUser) {
+    
+    public CandidatesClass(String pathToFileFolderIn, String osNameIn, int typeOfUser) {
         this.numberOfCandidate = typeOfUser;
     }
     
@@ -46,30 +50,14 @@ public class CandidatesClass {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
-        String fileNameERRORS = "";
+        //String fileNameERRORS = "";
         
-        //login to site START
-        String osName = System.getProperty("os.name");
-        
-        if (osName.contains("Linux")) {
-            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
-            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); 
-            fileName = "./logs/testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-            fileNameERRORS = "./logs/testCandidatesCreation_ERRORS_LogFile_" + dateTimeOfSession + ".txt";
-        } else if (osName.contains("Windows")) {
-            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
-            fileName = "C:\\logs\\testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-            fileNameERRORS = "C:\\logs\\testCandidatesCreation_ERRORS_LogFile_" + dateTimeOfSession + ".txt";
-        } else {
-            System.out.println("ERROR checking OS type");             
-            fileName = "./testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";             
-            fileNameERRORS = "./testCandidatesCreation_ERRORS_LogFile_" + dateTimeOfSession + ".txt";           
-        }
+        fileName = this.pathToLogFileFolder + "testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
+        System.out.println("Path to logfile:" + fileName);
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
-            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
             System.out.println("Error file creation, test log will be only in terminal");
