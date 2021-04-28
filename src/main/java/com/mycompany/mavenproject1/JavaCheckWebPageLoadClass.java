@@ -33,7 +33,7 @@ public class JavaCheckWebPageLoadClass {
     public String dateTimeOfSession;
     private String pathToLogFileFolder;
     private String osName;
-    public String urlToTest = "https://perscriptum-dev.herokuapp.com/";
+    public String urlToTest = "http://172.17.0.1";
     public URL url;
     public StringBuffer strBuffer = new StringBuffer("");
     public int[] arrayOfIntervals;
@@ -91,7 +91,7 @@ public class JavaCheckWebPageLoadClass {
         System.out.println("Set url to test, default is " + urlToTest);
         urlToTest = br.readLine();
         if (urlToTest.length() < 5) {
-            urlToTest = "https://perscriptum-dev.herokuapp.com/";
+            urlToTest = "http://172.17.0.1";
         }
         System.out.println("URL to test:" + urlToTest);
     }
@@ -100,7 +100,7 @@ public class JavaCheckWebPageLoadClass {
         
         arrayOfIntervals = new int[loops];
         try{
-            url = new URL(urlToTest);
+            url = new URL(urlToTest);//172.17.0.1
             for (int i = 0; i < loops; i++ ){
                 //load starts datetime
                 Date startDateTime = new java.util.Date();
@@ -122,12 +122,12 @@ public class JavaCheckWebPageLoadClass {
                         .append(" Web document length=")
                         .append(body.length())
                         .append(" Web page load time ")
-                        .append(getDateDiff(startDateTime,endDateTime,TimeUnit.MILLISECONDS))
+                        .append(getDateDiffMs(startDateTime,endDateTime,TimeUnit.MILLISECONDS))
                         .append(" MS")
                         .append("\r");
                 //System.out.println(body);
-                arrayOfIntervals[i] = (int)(getDateDiff(startDateTime,endDateTime,TimeUnit.MILLISECONDS));
-                System.out.println("Work: Load time=" + getDateDiff(startDateTime,endDateTime,TimeUnit.MILLISECONDS));            
+                arrayOfIntervals[i] = (int)(getDateDiffMs(startDateTime,endDateTime,TimeUnit.MILLISECONDS));
+                System.out.println("Work: Load time=" + getDateDiffMs(startDateTime,endDateTime,TimeUnit.MILLISECONDS));            
                 Thread.sleep(millisecondsToWait);
             }
         } catch(Exception ex) {
@@ -139,7 +139,7 @@ public class JavaCheckWebPageLoadClass {
         
     }
     
-    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+    public long getDateDiffMs(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }

@@ -35,23 +35,23 @@ public class LocationsClass {
             System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
             System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
         }
-        WebDriver browser = null;
+        WebDriver webDriver = null;
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
             //String script00 = "(console.log('1111!!!');"; 
-            browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            webDriver.manage().window().maximize();
+            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
             Thread.sleep(1500);
-            helperClass.safeFindElement(browser, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
+            helperClass.safeFindElement(webDriver, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
             Thread.sleep(2500);
-            //WebElement login = browser.findElement(By.id("input-11"));
-            //WebElement passwd = browser.findElement(By.id("input-14"));
-            //WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
-            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
-            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
-            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+            //WebElement login = webDriver.findElement(By.id("input-11"));
+            //WebElement passwd = webDriver.findElement(By.id("input-14"));
+            //WebElement btnLogin = webDriver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
+            WebElement login = helperClass.safeFindElement(webDriver, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(webDriver, "input-14", "id");
+            WebElement btnLogin = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
 
             //login.sendKeys("test2@pernexus.org");
             //passwd.sendKeys("testtest2");
@@ -66,7 +66,7 @@ public class LocationsClass {
             //String script02 = "console.log(\"2222!!!\");";
             //startThread(script02, js);    
             /*String urlExpected = "https://perscriptum-dev.herokuapp.com/";
-            String realUrl = browser.getCurrentUrl();  
+            String realUrl = webDriver.getCurrentUrl();  
 
             if(realUrl.contains(urlExpected))
             {
@@ -77,50 +77,50 @@ public class LocationsClass {
                 System.out.println("Test failed");
             }*/
             //Creating the JavascriptExecutor interface object by Type casting		
-            browser.get("https://perscriptum-dev.herokuapp.com/locations");
+            webDriver.get("https://perscriptum-dev.herokuapp.com/locations");
             Thread.sleep(1000);
-            WebElement createBtn = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
+            WebElement createBtn = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
             createBtn.click();
             Thread.sleep(400);
-            WebElement inputForLocationName = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
+            WebElement inputForLocationName = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
             Thread.sleep(400);
             inputForLocationName.sendKeys("TestNameLocation");
-            browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
+            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
 
             Thread.sleep(2000);
-            WebElement mapInput = browser.findElement(By.id("map"));
+            WebElement mapInput = webDriver.findElement(By.id("map"));
             mapInput.click();
             mapInput.sendKeys(helperClass.getRandChar());
             Thread.sleep(1000);
-            List<WebElement> containerOfResults = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
+            List<WebElement> containerOfResults = webDriver.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
             Thread.sleep(200);
-            selectOneElementFromDropdownAddress(containerOfResults, browser);
+            selectOneElementFromDropdownAddress(containerOfResults, webDriver);
 
-            browser.findElement(By.xpath("/html/body/div[1]/div/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
             //select tags START
             Thread.sleep(500);
-            WebElement tagsContainer = browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]"));
+            WebElement tagsContainer = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]"));
             tagsContainer.click();
             Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(browser);
+            helperClass.selectOneElementFromDropdownInHeper(webDriver);
             Thread.sleep(200);        
             //select tags END
 
             //click on main text on top div
-            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")).click();
             //save button click
-            browser.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
+            webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
             Thread.sleep(5000); 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            browser.close();
-            browser.quit();
+            webDriver.close();
+            webDriver.quit();
         }
         
     }
        
-    public void selectOneElementFromDropdownAddress(List<WebElement> listContainerElement, WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownAddress(List<WebElement> listContainerElement, WebDriver webDriver) throws InterruptedException
     {
         Thread.sleep(500);        
         List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));

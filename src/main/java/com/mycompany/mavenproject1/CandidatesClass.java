@@ -29,7 +29,7 @@ public class CandidatesClass {
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
     public File fileToWriteErrorLogOfTesting;
-    public WebDriver browser = null;
+    public WebDriver webDriver = null;
     public String mainUrl = "https://perscriptum-dev.herokuapp.com/";
     public String[] candidateTypes = {"", "candidates", "assessors", "employees", "contacts"};
     public CredentialsClass credentialsClass;
@@ -66,18 +66,18 @@ public class CandidatesClass {
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com");
-            browser.get(mainUrl);
+            webDriver.get(mainUrl);
             Thread.sleep(1500); 
-            helperClass.safeFindElement(browser, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
+            helperClass.safeFindElement(webDriver, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
             Thread.sleep(2500);
-            WebElement login = browser.findElement(By.id("input-11"));
-            WebElement passwd = browser.findElement(By.id("input-14"));
-            WebElement btnLogin = browser.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
+            WebElement login = webDriver.findElement(By.id("input-11"));
+            WebElement passwd = webDriver.findElement(By.id("input-14"));
+            WebElement btnLogin = webDriver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button"));
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);            
@@ -87,18 +87,18 @@ public class CandidatesClass {
             //login to site END
 
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com/candidates");
-            browser.get("https://perscriptum-dev.herokuapp.com/candidates");
+            webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
             Thread.sleep(3000);
-            browser.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]")).click();//create new candidate
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]")).click();//create new candidate
             Thread.sleep(500);
             //Click on 4 types of candidates START
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[2]/label")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[2]/label")).click();
             Thread.sleep(500);
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[3]/label")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[3]/label")).click();
             Thread.sleep(500);
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[4]/label")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[4]/label")).click();
             Thread.sleep(500);
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[1]/label")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[1]/label")).click();
             //Click on 4 types of candidates END
             Thread.sleep(1500);
             if (numberOfCandidate == 0) {//if is not set then random
@@ -109,70 +109,70 @@ public class CandidatesClass {
             System.out.println("Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
             //  
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
             Thread.sleep(500);
             //System.out.println("Click to check if menu Add person contact info");
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
             Thread.sleep(500);
             
             String firstName = "FirstName_" + helperClass.getRandomDigit(99,999);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > label")).getText());
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > label")).getText());
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > input, String dataToFill", firstName);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > label")).getText());            
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > label")).getText());            
             String secondName = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date())/*"SecondName_" + helperClass.getRandomDigit(99,999)*/;
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > input", secondName);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > label")).getText());            
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > label")).getText());            
             String lastName = "LastName_" + helperClass.getRandomDigit(99,999);
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > input", lastName);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > label")).getText());            
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > label")).getText());            
             String dataToFillInInput = "II_" + helperClass.getRandomDigit(99,999);
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > input", dataToFillInInput);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > label")).getText());            
-            int randomDay = helperClass.getRandomDigit(1,28);
-            String rndDayStr = (randomDay < 10) ? "0" + randomDay : String.valueOf(randomDay);
-            int randomMonth = helperClass.getRandomDigit(1,12);
-            String rndMonthStr = (randomMonth < 10) ? "0" + randomMonth : String.valueOf(randomMonth);
-            dataToFillInInput = "" + rndDayStr + "-" + rndMonthStr + "-" + helperClass.getRandomDigit(1960,2005);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > label")).getText());            
+//            int randomDay = helperClass.getRandomDigit(1,28);
+//            String rndDayStr = (randomDay < 10) ? "0" + randomDay : String.valueOf(randomDay);
+//            int randomMonth = helperClass.getRandomDigit(1,12);
+//            String rndMonthStr = (randomMonth < 10) ? "0" + randomMonth : String.valueOf(randomMonth);
+            dataToFillInInput = helperClass.getDataForTest()/*"" + rndDayStr + "-" + rndMonthStr + "-" + helperClass.getRandomDigit(1960,2005)*/;
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > input", dataToFillInInput);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > label")).getText());            
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > label")).getText());            
             dataToFillInInput = "City_" + helperClass.getRandomDigit(99,999);
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > input", dataToFillInInput);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(10) > div > div.v-input__slot > div > label")).getText());            
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(10) > div > div.v-input__slot > div > label")).getText());            
             dataToFillInInput = "123456789";
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(10) > div > div.v-input__slot > div > input", dataToFillInInput);
             Thread.sleep(100);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input")).getAttribute("placeholder"));
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input")).getAttribute("placeholder"));
             dataToFillInInput = "email_" + helperClass.getRandomDigit(99,999) + "@mail.com";
             fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input", dataToFillInInput);
             Thread.sleep(500); 
             
             //address System.out.println();
-            WebElement mapElement = helperClass.safeFindElement(browser, "map", "id");
+            WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: text in placeholder ---" + mapElement.getAttribute("placeholder") + "---");            
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling random address using external service");
             System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
             mapElement.click();
             Thread.sleep(500);    
-            helperClass.selectOneElementFromDropdownAddressInHelper(browser);
+            helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
             Thread.sleep(300);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address is: " + browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-8.col-md-10.col-12 > div > span")).getText() + "\n");
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address is: " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-8.col-md-10.col-12 > div > span")).getText() + "\n");
             Thread.sleep(300);   
             
             
-            WebElement someInfoInAddress = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > label", "cssSelector");
+            WebElement someInfoInAddress = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > label", "cssSelector");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + someInfoInAddress.getText());
             System.out.println("Work: label text " + someInfoInAddress.getText());
             dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
@@ -181,80 +181,75 @@ public class CandidatesClass {
             Thread.sleep(500);  
             
             //country of birth  
-            WebElement countryOfBirthLabel = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > label", "cssSelector");
+            WebElement countryOfBirthLabel = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > label", "cssSelector");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + countryOfBirthLabel.getText());
-            WebElement countryOfBirth = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8)", "cssSelector");
+            WebElement countryOfBirth = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8)", "cssSelector");
             countryOfBirth.click();
             Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(browser);
+            helperClass.selectOneElementFromDropdownInHeper(webDriver);
             Thread.sleep(500);
-            WebElement countryOfBirthInput = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > input", "cssSelector");
+            WebElement countryOfBirthInput = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > input", "cssSelector");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: random selectin \nWork: filled data: ---" + countryOfBirthInput.getAttribute("value") + "---\n");
             System.out.println("Work: random selectin in country of birth \nWork: filled data: ---" + countryOfBirthInput.getAttribute("value") + "---");
             Thread.sleep(500);
             
             //nationality
-            String nationality = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > label")).getText();
+            String nationality = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > label")).getText();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "195 Work: label text " + nationality);
             System.out.println("Work: label text " + nationality);
-            browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9)")).click();
+            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9)")).click();
             Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(browser);
+            helperClass.selectOneElementFromDropdownInHeper(webDriver);
             Thread.sleep(500);
-            String nationalityValue = browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > input")).getAttribute("value");
+            String nationalityValue = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > input")).getAttribute("value");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "216 Work: random selectin \nWork: filled data: ---" + nationalityValue + "---\n");
             System.out.println("216 Work: random selectin \nWork: filled data: ---" + nationalityValue + "---\n");
             Thread.sleep(500);
-            //browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
-            WebElement thirdPunktOfMenu = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
-            WebElement thirdPunktOfMenySpan = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5) > div > span", "cssSelector");
+            //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
+            WebElement thirdPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
+            WebElement thirdPunktOfMenySpan = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5) > div > span", "cssSelector");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + thirdPunktOfMenySpan.getText());
             helperClass.safeClickOnElement(thirdPunktOfMenu);
             Thread.sleep(500);
-            setInfoInThirdStage(numberOfCandidate, browser);
+            setInfoInThirdStage(numberOfCandidate, webDriver);
             Thread.sleep(500);
-            WebElement fourthPunktOfMenu = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7)", "cssSelector");
-            WebElement fourthPunktOfMenuDivText = helperClass.safeFindElement(browser, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7) > div", "cssSelector");
+            WebElement fourthPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7)", "cssSelector");
+            WebElement fourthPunktOfMenuDivText = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7) > div", "cssSelector");
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + fourthPunktOfMenuDivText.getText());
             helperClass.safeClickOnElement(fourthPunktOfMenu);
-            //browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
+            //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
             Thread.sleep(500);
             
-           // helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + browser.findElement(By.cssSelector("")).getText());
+           // helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("")).getText());
             
-            WebElement inputWithCompanies = browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[8]/div/div/div"));//dropdown with companies
+            WebElement inputWithCompanies = webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[8]/div/div/div"));//dropdown with companies
             inputWithCompanies.click();
             Thread.sleep(500);
-            WebElement tagsList = browser.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
+            WebElement tagsList = webDriver.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
             Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(browser);        
+            helperClass.selectOneElementFromDropdownInHeper(webDriver);        
             Thread.sleep(1000);
-            browser.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
+            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
             Thread.sleep(1000);//
             String fullName = lastName + ", " + firstName + " " + secondName;
             //System.out.println("fullName= ---" + fullName + "---");
             Thread.sleep(1000);            
-            browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--default")).click();
+            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--default")).click();
             //System.out.println(" ============================= Click to save ");
             Thread.sleep(5000);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: pressed button save, waiting for system message");
             Thread.sleep(1000);
-            try {
-                WebElement meassageDiv = browser.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]"));
-                System.out.println("Work: found system message: ---" + meassageDiv.getText() + "---");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: found system message: ---" + meassageDiv.getText() + "---");
-            } catch(NoSuchElementException eex) {
-                System.out.println(eex.getMessage());
-                System.out.println("Error: system message div container not found");
-            }
-            catch(Exception ex) {
-                System.out.println(ex.getMessage());
-                System.out.println("Error: some error while trying to find message in div container");
-            }
+            
+             //find div container with message result of saving START
+            String systemMessage = helperClass.getSystemMessage(webDriver);
+            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
+            System.out.println("Work: system message: " + systemMessage);
+            //find div container with message result of saving END
+            
             Thread.sleep(500);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Redirencting to " + mainUrl + candidateTypes[numberOfCandidate]);
             goToCorrespondingUrl(numberOfCandidate);            
-            WebElement searchInput = helperClass.safeFindElement(browser, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
+            WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
             Thread.sleep(500);
             //System.out.println("searchInput.getAttribute(\"value\").length()=" + searchInput.getAttribute("value").length());
             searchInput.sendKeys(Keys.CONTROL + "a");
@@ -265,7 +260,7 @@ public class CandidatesClass {
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Trying to find on page user with credentials: ---" + fullName + "--- to check is data saved id DB..."); 
             searchInput.sendKeys(fullName);
             Thread.sleep(1500);
-            WebElement containerOnThePage = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+            WebElement containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
             List<WebElement> resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr"));
             System.out.println("Work: resultTrsOnThePage.size()=" + resultTrsOnThePage.size());
             boolean isUserDataFound = false;
@@ -294,47 +289,47 @@ public class CandidatesClass {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            browser.close();
-            browser.quit();
+            webDriver.close();
+            webDriver.quit();
         }
     }
 
-    private void setInfoInThirdStage(int numberOfCandidate, WebDriver browser) throws InterruptedException {
+    private void setInfoInThirdStage(int numberOfCandidate, WebDriver webDriver) throws InterruptedException {
         switch (numberOfCandidate) {
             case 1:
                 System.out.println("Work: function setInfoInThirdStage: case 1...");
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 1..."); 
                 Thread.sleep(500);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div:nth-child(1) > div > div.v-input__slot > div > input")).sendKeys("TestRefData_" + helperClass.getRandomDigit(99,999));
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.v-input--is-label-active.v-input--is-dirty.theme--light.v-text-field.v-text-field--is-booted.v-select")).click();
-                helperClass.selectOneElementFromDropdownInHeper(browser);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div:nth-child(1) > div > div.v-input__slot > div > input")).sendKeys("TestRefData_" + helperClass.getRandomDigit(99,999));
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.v-input--is-label-active.v-input--is-dirty.theme--light.v-text-field.v-text-field--is-booted.v-select")).click();
+                helperClass.selectOneElementFromDropdownInHeper(webDriver);
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
                 Thread.sleep(500);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
                 break;
             case 2:
                 System.out.println("Work: function setInfoInThirdStage: case 2...");
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 2..."); 
                 Thread.sleep(500);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div")).click();
-                helperClass.selectOneElementFromDropdownInHeper(browser);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div")).click();
+                helperClass.selectOneElementFromDropdownInHeper(webDriver);
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
                 Thread.sleep(500);
                 break;
             case 3:
                 System.out.println("Work: function setInfoInThirdStage: case 3...");
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 3..."); 
                 Thread.sleep(500);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div > div.v-input__slot > div > input")).sendKeys("TestData_" + helperClass.getRandomDigit(99,999));
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div > div.v-input__slot > div > input")).sendKeys("TestData_" + helperClass.getRandomDigit(99,999));
                 Thread.sleep(500);
                 break;
             case 4:
                 System.out.println("Work: function setInfoInThirdStage: case 4...");
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 4..."); 
                 Thread.sleep(500);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div.v-input.mt-5.v-input--dense.theme--light.v-text-field.v-text-field--single-line.v-text-field--is-booted.v-text-field--enclosed.v-text-field--outlined.v-select.v-select--chips.v-select--chips--small.v-select--is-multi.v-autocomplete")).click();
-                helperClass.selectOneElementFromDropdownInHeper(browser);
-                browser.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div.v-input.mt-5.v-input--dense.theme--light.v-text-field.v-text-field--single-line.v-text-field--is-booted.v-text-field--enclosed.v-text-field--outlined.v-select.v-select--chips.v-select--chips--small.v-select--is-multi.v-autocomplete")).click();
+                helperClass.selectOneElementFromDropdownInHeper(webDriver);
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div.v-stepper__step.v-stepper__step--active.v-stepper__step--editable")).click();
                 Thread.sleep(500);
                 break;
         }
@@ -348,7 +343,7 @@ public class CandidatesClass {
             e.printStackTrace();
         }
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to fill input with data ---" + dataToFill + "---");
-        WebElement inputFirstName = browser.findElement(By.cssSelector(cssSelectorString));
+        WebElement inputFirstName = webDriver.findElement(By.cssSelector(cssSelectorString));
         inputFirstName.sendKeys(dataToFill);
         try{
             Thread.sleep(500);
@@ -395,7 +390,7 @@ public class CandidatesClass {
                 postfixUrl = "contacts";
             break;            
         }
-        browser.get(mainUrl + postfixUrl);
+        webDriver.get(mainUrl + postfixUrl);
     }
     
     

@@ -33,7 +33,7 @@ public class ManyRequestsClass {
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
     public File fileToWriteErrorLogOfTesting;
-    public WebDriver browser = null;
+    public WebDriver webDriver = null;
     public String mainUrl = "https://perscriptum-dev.herokuapp.com/";
     //public String mainUrl = "http://maxbarannyk.ru/laravel/public/index.php/login";
     public String urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
@@ -125,18 +125,18 @@ public class ManyRequestsClass {
         
         preLoader();
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url " + mainUrl);
-            browser.get(mainUrl);
+            webDriver.get(mainUrl);
             Thread.sleep(1500); 
-            helperClass.safeFindElement(browser, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
+            helperClass.safeFindElement(webDriver, "#materialpro > div > div > div.d-flex.align-center.col-lg-5.col-xl-6.col-12 > div > div > div.v-item-group.theme--light.v-btn-toggle > button:nth-child(2)", "cssSelector").click();
             Thread.sleep(2500);
-            WebElement login = browser.findElement(By.id(inputLoginData));
-            WebElement passwd = browser.findElement(By.id(inputPasswordData));
-            WebElement btnLogin = browser.findElement(By.xpath(buttonToLoginPath));
+            WebElement login = webDriver.findElement(By.id(inputLoginData));
+            WebElement passwd = webDriver.findElement(By.id(inputPasswordData));
+            WebElement btnLogin = webDriver.findElement(By.xpath(buttonToLoginPath));
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
 //            login.sendKeys("max@ya.ru");
@@ -146,10 +146,10 @@ public class ManyRequestsClass {
             btnLogin.click();
             Thread.sleep(2500);
             //first get to url and get it length
-            browser.get(urlToTest);
+            webDriver.get(urlToTest);
             Thread.sleep(3500);
-            //browser.getPageSource();
-            final int normalLengthOfPage = browser.getPageSource().length();
+            //webDriver.getPageSource();
+            final int normalLengthOfPage = webDriver.getPageSource().length();
             String message = "On the url " + urlToTest + " found web page with total length " + normalLengthOfPage + " after delay 3500MS";
             System.out.println(message);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
@@ -166,8 +166,8 @@ public class ManyRequestsClass {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 } finally {
-                    browser.close();
-                    browser.quit();
+                    webDriver.close();
+                    webDriver.quit();
                 }
     }
     
@@ -187,7 +187,7 @@ public class ManyRequestsClass {
         String timeOfStart, timeAfterSleep;
         for (int i = 0; i < loops; i++ ){
                 timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                browser.get(urlToTest);
+                webDriver.get(urlToTest);
                 System.out.println("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
                 strBuffer.append("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
                 Thread.sleep(millisecondsToWait);
@@ -195,7 +195,7 @@ public class ManyRequestsClass {
                     millisecondsToWait += millisecondsToWaitStepIncrease;
                 }
                 timeAfterSleep = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                int currentLengthOfPage = browser.getPageSource().length();
+                int currentLengthOfPage = webDriver.getPageSource().length();
                 String tmpInfo = "Start time=" + timeOfStart + " read time=" + timeAfterSleep + "  Sample length was=" + normalLengthOfPage 
                         + "  get length now=" + currentLengthOfPage +  "  difference abs=" + (normalLengthOfPage-currentLengthOfPage) + " or "+ ((normalLengthOfPage-currentLengthOfPage)*100/normalLengthOfPage) + "%";
                 System.out.println(tmpInfo);

@@ -26,7 +26,7 @@ public class SearchCandidateClass {
     public int numberOfLoops;
     public int counter;
     public HelperClass helperClass = new HelperClass();
-    public WebDriver browser = null;
+    public WebDriver webDriver = null;
     public String[] iDs;
     public String[] Names;
     public String[] Statuses;
@@ -73,15 +73,15 @@ public class SearchCandidateClass {
         }
         
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
+            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
             Thread.sleep(1500);
-            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
-            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
-            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+            WebElement login = helperClass.safeFindElement(webDriver, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(webDriver, "input-14", "id");
+            WebElement btnLogin = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
@@ -89,12 +89,12 @@ public class SearchCandidateClass {
             Thread.sleep(2500);  
             //login to site END
            
-            browser.get("https://perscriptum-dev.herokuapp.com/candidates");
+            webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
             Thread.sleep(1500);
-            helperClass.safeFindElement(browser, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > div > div.v-data-footer > div.v-data-footer__select > div > div > div", "cssSelector").click();
-            helperClass.selectOneElementFromDropdownInHeperAlt(browser, 0);//переключение количества юзеров на странице на последнее значение
+            helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > div > div.v-data-footer > div.v-data-footer__select > div > div > div", "cssSelector").click();
+            helperClass.selectOneElementFromDropdownInHeperAlt(webDriver, 0);//переключение количества юзеров на странице на последнее значение
             Thread.sleep(2500);
-            WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+            WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
             Thread.sleep(500);
             List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
             //System.out.println("listOfTableRows.size()=" + listOfTableRows.size());
@@ -130,8 +130,8 @@ public class SearchCandidateClass {
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            browser.close();
-            browser.quit();
+            webDriver.close();
+            webDriver.quit();
         }
     }
     public void printArray(String[] arrayToPrint)
@@ -174,7 +174,7 @@ public class SearchCandidateClass {
     private void checkDataOnThePage() {
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
             //System.out.println("Search testing starting now");
-            WebElement searchInput = helperClass.safeFindElement(browser, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
+            WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
             WebElement containerOnThePage;
             List <WebElement> resultTrsOnThePage;
             do {      
@@ -222,7 +222,7 @@ public class SearchCandidateClass {
                     } catch(InterruptedException e){
                         e.printStackTrace();
                     }
-                    containerOnThePage = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+                    containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
                     resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr")); 
                     List<WebElement> listOfTableHeads = resultTrsOnThePage.get(0).findElements(By.tagName("th"));
                     

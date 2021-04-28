@@ -97,7 +97,7 @@ public class WorkClass {
                         companiesClass.createCompany();
                         break;
                     case PROFILE_EDIT:
-                        ProfileEditClass profileEditClass = new ProfileEditClass();
+                        ProfileEditClass profileEditClass = new ProfileEditClass(pathToLogFile, osName);
                         profileEditClass.editProfile();
                         break;
                     case DELETE_USER:

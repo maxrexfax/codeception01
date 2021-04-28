@@ -88,10 +88,10 @@ public class HelperClass {
             }
         }
     
-    public void selectOneElementFromDropdownInHeper(WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownInHeper(WebDriver webDriver) throws InterruptedException
     {     
-        //WebElement listContainerElement = browser.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
-        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
+        //WebElement listContainerElement = webDriver.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
+        WebElement listContainerElement = webDriver.findElement(By.className("menuable__content__active"));
         Thread.sleep(500);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
         //System.out.println("H_listElements.size=" + listElements.size());
@@ -114,10 +114,10 @@ public class HelperClass {
         return new SimpleDateFormat("yyyy.MM.dd_HH.mm.ss").format(new java.util.Date());
     }
     
-    public void selectOneElementFromDropdownInHeperAlt(WebDriver browser, int index) throws InterruptedException
+    public void selectOneElementFromDropdownInHeperAlt(WebDriver webDriver, int index) throws InterruptedException
     {     
         int indexToClick;
-        WebElement listContainerElement = browser.findElement(By.className("menuable__content__active"));
+        WebElement listContainerElement = webDriver.findElement(By.className("menuable__content__active"));
         Thread.sleep(500);
         List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
         //System.out.println("H_listElements.size=" + listElements.size());
@@ -140,14 +140,14 @@ public class HelperClass {
         }   
     }
     
-    public void selectOneElementFromDropdownAddressInHelper(WebDriver browser) throws InterruptedException
+    public void selectOneElementFromDropdownAddressInHelper(WebDriver webDriver) throws InterruptedException
     {
-        WebElement mapInput = browser.findElement(By.id("map"));
+        WebElement mapInput = webDriver.findElement(By.id("map"));
         mapInput.click();
         Thread.sleep(500);        
         mapInput.sendKeys(getRandChar());  
         Thread.sleep(500);                  
-        List<WebElement> listContainerElement = browser.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
+        List<WebElement> listContainerElement = webDriver.findElements(By.xpath("//*[contains(@class,'pac-container pac-logo')]"));
         Thread.sleep(500);        
         List<WebElement> listElements = listContainerElement.get(1).findElements(By.className("pac-item"));
         Thread.sleep(500);
@@ -165,25 +165,25 @@ public class HelperClass {
         }
     }
     
-    public WebElement safeFindElement(WebDriver browser, String identifier, String type)
+    public WebElement safeFindElement(WebDriver webDriver, String identifier, String type)
     {
         WebElement foundedElement = null;
         try {
             switch (type){
                 case "id":
-                    foundedElement = browser.findElement(By.id(identifier));
+                    foundedElement = webDriver.findElement(By.id(identifier));
                     break;
                 case "xpath":
-                    foundedElement = browser.findElement(By.xpath(identifier));
+                    foundedElement = webDriver.findElement(By.xpath(identifier));
                     break;
                 case "cssSelector":
-                    foundedElement = browser.findElement(By.cssSelector(identifier));
+                    foundedElement = webDriver.findElement(By.cssSelector(identifier));
                     break;
                 case "className":
-                    foundedElement = browser.findElement(By.className(identifier));
+                    foundedElement = webDriver.findElement(By.className(identifier));
                     break;
                 case "tagName":
-                    foundedElement = browser.findElement(By.tagName(identifier));
+                    foundedElement = webDriver.findElement(By.tagName(identifier));
                     break;
             }
         }
@@ -238,5 +238,54 @@ public class HelperClass {
     public int getRandomDigit(int min, int max)
     {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+    
+    public String getSystemMessage(WebDriver webDriver)
+    {
+        String result = "EMPTY";
+        try {
+                result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
+                System.out.println("Helper: found system message: ---" + result + "---");
+            } catch(NoSuchElementException eex) {
+                System.out.println(eex.getMessage());
+                System.out.println("Error: system message div container not found");
+                Thread.sleep(1000);
+                try {
+                    result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
+                    System.out.println("Helper: found system message: ---" + result + "---");
+                    } catch(NoSuchElementException eex1) {
+                        System.out.println(eex1.getMessage());
+                    }catch(Exception ex) {
+                        System.out.println(ex.getMessage());
+                        System.out.println("Error: some error while trying to find message in div container");
+                    }
+            } catch(Exception ex) {
+                System.out.println(ex.getMessage());
+                System.out.println("Error: some error while trying to find message in div container");
+            } finally {
+                return result;
+            }        
+    }
+    
+    public String getAllAddressesOnPage(WebDriver webDriver) throws InterruptedException
+    {
+        Thread.sleep(500);
+        StringBuffer strBuffer = new StringBuffer("\r");
+        List <WebElement> spansWithAddresses = webDriver.findElements(By.className("value"));
+        
+        for (WebElement s : spansWithAddresses)
+        {
+            strBuffer.append(s.getText()).append("\r");
+        }
+        return strBuffer.toString();
+    }
+    
+    public String getDataForTest() 
+    {
+        int randomDay = getRandomDigit(1,28);
+        String rndDayStr = (randomDay < 10) ? "0" + randomDay : String.valueOf(randomDay);
+        int randomMonth = getRandomDigit(1,12);
+        String rndMonthStr = (randomMonth < 10) ? "0" + randomMonth : String.valueOf(randomMonth);
+        return "" + rndDayStr + "-" + rndMonthStr + "-" + getRandomDigit(1960,2005);
     }
 }

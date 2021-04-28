@@ -62,17 +62,17 @@ public class TestClass {
 //            System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
 //            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe"); 
 //        }
-//        WebDriver browser = null;
+//        WebDriver webDriver = null;
 //        try {
-//            browser = new ChromeDriver();
-//            //WebDriver browser = new FirefoxDriver();
-//            JavascriptExecutor js = (JavascriptExecutor)browser;
-//            browser.manage().window().maximize();
-//            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+//            webDriver = new ChromeDriver();
+//            //WebDriver webDriver = new FirefoxDriver();
+//            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+//            webDriver.manage().window().maximize();
+//            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
 //            Thread.sleep(1500);
-//            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
-//            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
-//            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+//            WebElement login = helperClass.safeFindElement(webDriver, "input-11", "id");
+//            WebElement passwd = helperClass.safeFindElement(webDriver, "input-14", "id");
+//            WebElement btnLogin = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
 //            login.sendKeys(credentialsClass.emailToLogin);
 //            passwd.sendKeys(credentialsClass.passwordToLogin);
 //            Thread.sleep(500);
@@ -87,8 +87,8 @@ public class TestClass {
 //            } catch (Exception ex) {
 //            System.out.println(ex.getMessage());
 //        } finally {
-//            browser.close();
-//            browser.quit();
+//            webDriver.close();
+//            webDriver.quit();
 //        }
 //    }
     

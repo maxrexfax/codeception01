@@ -24,7 +24,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class DeleteCandidatesClass {
     
     public HelperClass helperClass = new HelperClass();
-    public WebDriver browser = null;
+    public WebDriver webDriver = null;
     public CredentialsClass credentialsClass;
     
     public File fileToWriteLogsOfTesting;
@@ -56,15 +56,15 @@ public class DeleteCandidatesClass {
         helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Delete Candidate testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
+            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
             Thread.sleep(1500);
-            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
-            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
-            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+            WebElement login = helperClass.safeFindElement(webDriver, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(webDriver, "input-14", "id");
+            WebElement btnLogin = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
@@ -72,7 +72,7 @@ public class DeleteCandidatesClass {
             Thread.sleep(2500);  
             //login to site END
            
-            browser.get("https://perscriptum-dev.herokuapp.com/candidates");
+            webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
             Thread.sleep(1500);
             System.out.println("Change options to delete user");
             System.out.println("Delete one random user - 1");
@@ -97,8 +97,8 @@ public class DeleteCandidatesClass {
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            browser.close();
-            browser.quit();
+            webDriver.close();
+            webDriver.quit();
         }
     }
     
@@ -120,10 +120,10 @@ public class DeleteCandidatesClass {
 
     private void deleteOneRandomUser() throws InterruptedException {
         Thread.sleep(500);
-        browser.get("https://perscriptum-dev.herokuapp.com/candidates");
+        webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
         Thread.sleep(2500);        
         
-        WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         Thread.sleep(500);
         List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
         
@@ -141,7 +141,7 @@ public class DeleteCandidatesClass {
         
         System.out.println("oneRandomUseNumberToDelete=" + oneRandomUseNumberToDelete);        
         //reload list of trs
-        tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         listOfTableRows = tableContainer.findElements(By.tagName("tr"));
         
         List<WebElement> listOfTableDatasInTr = listOfTableRows.get(oneRandomUseNumberToDelete).findElements(By.tagName("td"));
@@ -152,19 +152,19 @@ public class DeleteCandidatesClass {
         System.out.println("==== Name to delete=" + listOfTableDatasInTr.get(2).getText());             
         Thread.sleep(1000);
         
-        WebElement deleteButton =  helperClass.safeFindElement(browser,"#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.red--text","cssSelector");
+        WebElement deleteButton =  helperClass.safeFindElement(webDriver,"#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.red--text","cssSelector");
         helperClass.safeClickOnElement(deleteButton);
         
         Thread.sleep(1000);
-        WebElement modalWindowDialog = helperClass.safeFindElement(browser, "v-dialog--active", "className");
+        WebElement modalWindowDialog = helperClass.safeFindElement(webDriver, "v-dialog--active", "className");
         List<WebElement> listOfButtonsInModal = modalWindowDialog.findElements(By.tagName("button"));
         System.out.println("listOfButtonsInModal.get(1).getText()=" + listOfButtonsInModal.get(1).getText());
         listOfButtonsInModal.get(1).click();
         Thread.sleep(2000);
         
         //Check if delete was successful
-        WebElement tableContainerAfterDelete = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
-        tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        WebElement tableContainerAfterDelete = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
+        tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         listOfTableRows = tableContainer.findElements(By.tagName("tr"));
         boolean isDeleted = true;
         for (int i = 1; i < listOfTableRows.size(); i++) {
@@ -189,7 +189,7 @@ public class DeleteCandidatesClass {
 
     private void deleteUserByData() throws IOException, InterruptedException {
         //CHANGE SORT BY ID START
-        WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         Thread.sleep(500);
         List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
         List<WebElement> listOfFlagsToSort = listOfTableRows.get(0).findElements(By.tagName("th"));
@@ -218,7 +218,7 @@ public class DeleteCandidatesClass {
 
     private void markAndDeleteUsers(String[] dataToFindUsers, int answer) throws InterruptedException {
         
-        WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
         for (int i = 1; i < listOfTableRows.size(); i++) {
             List<WebElement> listOfTableDatas = listOfTableRows.get(i).findElements(By.tagName("td"));
@@ -229,10 +229,10 @@ public class DeleteCandidatesClass {
             }
         }
         
-        WebElement deleteButton =  helperClass.safeFindElement(browser,"#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.red--text","cssSelector");
+        WebElement deleteButton =  helperClass.safeFindElement(webDriver,"#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.red--text","cssSelector");
         helperClass.safeClickOnElement(deleteButton);
         Thread.sleep(1000);
-        WebElement modalWindowDialog = helperClass.safeFindElement(browser, "v-dialog--active", "className");
+        WebElement modalWindowDialog = helperClass.safeFindElement(webDriver, "v-dialog--active", "className");
         List<WebElement> listOfButtonsInModal = modalWindowDialog.findElements(By.tagName("button"));
         listOfButtonsInModal.get(1).click();
         Thread.sleep(2000);

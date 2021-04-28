@@ -40,25 +40,25 @@ public class SortCandidatesClass {
             System.out.println("Set webdriver.chrome.driver from path C:\\chromedriver.exe");
             System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
         }
-        WebDriver browser = null;
+        WebDriver webDriver = null;
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
-            browser.get("https://perscriptum-dev.herokuapp.com/"); 
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
+            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
             Thread.sleep(1500);
-            WebElement login = helperClass.safeFindElement(browser, "input-11", "id");
-            WebElement passwd = helperClass.safeFindElement(browser, "input-14", "id");
-            WebElement btnLogin = helperClass.safeFindElement(browser, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
+            WebElement login = helperClass.safeFindElement(webDriver, "input-11", "id");
+            WebElement passwd = helperClass.safeFindElement(webDriver, "input-14", "id");
+            WebElement btnLogin = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/form/button", "xpath");
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);
             helperClass.safeClickOnElement(btnLogin);
             Thread.sleep(2500);  
-            browser.get("https://perscriptum-dev.herokuapp.com/candidates");
+            webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
             Thread.sleep(2500);  
-            WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+            WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
             Thread.sleep(500);
             List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
             List<WebElement> listOfFlagsToSort = listOfTableRows.get(0).findElements(By.tagName("th"));
@@ -67,7 +67,7 @@ public class SortCandidatesClass {
                 if (i ==4) continue;
                 listOfFlagsToSort.get(i).click();             
                 Thread.sleep(1500);
-                if (checkisTableSortedByCurrentColumn(browser, i, DEFAULT)) {
+                if (checkisTableSortedByCurrentColumn(webDriver, i, DEFAULT)) {
                     System.out.println("Table sorting correct");
                 } else {
                     System.out.println("ERROR table sorting");
@@ -75,7 +75,7 @@ public class SortCandidatesClass {
                 Thread.sleep(1500);
                 listOfFlagsToSort.get(i).click();             
                 Thread.sleep(1500); 
-                if (checkisTableSortedByCurrentColumn(browser, i, REVERSED)) {
+                if (checkisTableSortedByCurrentColumn(webDriver, i, REVERSED)) {
                     System.out.println("Table sorting correct");
                 } else {
                     System.out.println("ERROR table sorting");
@@ -90,19 +90,19 @@ public class SortCandidatesClass {
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            browser.close();
-            browser.quit();
+            webDriver.close();
+            webDriver.quit();
         }
     }
 
-    private boolean checkisTableSortedByCurrentColumn(WebDriver browser, int numberOfColumnTocheck , boolean flagOfSorting) {
+    private boolean checkisTableSortedByCurrentColumn(WebDriver webDriver, int numberOfColumnTocheck , boolean flagOfSorting) {
         String nameOfSorting = null;
         if (flagOfSorting) {
             nameOfSorting = " in default order";
         } else {
             nameOfSorting = " in reverced order";
         }
-        WebElement tableContainer = helperClass.safeFindElement(browser, "v-data-table__wrapper", "className");
+        WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr")); 
         List<WebElement> listOfTableHeaders = listOfTableRows.get(0).findElements(By.tagName("th"));
         System.out.println("Testing sorting of the column " + listOfTableHeaders.get(numberOfColumnTocheck).getText() + nameOfSorting);

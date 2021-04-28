@@ -28,7 +28,7 @@ public class TestOneUrlClass {
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
     public File fileToWriteErrorLogOfTesting;
-    public WebDriver browser = null;
+    public WebDriver webDriver = null;
     public int typeOfTest;
     public StringBuffer strBuffer = new StringBuffer("");
     public String urlToTest = "http://maxbarannyk.ru/laravel/public/index.php";
@@ -93,17 +93,17 @@ public class TestOneUrlClass {
     private void visitOneUrl() {
         preLoader();
         try {
-            browser = new ChromeDriver();
-            //WebDriver browser = new FirefoxDriver();
-            JavascriptExecutor js = (JavascriptExecutor)browser;
-            browser.manage().window().maximize();
+            webDriver = new ChromeDriver();
+            //WebDriver webDriver = new FirefoxDriver();
+            JavascriptExecutor js = (JavascriptExecutor)webDriver;
+            webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url " + urlToTest);
             
             //first get to url and get it length
-            browser.get(urlToTest);
+            webDriver.get(urlToTest);
             Thread.sleep(3500);
-            //browser.getPageSource();
-            final int normalLengthOfPage = browser.getPageSource().length();
+            //webDriver.getPageSource();
+            final int normalLengthOfPage = webDriver.getPageSource().length();
             String message = "On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
             System.out.println(message);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
@@ -121,8 +121,8 @@ public class TestOneUrlClass {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 } finally {
-                    browser.close();
-                    browser.quit();
+                    webDriver.close();
+                    webDriver.quit();
                 }
     }
     
@@ -157,7 +157,7 @@ public class TestOneUrlClass {
         String timeOfStart, timeAfterSleep;
         for (int i = 0; i < loops; i++ ){
                 timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                browser.get(urlToTest);
+                webDriver.get(urlToTest);
                 System.out.println("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
                 strBuffer.append("N " + (i+1) + " Pause=" + millisecondsToWait + "MS  ");
                 Thread.sleep(millisecondsToWait);
@@ -165,7 +165,7 @@ public class TestOneUrlClass {
                     millisecondsToWait += millisecondsToWaitStepIncrease;
                 }
                 timeAfterSleep = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
-                int currentLengthOfPage = browser.getPageSource().length();
+                int currentLengthOfPage = webDriver.getPageSource().length();
                 String tmpInfo = "Start time=" + timeOfStart + " read time=" + timeAfterSleep + "  Sample length was=" + normalLengthOfPage 
                         + "  get length now=" + currentLengthOfPage +  "  difference abs=" + (normalLengthOfPage-currentLengthOfPage) + " or "+ ((normalLengthOfPage-currentLengthOfPage)*100/normalLengthOfPage) + "%";
                 System.out.println(tmpInfo);
