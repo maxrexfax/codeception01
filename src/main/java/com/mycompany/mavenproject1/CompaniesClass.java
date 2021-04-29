@@ -41,11 +41,11 @@ public class CompaniesClass {
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
         String fileName = this.pathToLogFileFolder + "CreateCompanyLogFile_" + dateTimeOfSession + ".txt";
-        System.out.println("Path to logfile:" + fileName);
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
             //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            System.out.println("Path to logfile:" + fileName);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
             System.out.println("Error file creation, testing log will be only in terminal");

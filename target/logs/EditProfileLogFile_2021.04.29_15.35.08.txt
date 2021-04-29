@@ -1,0 +1,72 @@
+Edit profile testing starts at: 2021.04.29_15.35.08 OS: Linux
+Work: found in element Voornaam  data: ---Test 2---
+Work: clear data in element
+Work: fill data ---Test 2--- in element Voornaam
+Work: after filling found data ---Test 2---
+
+Work: found in element Tussenvoegsel  data: ---QA---
+Work: clear data in element
+Work: fill data ---QA--- in element Tussenvoegsel
+Work: after filling found data ---QA---
+
+Work: found in element Achternaam  data: ---Test---
+Work: clear data in element
+Work: fill data ---Test--- in element Achternaam
+Work: after filling found data ---Test---
+
+Work: found in element Initialen  data: ---A.QA.T---
+Work: clear data in element
+Work: fill data ---A.QA.T--- in element Initialen
+Work: after filling found data ---A.QA.T---
+
+Work: found in element E-mailadres  data: ---test2@pernexus.org---
+Work: clear data in element
+Work: fill data ---test2@pernexus.org--- in element E-mailadres
+Work: after filling found data ---test2@pernexus.org---
+
+Work: test switching languages
+Work: click on tab Contact information
+Work: found in element Telefoonnummer  data: ---123456789---
+Work: clear data in element
+Work: fill data ---123456789--- in element Telefoonnummer
+Work: after filling found data ---123456789---
+
+Work: found in element Mobiel nummer  data: ---987654321---
+Work: clear data in element
+Work: fill data ---987654321--- in element Mobiel nummer
+Work: after filling found data ---987654321---
+
+Work: found in element Faxnummer  data: ---1234---
+Work: clear data in element
+Work: fill data ---1234--- in element Faxnummer
+Work: after filling found data ---1234---
+
+Work: fill data ---test2@pernexus.org--- in element E-mailadres
+Work: after filling found data ---test2@pernexus.org---
+
+Work: Data in the input Address:
+Error while finding element with cssSelector   #inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > form > div:nth-child(1) > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > label
+Error while finding element with cssSelector   #inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > form > div:nth-child(1) > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > input
+ERROR: Unable to fill additional address field
+Work: attempt to change dropdown ---Land---
+Work: after changing found data ---Armenië---
+
+Work: found in element Geboorteplaats  data: ---PP---
+Work: clear data in element
+Work: fill data ---PP--- in element Geboorteplaats
+Work: after filling found data ---PPPP---
+
+Work: attempt to change dropdown ---Nationaliteit---
+Work: after changing found data ---Amerikaans---
+
+Work: found in element Geboortedatum  data: ---23-12-1970---
+Work: clear data in element
+Work: fill data ---15-04-1984--- in element Geboortedatum
+Work: after filling found data ---15-04-1984---
+
+Work: attempt to change gender
+Work: gender property: ---Man---
+Work: try to click save button
+ERROR: Unable to click save button
+Work: system message: DATA_NOT_FOUND
+Work: END

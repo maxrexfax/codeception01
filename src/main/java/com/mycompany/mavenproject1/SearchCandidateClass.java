@@ -98,19 +98,33 @@ public class SearchCandidateClass {
             Thread.sleep(500);
             List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
             //System.out.println("listOfTableRows.size()=" + listOfTableRows.size());
+            //find number of name and ID columns
+            int idNumber = 0, nameNumber = 0;
+            List<WebElement> listOfTableHeads = listOfTableRows.get(0).findElements(By.tagName("th"));
+            for (int i = 0; i < listOfTableHeads.size(); i++) {
+                if (listOfTableHeads.get(i).getText().contains("ID")) {
+                    idNumber = i;
+                    System.out.println("Number of ID column=" + idNumber);
+                }
+                
+                if (listOfTableHeads.get(i).getText().contains("Name") || listOfTableHeads.get(i).getText().contains("Naam")) {
+                    nameNumber = i;
+                    System.out.println("Number of name column=" + nameNumber);
+                }
+            }
             iDs = new String[listOfTableRows.size()];
             Names = new String[listOfTableRows.size()];
-            Statuses = new String[listOfTableRows.size()];
-            References = new String[listOfTableRows.size()];
-            DatesOfBirth = new String[listOfTableRows.size()];
+//            Statuses = new String[listOfTableRows.size()];
+//            References = new String[listOfTableRows.size()];
+//            DatesOfBirth = new String[listOfTableRows.size()];
             
             for (int i = 1; i < listOfTableRows.size(); i++) {
                 List<WebElement> listOfTableDatas = listOfTableRows.get(i).findElements(By.tagName("td"));
-                iDs[i] = listOfTableDatas.get(1).getText();
-                Names[i] = listOfTableDatas.get(2).getText();
-                Statuses[i] = listOfTableDatas.get(3).getText();
-                References[i] = listOfTableDatas.get(5).getText();
-                DatesOfBirth[i] = listOfTableDatas.get(6).getText();
+                iDs[i] = listOfTableDatas.get(idNumber).getText();
+                Names[i] = listOfTableDatas.get(nameNumber).getText();
+//                Statuses[i] = listOfTableDatas.get(3).getText();
+//                References[i] = listOfTableDatas.get(5).getText();
+//                DatesOfBirth[i] = listOfTableDatas.get(6).getText();
             }
             //printArray(Names);
             

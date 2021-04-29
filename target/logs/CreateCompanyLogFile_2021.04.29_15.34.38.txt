@@ -1,0 +1,9 @@
+Create Company testing starts at: 2021.04.29_15.34.38 OS: Linux
+Work: try to send data ---TestCompanyName_698--- to input with label text: Naam
+Work: Data in the input:TestCompanyName_698
+Work: try to send data ---Reference_657--- to input with label text: Referentie
+Work: Data in the input:Reference_657
+Work: try to send data ---290854402--- to input with label text: Telefoonnummer
+Work: Data in the input:290854402
+Work: try to send data ---8951--- to input with label text: Faxnummer
+Work: Data in the input:8951

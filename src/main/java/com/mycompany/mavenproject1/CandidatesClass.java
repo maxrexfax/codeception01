@@ -50,14 +50,16 @@ public class CandidatesClass {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
-        //String fileNameERRORS = "";
+        String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-        System.out.println("Path to logfile:" + fileName);
+        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
+        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
-            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            System.out.println("Path to logfile:" + fileName);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
             System.out.println("Error file creation, test log will be only in terminal");
@@ -112,133 +114,165 @@ public class CandidatesClass {
             webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
             Thread.sleep(500);
             //System.out.println("Click to check if menu Add person contact info");
-            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
-            Thread.sleep(500);
+            try {
+                System.out.println("Work: Try to click on Add person contact info");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on Add person contact info");
+                webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
+                Thread.sleep(500);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on Add person contact info", ex.getMessage());
+            }
             
+            //first name
             String firstName = "FirstName_" + helperClass.getRandomDigit(99,999);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > label")).getText());
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > input, String dataToFill", firstName);
-            Thread.sleep(100);            
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, firstName, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill first name", ex.getMessage());
+            }            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > label")).getText());            
-            String secondName = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date())/*"SecondName_" + helperClass.getRandomDigit(99,999)*/;
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > input", secondName);
-            Thread.sleep(100);            
-            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > label")).getText());            
+            //second name
+            String secondName = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, secondName, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill second name", ex.getMessage());
+            }
+           
+            //last name
             String lastName = "LastName_" + helperClass.getRandomDigit(99,999);
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > input", lastName);
-            Thread.sleep(100);            
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, lastName, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill last name", ex.getMessage());
+            }
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > label")).getText());            
+            //initials
             String dataToFillInInput = "II_" + helperClass.getRandomDigit(99,999);
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(100);            
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(5) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill initials", ex.getMessage());
+            }  
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > label")).getText());            
-//            int randomDay = helperClass.getRandomDigit(1,28);
-//            String rndDayStr = (randomDay < 10) ? "0" + randomDay : String.valueOf(randomDay);
-//            int randomMonth = helperClass.getRandomDigit(1,12);
-//            String rndMonthStr = (randomMonth < 10) ? "0" + randomMonth : String.valueOf(randomMonth);
-            dataToFillInInput = helperClass.getDataForTest()/*"" + rndDayStr + "-" + rndMonthStr + "-" + helperClass.getRandomDigit(1960,2005)*/;
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(100);            
-            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > label")).getText());            
+            //date of birth
+            dataToFillInInput = helperClass.getFormattedDateForTest();
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill date of birth", ex.getMessage());
+            } 
+                        
+            //city
             dataToFillInInput = "City_" + helperClass.getRandomDigit(99,999);
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(100);            
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill city", ex.getMessage());
+            } 
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(10) > div > div.v-input__slot > div > label")).getText());            
-            dataToFillInInput = "123456789";
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(10) > div > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(100);            
-            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input")).getAttribute("placeholder"));
+            //phone
+            dataToFillInInput = "1234" + helperClass.getRandomDigit(9999,99999);
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill phone", ex.getMessage());
+            } 
+                    
+            //email
             dataToFillInInput = "email_" + helperClass.getRandomDigit(99,999) + "@mail.com";
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(500); 
+            try {                
+                helperClass.fillOneInput(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input", fileToWriteLogsOfTesting, "Email");
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill email", ex.getMessage());
+            } 
             
-            //address System.out.println();
-            WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: text in placeholder ---" + mapElement.getAttribute("placeholder") + "---");            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling random address using external service");
-            System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
-            mapElement.click();
-            Thread.sleep(500);    
-            helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
-            Thread.sleep(300);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address is: " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-8.col-md-10.col-12 > div > span")).getText() + "\n");
-            Thread.sleep(300);   
-            
-            
-            WebElement someInfoInAddress = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > label", "cssSelector");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + someInfoInAddress.getText());
-            System.out.println("Work: label text " + someInfoInAddress.getText());
+            try {
+                //address 
+                WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: text in placeholder ---" + mapElement.getAttribute("placeholder") + "---");            
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling random address using external service");
+                System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
+                mapElement.click();
+                Thread.sleep(500);    
+                helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
+                Thread.sleep(300);
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address is: " + webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-8.col-md-10.col-12 > div > span")).getText() + "\n");
+                Thread.sleep(300);   
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill address", ex.getMessage());
+            } 
+                    
+            //Additional field in address
             dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
-            System.out.println();
-            fillInputWithData("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > input", dataToFillInInput);
-            Thread.sleep(500);  
+            try {                
+                helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill Additional field in address", ex.getMessage());
+            }            
             
-            //country of birth  
-            WebElement countryOfBirthLabel = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > label", "cssSelector");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + countryOfBirthLabel.getText());
-            WebElement countryOfBirth = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8)", "cssSelector");
-            countryOfBirth.click();
-            Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(webDriver);
-            Thread.sleep(500);
-            WebElement countryOfBirthInput = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > input", "cssSelector");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: random selectin \nWork: filled data: ---" + countryOfBirthInput.getAttribute("value") + "---\n");
-            System.out.println("Work: random selectin in country of birth \nWork: filled data: ---" + countryOfBirthInput.getAttribute("value") + "---");
-            Thread.sleep(500);
+            try {
+                //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
+                WebElement thirdPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
+                WebElement thirdPunktOfMenySpan = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5) > div > span", "cssSelector");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + thirdPunktOfMenySpan.getText());
+                helperClass.safeClickOnElement(thirdPunktOfMenu);
+                Thread.sleep(500);
+                setInfoInThirdStage(numberOfCandidate, webDriver);
+                Thread.sleep(500);               
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill data in third part of menu", ex.getMessage());
+            }
             
-            //nationality
-            String nationality = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > label")).getText();
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "195 Work: label text " + nationality);
-            System.out.println("Work: label text " + nationality);
-            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9)")).click();
-            Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(webDriver);
-            Thread.sleep(500);
-            String nationalityValue = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(9) > div > div.v-input__slot > div.v-select__slot > input")).getAttribute("value");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "216 Work: random selectin \nWork: filled data: ---" + nationalityValue + "---\n");
-            System.out.println("216 Work: random selectin \nWork: filled data: ---" + nationalityValue + "---\n");
-            Thread.sleep(500);
-            //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
-            WebElement thirdPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
-            WebElement thirdPunktOfMenySpan = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5) > div > span", "cssSelector");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + thirdPunktOfMenySpan.getText());
-            helperClass.safeClickOnElement(thirdPunktOfMenu);
-            Thread.sleep(500);
-            setInfoInThirdStage(numberOfCandidate, webDriver);
-            Thread.sleep(500);
-            WebElement fourthPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7)", "cssSelector");
-            WebElement fourthPunktOfMenuDivText = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7) > div", "cssSelector");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + fourthPunktOfMenuDivText.getText());
-            helperClass.safeClickOnElement(fourthPunktOfMenu);
-            //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
-            Thread.sleep(500);
+            try {
+                Thread.sleep(500);
+                WebElement fourthPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7)", "cssSelector");
+                WebElement fourthPunktOfMenuDivText = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7) > div", "cssSelector");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + fourthPunktOfMenuDivText.getText());
+                helperClass.safeClickOnElement(fourthPunktOfMenu);
+                Thread.sleep(500);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on fourth part of menu", ex.getMessage());
+            }
             
            // helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("")).getText());
+            try {
+                WebElement inputWithCompanies = webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[8]/div/div/div"));//dropdown with companies
+                inputWithCompanies.click();
+                Thread.sleep(500);
+                WebElement tagsList = webDriver.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
+                Thread.sleep(500);
+                helperClass.selectOneElementFromDropdownInHeper(webDriver);        
+                Thread.sleep(1000);
+                webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill Companies", ex.getMessage());
+            }            
             
-            WebElement inputWithCompanies = webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[8]/div/div/div"));//dropdown with companies
-            inputWithCompanies.click();
-            Thread.sleep(500);
-            WebElement tagsList = webDriver.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
-            Thread.sleep(500);
-            helperClass.selectOneElementFromDropdownInHeper(webDriver);        
-            Thread.sleep(1000);
-            webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
             Thread.sleep(1000);//
-            String fullName = lastName + ", " + firstName + " " + secondName;
+            String fullName = lastName + ", " + firstName;
             //System.out.println("fullName= ---" + fullName + "---");
-            Thread.sleep(1000);            
-            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--default")).click();
-            //System.out.println(" ============================= Click to save ");
-            Thread.sleep(5000);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: pressed button save, waiting for system message");
-            Thread.sleep(1000);
+            Thread.sleep(1000); 
+            
+            try {
+                webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--default")).click();
+                //System.out.println(" ============================= Click to save ");
+                Thread.sleep(5000);
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: pressed button save, waiting for system message");
+                System.out.println("Work: pressed button save, waiting for system message");
+                Thread.sleep(1000);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click save button", ex.getMessage());
+            }
             
              //find div container with message result of saving START
             String systemMessage = helperClass.getSystemMessage(webDriver);
@@ -248,33 +282,46 @@ public class CandidatesClass {
             
             Thread.sleep(500);
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Redirencting to " + mainUrl + candidateTypes[numberOfCandidate]);
-            goToCorrespondingUrl(numberOfCandidate);            
-            WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
-            Thread.sleep(500);
-            //System.out.println("searchInput.getAttribute(\"value\").length()=" + searchInput.getAttribute("value").length());
-            searchInput.sendKeys(Keys.CONTROL + "a");
-            Thread.sleep(500);
-            searchInput.sendKeys(Keys.DELETE);
-            Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling user credentials: ---" + fullName + "--- into the search field...");
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Trying to find on page user with credentials: ---" + fullName + "--- to check is data saved id DB..."); 
-            searchInput.sendKeys(fullName);
-            Thread.sleep(1500);
-            WebElement containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
-            List<WebElement> resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr"));
-            System.out.println("Work: resultTrsOnThePage.size()=" + resultTrsOnThePage.size());
+            goToCorrespondingUrl(numberOfCandidate);   
+            try {
+                WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
+                Thread.sleep(500);
+                //System.out.println("searchInput.getAttribute(\"value\").length()=" + searchInput.getAttribute("value").length());
+                searchInput.sendKeys(Keys.CONTROL + "a");
+                Thread.sleep(500);
+                searchInput.sendKeys(Keys.DELETE);
+                Thread.sleep(500);
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling user credentials: ---" + fullName + "--- into the search field...");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Trying to find on page user with credentials: ---" + fullName + "--- to check is data saved id DB..."); 
+                searchInput.sendKeys(fullName);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill date in Search input after saving user", ex.getMessage());
+            }
+            
             boolean isUserDataFound = false;
-            if (resultTrsOnThePage.size() > 0) {
-                for (int i = 1; i < resultTrsOnThePage.size(); i++) {
-                    List<WebElement> listOfTableDatas = resultTrsOnThePage.get(i).findElements(By.tagName("td"));
-                    System.out.println("Work: listOfTableDatas.size()=" + listOfTableDatas.size());
-                    if (listOfTableDatas.size() > 1) {                        
-                        System.out.println("Work: listOfTableDatas.get(2).getText()=" + listOfTableDatas.get(2).getText());
-                        if (listOfTableDatas.get(2).getText().contains(fullName)) {
-                            isUserDataFound = true;
+            
+            try {
+                Thread.sleep(1500);
+                WebElement containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
+                List<WebElement> resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr"));
+                //System.out.println("Work: resultTrsOnThePage.size()=" + resultTrsOnThePage.size());            
+                if (resultTrsOnThePage.size() > 0) {
+                    for (int i = 1; i < resultTrsOnThePage.size(); i++) {
+                        List<WebElement> listOfTableDatas = resultTrsOnThePage.get(i).findElements(By.tagName("td"));
+                        //System.out.println("Work: listOfTableDatas.size()=" + listOfTableDatas.size());
+                        //System.out.println("Check saving fullName=" + fullName);
+                        if (listOfTableDatas.size() > 1) {   
+                            for(WebElement EL : listOfTableDatas) {
+                                //System.out.println("Current TD ---" + EL.getText() + "---");
+                                if (EL.getText().contains(fullName)) {
+                                    isUserDataFound = true;
+                                }
+                            }     
                         }
                     }
                 }
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform search on the web page", ex.getMessage());
             }
             
             if (isUserDataFound){
@@ -288,6 +335,7 @@ public class CandidatesClass {
             Thread.sleep(15000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.writeStringToFile(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block"); 
         } finally {
             webDriver.close();
             webDriver.quit();
@@ -335,31 +383,7 @@ public class CandidatesClass {
         }
     }
 
-    private void fillInputWithData(String cssSelectorString, String dataToFill)
-    {
-        try{
-            Thread.sleep(500);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to fill input with data ---" + dataToFill + "---");
-        WebElement inputFirstName = webDriver.findElement(By.cssSelector(cssSelectorString));
-        inputFirstName.sendKeys(dataToFill);
-        try{
-            Thread.sleep(500);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        System.out.println("Check if data in input is equals to ---" + dataToFill + "---");
-        System.out.println(checkInputDataFunction(inputFirstName, dataToFill));
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: check filling of the data ---" + dataToFill + "--- result: " + checkInputDataFunction(inputFirstName, dataToFill) + "\n");
-        //helperClass.writeStringToFile(fileToWriteLogsOfTesting, " ");
-        try{
-            Thread.sleep(500);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
+
     
     private String checkInputDataFunction(WebElement inputToCheck, String dataSentToInput) 
     {

@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -242,7 +243,7 @@ public class HelperClass {
     
     public String getSystemMessage(WebDriver webDriver)
     {
-        String result = "EMPTY";
+        String result = "DATA_NOT_FOUND";
         try {
                 result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
                 System.out.println("Helper: found system message: ---" + result + "---");
@@ -280,12 +281,123 @@ public class HelperClass {
         return strBuffer.toString();
     }
     
-    public String getDataForTest() 
+    public String getFormattedDateForTest() 
     {
         int randomDay = getRandomDigit(1,28);
         String rndDayStr = (randomDay < 10) ? "0" + randomDay : String.valueOf(randomDay);
         int randomMonth = getRandomDigit(1,12);
         String rndMonthStr = (randomMonth < 10) ? "0" + randomMonth : String.valueOf(randomMonth);
         return "" + rndDayStr + "-" + rndMonthStr + "-" + getRandomDigit(1960,2005);
+    }
+    
+    public void editDataInTextInputWithLabel(WebDriver webDriver, String dataToFill, String cssPreSelector, File logFileNormal) throws InterruptedException {
+        Thread.sleep(300);
+        //NOTE if dataToFill == null this function will try to copy and paste in the input
+        WebElement inputToEditValueLabel = null;
+        WebElement inputToEditValue = null;
+        String textInLabel = null;
+        
+        try {
+            inputToEditValueLabel = webDriver.findElement(By.cssSelector(cssPreSelector + "label"));
+            textInLabel = inputToEditValueLabel.getText();        
+        } catch(Exception ex) {
+            writeStringToFile(logFileNormal, "Error while finding element with cssSelector   " + cssPreSelector + "label");
+            System.out.println("Error while finding element with cssSelector   " + cssPreSelector + "label");
+        }
+        
+        try {
+            inputToEditValue = webDriver.findElement(By.cssSelector(cssPreSelector + "input"));
+        } catch(Exception ex) {
+            writeStringToFile(logFileNormal, "Error while finding element with cssSelector   " + cssPreSelector + "input");
+            System.out.println("Error while finding element with cssSelector   " + cssPreSelector + "input");
+        }
+        
+        String inputValue;
+        if (dataToFill != null) {
+            inputValue = dataToFill;
+        } else {
+            inputValue = inputToEditValue.getAttribute("value");
+        }
+         
+        writeStringToFile(logFileNormal, "Work: found in element " + textInLabel + "  data: ---" + inputToEditValue.getAttribute("value") + "---"); 
+        System.out.println("Work: found in element: " + inputToEditValue.getAttribute("value"));
+        
+        if (inputToEditValue.getAttribute("value").length() > 0) {
+            writeStringToFile(logFileNormal, "Work: clear data in element"); 
+            System.out.println("Work: clear data in element");
+            inputToEditValue.sendKeys(Keys.CONTROL + "a");
+            Thread.sleep(500);
+            inputToEditValue.sendKeys(Keys.DELETE);
+            Thread.sleep(500);
+        }        
+        
+        writeStringToFile(logFileNormal, "Work: fill data ---" + inputValue + "--- in element " + textInLabel); 
+        System.out.println("Work: fill data ---" + inputValue + "--- in element " +  textInLabel);
+        
+        try {
+            inputToEditValue.sendKeys(inputValue);
+        } catch (Exception ex) {
+            writeStringToFile(logFileNormal, "Error while sending data ---" + inputValue + "--- to input");
+            System.out.println("Error while sending data ---" + inputValue + "--- to input");
+        }
+        
+        writeStringToFile(logFileNormal, "Work: after filling found data ---" + inputToEditValue.getAttribute("value") + "---\r\n");
+        System.out.println("Work: after filling found data ---" + inputToEditValue.getAttribute("value") + "---\r");
+        Thread.sleep(300);
+    }
+    
+    public void workWithDropdownElementCitiesNation(WebDriver webDriver, String elementToClickCss, String labelAndInput, File logFileNormal) throws InterruptedException {
+        WebElement inputToEditValueLabel = webDriver.findElement(By.cssSelector(labelAndInput + "label"));
+        String textInLabel = inputToEditValueLabel.getText();
+        writeStringToFile(logFileNormal, "Work: attempt to change dropdown ---" + textInLabel + "---"); 
+        System.out.println("Work: attempt to change dropdown ---" + textInLabel + "---");
+        //WebElement inputToEditValue = webDriver.findElement(By.cssSelector(labelAndInput + "input"));
+        WebElement divToEditValue = webDriver.findElement(By.cssSelector(labelAndInput + "div"));
+        webDriver.findElement(By.cssSelector(elementToClickCss)).click();
+        Thread.sleep(500);
+        selectOneElementFromDropdownInHeper(webDriver);
+        Thread.sleep(500);
+        writeStringToFile(logFileNormal, "Work: after changing found data ---" + divToEditValue.getText() + "---\r\n"); 
+        System.out.println("Work: after changing found data ---" + divToEditValue.getText() + "---");        
+    }
+    
+    public void fillOneInput(WebDriver webDriver, String dataToFill, String cssInputSelector, File logFileNormal, String nameOfField) throws InterruptedException {
+        Thread.sleep(300);
+        writeStringToFile(logFileNormal, "Work: trying to find element " + nameOfField + " and fill with data: ---" + dataToFill + "---"); 
+        System.out.println("Work: trying to find element " + nameOfField + " and fill with data: ---" + dataToFill + "---");
+        WebElement inputToEditValue = null;
+        
+        try {
+            inputToEditValue = webDriver.findElement(By.cssSelector(cssInputSelector));
+        } catch(Exception ex) {
+            writeStringToFile(logFileNormal, "Error while finding element with cssSelector  " + cssInputSelector + "input");
+            System.out.println("Error while finding element with cssSelector  " + cssInputSelector + "input");
+        }
+        
+        try {
+            inputToEditValue.sendKeys(dataToFill);
+        } catch (Exception ex) {
+            writeStringToFile(logFileNormal, "Error while sending data ---" + dataToFill + "--- to input");
+            System.out.println("Error while sending data ---" + dataToFill + "--- to input");
+        }
+        
+        Thread.sleep(300);
+        String valueInInput = "EMPTY_DATA";
+        try {
+            valueInInput = inputToEditValue.getAttribute("value");
+        } catch (Exception ex) {
+            writeStringToFile(logFileNormal, "Error while getting value from input");
+            System.out.println("Error while getting value from input");
+        }
+        Thread.sleep(300);
+        writeStringToFile(logFileNormal, "Work: found in element " + nameOfField + " this data: ---" + valueInInput + "---"); 
+        System.out.println("Work: found in element " + nameOfField + " this data: ---" + valueInInput + "---");
+        Thread.sleep(300);
+    }
+    
+    public void writeErrorsToFiles(File logFile, File errorLogFile, String message, String exceptionMessage) {
+        writeStringToFile(logFile, message); 
+        writeStringToFile(errorLogFile, message); 
+        writeStringToFile(errorLogFile, exceptionMessage); 
     }
 }
