@@ -27,6 +27,9 @@ import org.openqa.selenium.WebElement;
  */
 public class HelperClass {
     
+    public final String leftDemarkator = "--->";
+    public final String rightDemarkator = "<---";
+    
     public String getRandChar() 
     {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -80,34 +83,44 @@ public class HelperClass {
                 out.println(content);
             } catch (IOException e) {
                 System.out.println("IOException in writeStringToFile function");
-                System.out.println("Failed to write data ---" + content + "---");
+                System.out.println("Failed to write data " + leftDemarkator + content + rightDemarkator);
                 System.out.println(e.getMessage());
             } catch (Exception ex) {
                 System.out.println("Exception in writeStringToFile function");
-                System.out.println("Failed to write data ---" + content + "---");
+                System.out.println("Failed to write data " + leftDemarkator + content + rightDemarkator);
                 System.out.println(ex.getMessage());
             }
         }
     
-    public void selectOneElementFromDropdownInHeper(WebDriver webDriver) throws InterruptedException
+    public void selectOneElementFromDropdownInHelper(WebDriver webDriver, File logFileNormal) throws InterruptedException
     {     
         //WebElement listContainerElement = webDriver.findElement(By.xpath("//*[contains(@class,'v-menu__content--fixed menuable__content__active')]"));
         WebElement listContainerElement = webDriver.findElement(By.className("menuable__content__active"));
         Thread.sleep(500);
-        List<WebElement> listElements = listContainerElement.findElements(By.className("v-list-item--link"));
+        List<WebElement> listElements = null;
+        try {
+            listElements = listContainerElement.findElements(By.className("v-list-item--link"));
+        } catch (Exception ex) {
+            System.out.println("Error while finding elements in dropdown");
+            writeStringToFile(logFileNormal, "Error while finding elements in dropdown!");
+        }
         //System.out.println("H_listElements.size=" + listElements.size());
         Thread.sleep(500);
         int randomNumberOfElement = (int)(Math.random() * listElements.size());        
         Thread.sleep(500);
-        if (listElements.size() > 0) {
-            //System.out.println("H_BEFORE CLICK ON ELEMENT");
-            listElements.get(randomNumberOfElement).click(); 
-            //System.out.println("H_AFTER CLICK ON ELEMENT"); 
-            Thread.sleep(500);
-            
+        if (listElements != null) {
+            if (listElements.size() > 0) {
+                //System.out.println("H_BEFORE CLICK ON ELEMENT");
+                listElements.get(randomNumberOfElement).click(); 
+                //System.out.println("H_AFTER CLICK ON ELEMENT"); 
+                Thread.sleep(500);            
+            } else {
+                System.out.println("H_Error, listElements.size() = " + listElements.size());
+            }
         } else {
-            System.out.println("H_Error, listElements.size() = " + listElements.size());
-        }   
+            System.out.println("H_Error, listElements is null");
+            writeStringToFile(logFileNormal, "Dropdown is null");
+        }
     }
     
     public String getDateInStringForWindowsLinux()
@@ -243,17 +256,20 @@ public class HelperClass {
     
     public String getSystemMessage(WebDriver webDriver)
     {
-        String result = "DATA_NOT_FOUND";
+        String result = "";
+        String resultCleared = "DATA_NOT_FOUND";
         try {
                 result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
-                System.out.println("Helper: found system message: ---" + result + "---");
+                resultCleared = result.replaceAll("[X\r\n]", "");
+                System.out.println("Helper: found system message:  " + leftDemarkator + resultCleared + rightDemarkator);
             } catch(NoSuchElementException eex) {
                 System.out.println(eex.getMessage());
                 System.out.println("Error: system message div container not found");
                 Thread.sleep(1000);
                 try {
                     result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
-                    System.out.println("Helper: found system message: ---" + result + "---");
+                    System.out.println("Helper: found system message:   " + leftDemarkator + resultCleared + rightDemarkator);
+                    resultCleared = result.replaceAll("[X\r\n]", "");
                     } catch(NoSuchElementException eex1) {
                         System.out.println(eex1.getMessage());
                     }catch(Exception ex) {
@@ -264,7 +280,7 @@ public class HelperClass {
                 System.out.println(ex.getMessage());
                 System.out.println("Error: some error while trying to find message in div container");
             } finally {
-                return result;
+                return resultCleared;
             }        
     }
     
@@ -290,26 +306,33 @@ public class HelperClass {
         return "" + rndDayStr + "-" + rndMonthStr + "-" + getRandomDigit(1960,2005);
     }
     
-    public void editDataInTextInputWithLabel(WebDriver webDriver, String dataToFill, String cssPreSelector, File logFileNormal) throws InterruptedException {
+    public void editDataInTextInputWithLabel(WebDriver webDriver, String dataToFill, String cssPreSelector, File logFileNormal, String tagNameOfInputElement) throws InterruptedException {
         Thread.sleep(300);
+        String tagNameOfInputElementToUse;
+        if (tagNameOfInputElement != null) {
+            tagNameOfInputElementToUse = tagNameOfInputElement;
+        } else {
+            tagNameOfInputElementToUse = "input";
+        }
         //NOTE if dataToFill == null this function will try to copy and paste in the input
         WebElement inputToEditValueLabel = null;
         WebElement inputToEditValue = null;
-        String textInLabel = null;
+        String textInLabel = "";
         
         try {
             inputToEditValueLabel = webDriver.findElement(By.cssSelector(cssPreSelector + "label"));
-            textInLabel = inputToEditValueLabel.getText();        
+            textInLabel = inputToEditValueLabel.getText();    
+            System.out.println("Text in label = " + textInLabel);
         } catch(Exception ex) {
             writeStringToFile(logFileNormal, "Error while finding element with cssSelector   " + cssPreSelector + "label");
             System.out.println("Error while finding element with cssSelector   " + cssPreSelector + "label");
         }
         
         try {
-            inputToEditValue = webDriver.findElement(By.cssSelector(cssPreSelector + "input"));
+            inputToEditValue = webDriver.findElement(By.cssSelector(cssPreSelector + tagNameOfInputElementToUse));
         } catch(Exception ex) {
-            writeStringToFile(logFileNormal, "Error while finding element with cssSelector   " + cssPreSelector + "input");
-            System.out.println("Error while finding element with cssSelector   " + cssPreSelector + "input");
+            writeStringToFile(logFileNormal, "Error while finding element with cssSelector   " + cssPreSelector + tagNameOfInputElementToUse);
+            System.out.println("Error while finding element with cssSelector   " + cssPreSelector + tagNameOfInputElementToUse);
         }
         
         String inputValue;
@@ -319,8 +342,8 @@ public class HelperClass {
             inputValue = inputToEditValue.getAttribute("value");
         }
          
-        writeStringToFile(logFileNormal, "Work: found in element " + textInLabel + "  data: ---" + inputToEditValue.getAttribute("value") + "---"); 
-        System.out.println("Work: found in element: " + inputToEditValue.getAttribute("value"));
+        writeStringToFile(logFileNormal, "Work: found in element " + textInLabel + "  data:   " + leftDemarkator + inputToEditValue.getAttribute("value") + rightDemarkator); 
+        System.out.println("Work: found in element " + textInLabel + "  data:   " + leftDemarkator + inputToEditValue.getAttribute("value") + rightDemarkator);
         
         if (inputToEditValue.getAttribute("value").length() > 0) {
             writeStringToFile(logFileNormal, "Work: clear data in element"); 
@@ -331,40 +354,40 @@ public class HelperClass {
             Thread.sleep(500);
         }        
         
-        writeStringToFile(logFileNormal, "Work: fill data ---" + inputValue + "--- in element " + textInLabel); 
-        System.out.println("Work: fill data ---" + inputValue + "--- in element " +  textInLabel);
+        writeStringToFile(logFileNormal, "Work: fill data   " + leftDemarkator + inputValue + rightDemarkator + " in element " + textInLabel); 
+        System.out.println("Work: fill data " + leftDemarkator + inputValue + rightDemarkator + " in element " +  textInLabel);
         
         try {
             inputToEditValue.sendKeys(inputValue);
         } catch (Exception ex) {
-            writeStringToFile(logFileNormal, "Error while sending data ---" + inputValue + "--- to input");
-            System.out.println("Error while sending data ---" + inputValue + "--- to input");
+            writeStringToFile(logFileNormal, "Error while sending data " + leftDemarkator + inputValue + rightDemarkator + " to input");
+            System.out.println("Error while sending data   " + leftDemarkator + inputValue + rightDemarkator + " to input");
         }
         
-        writeStringToFile(logFileNormal, "Work: after filling found data ---" + inputToEditValue.getAttribute("value") + "---\r\n");
-        System.out.println("Work: after filling found data ---" + inputToEditValue.getAttribute("value") + "---\r");
+        writeStringToFile(logFileNormal, "Work: after filling found data " + leftDemarkator + inputToEditValue.getAttribute("value") + rightDemarkator + "\r\n");
+        System.out.println("Work: after filling found data   " + leftDemarkator + inputToEditValue.getAttribute("value") + rightDemarkator + "\r");
         Thread.sleep(300);
     }
     
     public void workWithDropdownElementCitiesNation(WebDriver webDriver, String elementToClickCss, String labelAndInput, File logFileNormal) throws InterruptedException {
         WebElement inputToEditValueLabel = webDriver.findElement(By.cssSelector(labelAndInput + "label"));
         String textInLabel = inputToEditValueLabel.getText();
-        writeStringToFile(logFileNormal, "Work: attempt to change dropdown ---" + textInLabel + "---"); 
-        System.out.println("Work: attempt to change dropdown ---" + textInLabel + "---");
+        writeStringToFile(logFileNormal, "Work: attempt to change   " + leftDemarkator + textInLabel + rightDemarkator); 
+        System.out.println("Work: attempt to change   " + leftDemarkator + textInLabel + rightDemarkator);
         //WebElement inputToEditValue = webDriver.findElement(By.cssSelector(labelAndInput + "input"));
         WebElement divToEditValue = webDriver.findElement(By.cssSelector(labelAndInput + "div"));
         webDriver.findElement(By.cssSelector(elementToClickCss)).click();
         Thread.sleep(500);
-        selectOneElementFromDropdownInHeper(webDriver);
+        selectOneElementFromDropdownInHelper(webDriver, logFileNormal);
         Thread.sleep(500);
-        writeStringToFile(logFileNormal, "Work: after changing found data ---" + divToEditValue.getText() + "---\r\n"); 
-        System.out.println("Work: after changing found data ---" + divToEditValue.getText() + "---");        
+        writeStringToFile(logFileNormal, "Work: after changing found data   " + leftDemarkator + divToEditValue.getText() + rightDemarkator + "\r\n"); 
+        System.out.println("Work: after changing found data   " + leftDemarkator + divToEditValue.getText() + leftDemarkator);        
     }
     
     public void fillOneInput(WebDriver webDriver, String dataToFill, String cssInputSelector, File logFileNormal, String nameOfField) throws InterruptedException {
         Thread.sleep(300);
-        writeStringToFile(logFileNormal, "Work: trying to find element " + nameOfField + " and fill with data: ---" + dataToFill + "---"); 
-        System.out.println("Work: trying to find element " + nameOfField + " and fill with data: ---" + dataToFill + "---");
+        writeStringToFile(logFileNormal, "Work: trying to find element " + nameOfField + " and fill with data:   " + leftDemarkator + dataToFill + rightDemarkator); 
+        System.out.println("Work: trying to find element " + nameOfField + " and fill with data:   " + leftDemarkator + dataToFill + rightDemarkator);
         WebElement inputToEditValue = null;
         
         try {
@@ -377,8 +400,8 @@ public class HelperClass {
         try {
             inputToEditValue.sendKeys(dataToFill);
         } catch (Exception ex) {
-            writeStringToFile(logFileNormal, "Error while sending data ---" + dataToFill + "--- to input");
-            System.out.println("Error while sending data ---" + dataToFill + "--- to input");
+            writeStringToFile(logFileNormal, "Error while sending data   " + leftDemarkator + dataToFill + rightDemarkator + " to input");
+            System.out.println("Error while sending data   " + leftDemarkator + dataToFill + rightDemarkator + " to input");
         }
         
         Thread.sleep(300);
@@ -390,8 +413,8 @@ public class HelperClass {
             System.out.println("Error while getting value from input");
         }
         Thread.sleep(300);
-        writeStringToFile(logFileNormal, "Work: found in element " + nameOfField + " this data: ---" + valueInInput + "---"); 
-        System.out.println("Work: found in element " + nameOfField + " this data: ---" + valueInInput + "---");
+        writeStringToFile(logFileNormal, "Work: found in element " + nameOfField + " this data:    " + leftDemarkator + valueInInput + rightDemarkator + "\r\n"); 
+        System.out.println("Work: found in element " + nameOfField + " this data: " + leftDemarkator + valueInInput + rightDemarkator + "\r\n");
         Thread.sleep(300);
     }
     
@@ -399,5 +422,17 @@ public class HelperClass {
         writeStringToFile(logFile, message); 
         writeStringToFile(errorLogFile, message); 
         writeStringToFile(errorLogFile, exceptionMessage); 
+    }
+    
+    public String getAllChosenTags(WebDriver webDriver) {
+        StringBuffer strBuf = new StringBuffer();
+        List <WebElement> allTags = webDriver.findElements(By.className("v-chip__content"));
+        for (int i = 0; i < allTags.size(); i++) {
+            strBuf.append(allTags.get(i).getText());
+            if (i != allTags.size()-1) {
+                strBuf.append(", ");
+            }
+        }
+        return strBuf.toString();
     }
 }

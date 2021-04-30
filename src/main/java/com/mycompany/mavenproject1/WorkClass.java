@@ -18,6 +18,7 @@ import java.util.Arrays;
  */
 public class WorkClass {
     
+    public final String appName = "«Solid Sulutions automatic site testing»";
     public String pathToLogFile;
     final int CANDIDATES = 1;
     final int ALL_CANDIDATES = 2;
@@ -35,30 +36,29 @@ public class WorkClass {
     public String[] typeNames = new String[20]; 
     public String osName;
     
-    public void startWork() throws IOException {
-        System.out.println("Please ensure that appropriate version of chromedriver exists on the path C:\\users\\public\\documents\\chromedriver.exe"); 
-        System.out.println("Visit URL https://chromedriver.chromium.org/downloads to download if you have no chromedriver!"); 
+    public void startWork() throws IOException {        
         fillClassData();
         int res = 0;
         // TODO code application logic here
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        do {
-            System.out.println(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-            System.out.println("Testing of One random Candidates creation - 1");
-            System.out.println("Testing of ALL 4 TYPES Candidates creation - 2");
-            System.out.println("Testing of Locations creation - 3");
-            System.out.println("Testing of Company creation - 4");
-            System.out.println("Testing of Profile editing - 5");
-            System.out.println("Testing of User delete - 6");
-            System.out.println("Testing of User sorting - 7");
-            System.out.println("Testing of User search - 8");
-            System.out.println("Testing of Schemas creation - 9");
-            System.out.println("Send many requests to site - 10");
-            System.out.println("Send many requests to one url - 11");
-            System.out.println("Send many requests TERMINAL - 12");
-            System.out.println("EXIT - 19");
+        do {            
+            System.out.println();
+            System.out.println("1 - Testing of One random Candidate creation");
+            System.out.println("2 - Testing of ALL 4 TYPES Candidates creation");
+            System.out.println("3 - Testing of Locations creation");
+            System.out.println("4 - Testing of Company creation");
+            System.out.println("5 - Testing of Profile editing");
+            System.out.println("6 - Testing of User delete");
+            System.out.println("7 - Testing of User sorting");
+            System.out.println("8 - Testing of User search");
+            System.out.println("9 - Testing of Schemas creation");
+            System.out.println("10 - Test one page AFTER login on site");
+            System.out.println("11 - Test one URL with many requests (NO LOGIN, Browser)");
+            System.out.println("12 - Send many requests to URL TERMINAL (no login, no browser)");
+            System.out.println("19 - EXIT");
             System.out.println("Enter digit and press Enter");
+            
             try {
                 res = Integer.parseInt(br.readLine());
             } catch (Exception ex) {
@@ -66,6 +66,7 @@ public class WorkClass {
                 System.out.println(ex.getMessage());
                 res = 0;
             }
+            
             int[] allowedNumbers  = {0, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, ALL_CANDIDATES, MANY_REQUESTS_TO_PAGE, TEST_ONE_URL, TEST_ONE_URL_CONSOLE, EXIT};
 
             if (!contains(allowedNumbers, res)) {
@@ -83,13 +84,13 @@ public class WorkClass {
                         break;
                     case ALL_CANDIDATES:
                         CandidatesClass[] candidatesClassArr = new CandidatesClass[4];
-                        for (int i = 1; i < 5; i++) {
-                            candidatesClassArr[i] = new CandidatesClass(pathToLogFile, osName, i);
+                        for (int i = 0; i < 4; i++) {
+                            candidatesClassArr[i] = new CandidatesClass(pathToLogFile, osName, (i + 1));
                             candidatesClassArr[i].createCandidate();
                         }
                         break;
                     case LOCATIONS:
-                        LocationsClass locationsClass = new LocationsClass();
+                        LocationsClass locationsClass = new LocationsClass(pathToLogFile, osName);
                         locationsClass.createLocation();
                         break;
                     case COMPANIES:
@@ -113,7 +114,7 @@ public class WorkClass {
                         searchCandidateClass.searchCandidate();
                         break;
                     case SCHEMAS:
-                        SchemasClass schemasClass = new SchemasClass();
+                        SchemasClass schemasClass = new SchemasClass(pathToLogFile, osName);
                         schemasClass.createSchema();
                         break;
                     case MANY_REQUESTS_TO_PAGE:
@@ -139,6 +140,7 @@ public class WorkClass {
                         
                         break;
                     case 19:
+                        System.out.println("The application " + appName + " is shutting down");
                         System.out.println("Exiting, BYE...");
                         break;
                     default:
@@ -159,29 +161,33 @@ public class WorkClass {
     public void fillClassData() throws IOException
     {
         osName = System.getProperty("os.name");
-        File theDir = null;
+        File theDirectoryForLogFiles = null;
         if (osName.contains("Linux")) {
-            System.out.println("OS Linux detected, try to create log folder in same folder where jar file");
-            pathToLogFile = "./logs/";
-            theDir = new File(pathToLogFile);
-            theDir.mkdirs();
+            System.out.println("OS Linux detected. Trying to create a folder for log files in the same folder as the executable file");
+            System.out.println("Please make sure the appropriate chromedriver exists along the path /usr/bin/chromedriver"); 
+            System.out.println("Visit URL https://chromedriver.chromium.org/downloads to download if you have no chromedriver!"); 
+            pathToLogFile = "./logs/";            
             
-            System.out.println("Set webdriver.chrome.driver from path /usr/bin/chromedriver");
             System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");    
             
         } else if (osName.contains("Windows")) {
-            System.out.println("OS Windows detected, try to create log folder in C:\\logs");
-            pathToLogFile = "C:\\users\\public\\documents\\logs\\";
-            theDir = new File(pathToLogFile);
-            theDir.mkdirs();
+            System.out.println("Please make sure the appropriate chromedriver exists along the path C:\\users\\public\\documents\\chromedriver.exe"); 
+            System.out.println("OS Windows detected, try to create log folder in C:\\users\\public\\documents\\logs");
+            pathToLogFile = "C:\\users\\public\\documents\\logs\\";            
             
-            System.out.println("Set webdriver.chrome.driver from path C:\\users\\public\\documents\\chromedriver.exe"); 
             System.setProperty("webdriver.chrome.driver", "C:\\users\\public\\documents\\chromedriver.exe");  
             
         } else {
             pathToLogFile = "./";
         }
-
+        
+        try {
+            theDirectoryForLogFiles = new File(pathToLogFile);
+            theDirectoryForLogFiles.mkdirs();
+            System.out.println("Create folder for log files at path " + pathToLogFile);
+        } catch (Exception ex) {
+            System.out.println("ERROR with creation of the folder for log files at path " + pathToLogFile);            
+        }
        
         typeNames[0] = "Testing";
         typeNames[1] = "Candidates";

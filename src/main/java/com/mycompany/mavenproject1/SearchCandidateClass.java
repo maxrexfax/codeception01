@@ -35,6 +35,7 @@ public class SearchCandidateClass {
     public boolean isTestGoOn;
     public String dateTimeOfSession;
     public File fileToWriteLogsOfTesting;
+    public File fileToWriteErrorLogOfTesting;
     public CredentialsClass credentialsClass;
     private String pathToLogFileFolder;
     private String osName;

@@ -87,7 +87,7 @@ public class ProfileEditClass {
             
             try {
                 //first name
-                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(1) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(1) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill first name", ex.getMessage());
@@ -95,7 +95,7 @@ public class ProfileEditClass {
             
             try {
                 //insertion
-                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill insertion", ex.getMessage());
@@ -103,7 +103,7 @@ public class ProfileEditClass {
             
             try {
                 //last name
-                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill last name", ex.getMessage());
@@ -111,7 +111,7 @@ public class ProfileEditClass {
             
             try {
                 //initials
-                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(4) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(4) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill initials", ex.getMessage());
@@ -119,7 +119,7 @@ public class ProfileEditClass {
             
             try {
                 //languages
-                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(5) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, null, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div:nth-child(5) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: test switching languages"); 
                 System.out.println("Work: test switching languages");
@@ -143,7 +143,7 @@ public class ProfileEditClass {
             
             try {
                 //phone number
-                helperClass.editDataInTextInputWithLabel(webDriver, "123456789", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(1) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, "123456789", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(1) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill phone number", ex.getMessage());
@@ -151,7 +151,7 @@ public class ProfileEditClass {
             
             try {
                 //mobile number
-                helperClass.editDataInTextInputWithLabel(webDriver, "987654321", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, "987654321", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill mobile number", ex.getMessage());
@@ -159,7 +159,7 @@ public class ProfileEditClass {
             
             try {
                 //fax number
-                helperClass.editDataInTextInputWithLabel(webDriver, "1234", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, "1234", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill fax number", ex.getMessage());
@@ -181,15 +181,18 @@ public class ProfileEditClass {
             
             //address - click and dropdown            
             try {                
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to fill input Address");
                 helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
                 Thread.sleep(1500);  
-                webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > div:nth-child(3)")).click();                         
+                webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > div:nth-child(3)")).click();                                         
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill adresses", ex.getMessage());
             }   
             
             try {
-                String address = webDriver.findElement(By.id("map")).getAttribute("value");
+                WebElement inputMap = webDriver.findElement(By.id("map"));
+                System.out.println(inputMap);
+                String address = inputMap.getAttribute("value");
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input Address:" + address + "\r\n");
                 System.out.println("Work: Data in the input Address:" + address);  
             } catch (Exception ex) {
@@ -201,6 +204,7 @@ public class ProfileEditClass {
             
             try {
                 //country of birth  - click and dropdown
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: attempt to change country of birth"); 
                 helperClass.workWithDropdownElementCitiesNation(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(6)", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(6) > div > div.v-input__slot > div.v-select__slot > ", fileToWriteLogsOfTesting);
                 Thread.sleep(500);  
             } catch (Exception ex) {
@@ -209,7 +213,7 @@ public class ProfileEditClass {
             
             try {
                 //place of birth
-                helperClass.editDataInTextInputWithLabel(webDriver, "PP", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(7) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, "PP", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(7) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to change place of birth", ex.getMessage());
@@ -217,6 +221,7 @@ public class ProfileEditClass {
             
             try {
                 //nationality  - click and dropdown
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: attempt to change nationality"); 
                 helperClass.workWithDropdownElementCitiesNation(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(8)", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > ", fileToWriteLogsOfTesting);
                 Thread.sleep(500);
             } catch (Exception ex) {
@@ -225,7 +230,7 @@ public class ProfileEditClass {
             
             try {
                 //date of birth  - 11-11-1999
-                helperClass.editDataInTextInputWithLabel(webDriver, helperClass.getFormattedDateForTest(), "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting);
+                helperClass.editDataInTextInputWithLabel(webDriver, helperClass.getFormattedDateForTest(), "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500);  
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill date of birth", ex.getMessage());
@@ -237,11 +242,11 @@ public class ProfileEditClass {
                 helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: attempt to change gender"); 
                 System.out.println("Work: attempt to change gender");
                 Thread.sleep(500); 
-                helperClass.selectOneElementFromDropdownInHeper(webDriver);
+                helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
                 Thread.sleep(500); 
                 String valueOfGender = webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.v-input.v-input--is-label-active.v-input--is-dirty.v-input--is-focused.theme--light.v-text-field.v-text-field--is-booted.v-select.primary--text > div > div.v-input__slot > div.v-select__slot > div.v-select__selections > div")).getText();
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: gender property: ---" + valueOfGender + "---"); 
-                System.out.println("Work: gender property: ---" + valueOfGender + "---");
+                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: gender property:  " + helperClass.leftDemarkator + valueOfGender + helperClass.rightDemarkator + "\r\n"); 
+                System.out.println("Work: gender property:  " + helperClass.leftDemarkator + valueOfGender + helperClass.rightDemarkator + "\n");
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to change gender", ex.getMessage());
             }       
