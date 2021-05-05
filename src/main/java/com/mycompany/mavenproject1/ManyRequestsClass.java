@@ -28,6 +28,7 @@ public class ManyRequestsClass {
     public int loops;
     public int millisecondsToWait;
     public int millisecondsToWaitStepIncrease;
+    public int numberOfPageToTest = 0;
     
     public HelperClass helperClass = new HelperClass();
     public CredentialsClass credentialsClass = new CredentialsClass();
@@ -37,7 +38,7 @@ public class ManyRequestsClass {
     public WebDriver webDriver = null;
     public String mainUrl = "https://perscriptum-dev.herokuapp.com/";
     //public String mainUrl = "http://maxbarannyk.ru/laravel/public/index.php/login";
-    public String urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
+    public String urlToTest = "https://perscriptum-dev.herokuapp.com/";
     //public String urlToTest = "http://maxbarannyk.ru/laravel/public/index.php/users/list";
     //public String mainUrl = "http://maxbarannyk.ru/";
     public int typeOfTest;
@@ -50,6 +51,7 @@ public class ManyRequestsClass {
     public String buttonToLoginPath1 = "/html/body/div[1]/main/div/div/div/div/div[2]/form/div[4]/div/button";
     private String pathToLogFileFolder;
     private String osName;
+    private String[] arrayOfUrlsToTest = null;
     
     public ManyRequestsClass(String pathToFileFolderIn, String osNameIn) {
         this.pathToLogFileFolder = pathToFileFolderIn;
@@ -57,6 +59,7 @@ public class ManyRequestsClass {
     }
     
     public void startTest() throws IOException {
+        fillAllData();
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         System.out.println("This test determines how many page elements have been loaded after a specified time when the web page is constantly refreshed.");
@@ -98,6 +101,18 @@ public class ManyRequestsClass {
 //        if (urlToTest.length() < 5) {
 //            urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
 //        }
+        System.out.println("Set page to test after login");
+        
+        for(int i = 0; i < arrayOfUrlsToTest.length; i++) {
+            System.out.println(i + " - " + arrayOfUrlsToTest[i]);
+        }
+        
+        try {
+            numberOfPageToTest = Integer.parseInt(br.readLine());
+        } catch (Exception ex) {
+            System.out.println("Error, number set to 0");
+            numberOfPageToTest = 0;
+        }
         loginAndTestInternalUrlFunction();
         //visitOneUrl();
         
@@ -144,13 +159,12 @@ public class ManyRequestsClass {
             WebElement btnLogin = webDriver.findElement(By.xpath(buttonToLoginPath));
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
-//            login.sendKeys("max@ya.ru");
-//            passwd.sendKeys("1234");
             Thread.sleep(500);            
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to login");
             btnLogin.click();
             Thread.sleep(2500);
             //first get to url and get it length
+            urlToTest = mainUrl + arrayOfUrlsToTest[numberOfPageToTest];
             webDriver.get(urlToTest);
             Thread.sleep(3500);
             //webDriver.getPageSource();
@@ -181,14 +195,13 @@ public class ManyRequestsClass {
     private void testLoopLoadFunction(int normalLengthOfPage) throws InterruptedException {
         String message = "";
         if (typeOfTest == 1) {
-            message = "STARTING ASCENDING TEST WITH NUMBER OF LOOPS: " + loops + " FIRST PAUSE: " + millisecondsToWait + "MS AND INCREASING STEP: " + millisecondsToWaitStepIncrease + "MS";  
+            message = "Work: STARTING ASCENDING TEST WITH NUMBER OF LOOPS: " + loops + " FIRST PAUSE: " + millisecondsToWait + "MS AND INCREASING STEP: " + millisecondsToWaitStepIncrease + "MS";  
             loops = 20;
             millisecondsToWait = 100;          
         } else if (typeOfTest == 2) {
-            message = "STARTING TEST WITH NUMBER OF LOOPS:" + loops + "  AND PAUSES:" + millisecondsToWait + "MS";
+            message = "Work: STARTING TEST WITH NUMBER OF LOOPS:" + loops + "  AND PAUSES:" + millisecondsToWait + "MS";
         }
-        System.out.println(message);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message); 
         String timeOfStart, timeAfterSleep;
         for (int i = 0; i < loops; i++ ){
                 timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());
@@ -210,4 +223,25 @@ public class ManyRequestsClass {
     }
 
    
+
+    private void fillAllData() {
+        arrayOfUrlsToTest = new String[17];
+        arrayOfUrlsToTest[0] = "exams";
+        arrayOfUrlsToTest[1] = "candidates";
+        arrayOfUrlsToTest[2] = "certificates";
+        arrayOfUrlsToTest[3] = "dossiers";
+        arrayOfUrlsToTest[4] = "assessors";
+        arrayOfUrlsToTest[5] = "companies";
+        arrayOfUrlsToTest[6] = "contacts";
+        arrayOfUrlsToTest[7] = "schemes";
+        arrayOfUrlsToTest[8] = "templates";
+        arrayOfUrlsToTest[9] = "locations";
+        arrayOfUrlsToTest[10] = "translations";
+        arrayOfUrlsToTest[11] = "fields";
+        arrayOfUrlsToTest[12] = "employees";
+        arrayOfUrlsToTest[13] = "roles";
+        arrayOfUrlsToTest[14] = "workflows";
+        arrayOfUrlsToTest[15] = "settings";
+        arrayOfUrlsToTest[16] = "profile";
+    }
 }
