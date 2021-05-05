@@ -58,8 +58,7 @@ public class DeleteCandidatesClass {
         
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Delete Candidate testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
-        try {
-            
+        try {            
             if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
                 webDriver = new ChromeDriver();
             } else {
@@ -104,6 +103,7 @@ public class DeleteCandidatesClass {
             
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of DeleteCandidatesClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();

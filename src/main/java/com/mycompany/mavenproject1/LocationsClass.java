@@ -45,8 +45,7 @@ public class LocationsClass {
         
         fileName = this.pathToLogFileFolder + "testLocationsCreationLogFile_" + dateTimeOfSession + ".txt";
         fileNameERRORS = this.pathToLogFileFolder + "testLocationsCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";
-        
-        
+                
         try {
             fileToWriteLogsOfTesting = new File(fileName);
             fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
@@ -56,10 +55,9 @@ public class LocationsClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Location creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Location creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
-        try {
-            
+        try {            
             if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
                 webDriver = new ChromeDriver();
             } else {
@@ -116,7 +114,6 @@ public class LocationsClass {
                 WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filling random address using external service");
-                System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
                 mapElement.click();
                 Thread.sleep(500);    
                 helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
@@ -159,7 +156,6 @@ public class LocationsClass {
             try {
                 allTags = helperClass.getAllChosenTags(webDriver);
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
-                System.out.println("Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find Tags!", ex.getMessage());
             }
@@ -180,11 +176,11 @@ public class LocationsClass {
             } 
             //save button click
             webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
-            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END"); 
-            System.out.println("Work: END");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of LocationsClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();

@@ -165,6 +165,7 @@ public class CompaniesClass {
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of CompaniesClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();

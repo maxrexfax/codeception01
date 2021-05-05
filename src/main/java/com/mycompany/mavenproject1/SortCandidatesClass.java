@@ -44,8 +44,7 @@ public class SortCandidatesClass {
     
     public void sortCandidates()
     {
-        credentialsClass = new CredentialsClass();
-        
+        credentialsClass = new CredentialsClass();        
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
         String fileNameERRORS = "";
@@ -103,7 +102,6 @@ public class SortCandidatesClass {
                     helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on element N " + i + " - Table sorting correct");
                 } else {
                     helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on element N " + i + " - ERROR table sorting");
-                    System.out.println("ERROR table sorting");
                 }            
                 Thread.sleep(1500);
                 listOfFlagsToSort.get(i).click();             
@@ -119,10 +117,10 @@ public class SortCandidatesClass {
                 Thread.sleep(5000);
             }
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: End");
-            Thread.sleep(5000);
-            
+            Thread.sleep(5000);            
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of SortCandidatesClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();
@@ -138,19 +136,14 @@ public class SortCandidatesClass {
         }
         WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
         List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr")); 
-        List<WebElement> listOfTableHeaders = listOfTableRows.get(0).findElements(By.tagName("th"));
-        System.out.println("Testing sorting of the column " + listOfTableHeaders.get(numberOfColumnTocheck).getText() + nameOfSorting);
-        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Testing sorting of the column " + listOfTableHeaders.get(numberOfColumnTocheck).getText() + nameOfSorting);
+        List<WebElement> listOfTableHeaders = listOfTableRows.get(0).findElements(By.tagName("th"));        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Testing sorting of the column " + listOfTableHeaders.get(numberOfColumnTocheck).getText() + nameOfSorting);        
         String[] listToCheckArr = new String[listOfTableRows.size()-1];
         for (int i = 1; i < listOfTableRows.size(); i++) {
             List<WebElement> listOfTableDatas = listOfTableRows.get(i).findElements(By.tagName("td"));
             listToCheckArr[i-1] = listOfTableDatas.get(numberOfColumnTocheck).getText();
-            //System.out.println(listToCheckArr[i-1]);
-        }
-        
-        //System.out.println("listToCheck.size()=" + listToCheck.size());
-        
-        //System.out.println("Array of values from current column=");
+        }        
+
         //printArray(listToCheckArr);        
         
         String[] tmp = listToCheckArr.clone();
@@ -158,24 +151,17 @@ public class SortCandidatesClass {
             Arrays.sort(tmp);
         } else {
             Arrays.sort(tmp, Collections.reverseOrder());
-        }
+        }        
         
-        
-        boolean isArrayEquals = Arrays.equals(listToCheckArr, tmp);
-        //System.out.println("boolean isArrayEquals ==" + isArrayEquals);
-                
+        boolean isArrayEquals = Arrays.equals(listToCheckArr, tmp);                
         return isArrayEquals;
     }
     
     public void printArray(String[] arrayToPrint)
     {
-        String dataToPrint = "";
         for (int i = 0; i < arrayToPrint.length; i++) {
-            dataToPrint.concat(arrayToPrint[i]);
-            dataToPrint.concat(" - ");
             System.out.print(arrayToPrint[i] + " - ");
         }
-        //System.out.println(dataToPrint);
         System.out.println();
     }
     

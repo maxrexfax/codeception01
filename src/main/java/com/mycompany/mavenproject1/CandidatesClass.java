@@ -117,7 +117,6 @@ public class CandidatesClass {
             //  
             webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
             Thread.sleep(300);
-            //System.out.println("Click to check if menu Add person contact info");
             try {
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Add person contact info");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
@@ -300,16 +299,13 @@ public class CandidatesClass {
             try {
                 Thread.sleep(1500);
                 WebElement containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
-                List<WebElement> resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr"));
-                //System.out.println("Work: resultTrsOnThePage.size()=" + resultTrsOnThePage.size());            
+                List<WebElement> resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr"));       
                 if (resultTrsOnThePage.size() > 0) {
                     for (int i = 1; i < resultTrsOnThePage.size(); i++) {
                         List<WebElement> listOfTableDatas = resultTrsOnThePage.get(i).findElements(By.tagName("td"));
-                        //System.out.println("Work: listOfTableDatas.size()=" + listOfTableDatas.size());
-                        //System.out.println("Check saving fullName=" + fullName);
+                        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Check saving fullName=" + fullName); 
                         if (listOfTableDatas.size() > 1) {   
                             for(WebElement EL : listOfTableDatas) {
-                                //System.out.println("Current TD ---" + EL.getText() + "---");
                                 if (EL.getText().contains(fullName)) {
                                     isUserDataFound = true;
                                 }
@@ -322,17 +318,15 @@ public class CandidatesClass {
             }
             
             if (isUserDataFound){
-                    System.out.println("Work: User saved successfully!");
                     helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: User saved successfully!"); 
                 } else {
-                    System.out.println("Work: User saving FAILED!");
                     helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: User saving FAILED!"); 
                 }
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");            
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            helperClass.writeStringToFile(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block"); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of CandidatesClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();

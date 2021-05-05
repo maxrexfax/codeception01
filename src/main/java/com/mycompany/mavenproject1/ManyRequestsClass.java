@@ -95,14 +95,8 @@ public class ManyRequestsClass {
                 System.out.println("Wrong input, set to 100");
             }
         }
-        
-//        System.out.println("Set url, default is " + mainUrl);
-//        urlToTest = br.readLine();
-//        if (urlToTest.length() < 5) {
-//            urlToTest = "https://perscriptum-dev.herokuapp.com/candidates";
-//        }
-        System.out.println("Set page to test after login");
-        
+
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Set page to test after login");
         for(int i = 0; i < arrayOfUrlsToTest.length; i++) {
             System.out.println(i + " - " + arrayOfUrlsToTest[i]);
         }
@@ -113,8 +107,9 @@ public class ManyRequestsClass {
             System.out.println("Error, number set to 0");
             numberOfPageToTest = 0;
         }
+        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Page to test set to " + arrayOfUrlsToTest[numberOfPageToTest]);
         loginAndTestInternalUrlFunction();
-        //visitOneUrl();
         
     }
     
@@ -170,21 +165,20 @@ public class ManyRequestsClass {
             Thread.sleep(3500);
             //webDriver.getPageSource();
             final int normalLengthOfPage = webDriver.getPageSource().length();
-            String message = "On the url " + urlToTest + " found web page with total length " + normalLengthOfPage + " after delay 3500MS";
-            System.out.println(message);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
+            String message = "Work: On the url " + urlToTest + " found web page with total length " + normalLengthOfPage + " after delay 3500MS";
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message);
             Thread.sleep(1500);              
             
-            String message2 = "URL TO TEST " + urlToTest;
-            System.out.println(message2);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message2);
+            String message2 = "Work: URL TO TEST " + urlToTest;
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message2);
             testLoopLoadFunction(normalLengthOfPage);            
             
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Accumulated message: \r" + strBuffer.toString());
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");     
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");     
             Thread.sleep(5000);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of ManyRequestsClass"); 
                 } finally {
                     webDriver.close();
                     webDriver.quit();

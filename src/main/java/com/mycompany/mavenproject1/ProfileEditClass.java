@@ -39,21 +39,12 @@ public class ProfileEditClass {
     }
     
     public void editProfile() throws InterruptedException
-    {
-//        threadForJs = new Thread() {//зависает
-//            public void run() {
-//                System.out.println("Thread with js to scroll up");
-//                jsInThread();
-//            }
-//        };
-        //threadForJs.start();
-            
+    {            
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
         String fileName = this.pathToLogFileFolder + "EditProfileLogFile_" + dateTimeOfSession + ".txt";
-        String fileNameERRORS = this.pathToLogFileFolder + "EditProfileLogFile_ERRORS_" + dateTimeOfSession + ".txt";
-        
+        String fileNameERRORS = this.pathToLogFileFolder + "EditProfileLogFile_ERRORS_" + dateTimeOfSession + ".txt";        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
@@ -265,24 +256,16 @@ public class ProfileEditClass {
                 //find div container with message result of saving END
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find message from site", ex.getMessage());
-            }  
-            
+            }              
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END"); 
-            Thread.sleep(15000);
-            
+            Thread.sleep(15000);            
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of ProfileEditClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();
         }
-    }
-
-    
-    private void jsInThread()
-    {
-        JavascriptExecutor js = (JavascriptExecutor) webDriver; 
-        String docInfoVal = (String) js.executeAsyncScript("window.scrollTo({ top: 1000, behavior: \"smooth\" });");
     }
     
 }

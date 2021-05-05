@@ -170,20 +170,21 @@ public class WorkClass {
                         testClass.testFunction();                        
                         break;
                     case 19:
-                        System.out.println("The application " + appName + " is shutting down");
-                        System.out.println("Exiting, BYE...");
+                        helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "The application " + appName + " is shutting down"); 
+                        helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "Exiting, BYE..."); 
                         break;
                     case 20:
                         changeBrowserForTesting();
                         break;
                     default:
-                        System.out.println("Something went wrong in NewClass1 switch...");
+                        helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "Something went wrong in WorkClass switch..."); 
                         break;
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in SWITCH try block of WorkClass"); 
             }            
-            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Test finished at " + helperClass.getDateInStringForWindowsLinux());
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work finished at " + helperClass.getDateInStringForWindowsLinux());
         } while (res != EXIT);
     }
     

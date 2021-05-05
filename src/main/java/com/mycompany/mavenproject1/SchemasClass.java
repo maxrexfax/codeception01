@@ -51,8 +51,7 @@ public class SchemasClass {
         String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testShemasCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "testShemasCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";
-        
+        fileNameERRORS = this.pathToLogFileFolder + "testShemasCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
@@ -63,8 +62,7 @@ public class SchemasClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Shema creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
-        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Shema creation testing starts at: " + dateTimeOfSession +" OS: " + osName);        
         
         try {
             if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
@@ -90,16 +88,16 @@ public class SchemasClass {
             webDriver.get("https://perscriptum-dev.herokuapp.com/schemes");
             Thread.sleep(1000);
 
-//            WebElement createBtn = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
-//            createBtn.click();
-//            Thread.sleep(400);
-//            WebElement inputForLocationName = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
-//            Thread.sleep(400);
-//            inputForLocationName.sendKeys(SchemaName);
-//            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
-//            Thread.sleep(2000);
+            WebElement createBtn = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
+            createBtn.click();
+            Thread.sleep(400);
+            WebElement inputForLocationName = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > input"));
+            Thread.sleep(400);
+            inputForLocationName.sendKeys(SchemaName);
+            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
+            Thread.sleep(2000);
 
-            webDriver.get("https://perscriptum-dev.herokuapp.com/schemes/20");//only testing
+            
             
             //Section name
             String dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
@@ -175,7 +173,6 @@ public class SchemasClass {
             try {
                 allTags = helperClass.getAllChosenTags(webDriver);
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
-                System.out.println("Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find Tags!", ex.getMessage());
             }
@@ -234,8 +231,7 @@ public class SchemasClass {
             //Optional field - exist only if END_RESULT is 1
             WebElement alternativeSertificateChoise = null;
             try {
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to find optional field TEMPLATE");                
-                System.out.println("Work: Try to find optional field TEMPLATE");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to find optional field TEMPLATE");  
                 Thread.sleep(500);
                 alternativeSertificateChoise = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]", "xpath");
                 if (alternativeSertificateChoise != null) {
@@ -266,6 +262,7 @@ public class SchemasClass {
             Thread.sleep(15000);
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of SchemasClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();

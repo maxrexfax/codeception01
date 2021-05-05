@@ -109,22 +109,21 @@ public class TestOneUrlClass {
             Thread.sleep(3500);
             //webDriver.getPageSource();
             final int normalLengthOfPage = webDriver.getPageSource().length();
-            String message = "On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
-            System.out.println(message);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
+            String message = "Work: On the url " + urlToTest + " found length " + normalLengthOfPage + " after delay 3500MS";
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message);
             Thread.sleep(1500);            
             
-            String message2 = "URL TO TEST " + urlToTest;
-            System.out.println(message2);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, message2);
+            String message2 = "Work: URL TO TEST " + urlToTest;
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message2);
             testLoopLoadFunction(normalLengthOfPage);            
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Accumulated message: \r" + strBuffer.toString());
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Accumulated message: \r" + strBuffer.toString());
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");
             System.out.println("Work: END");
             Thread.sleep(5000);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of TestOneUrlClass"); 
                 } finally {
                     webDriver.close();
                     webDriver.quit();
@@ -148,7 +147,7 @@ public class TestOneUrlClass {
             System.out.println("Error file creation, testing log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Page load testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Page load testing starts at: " + dateTimeOfSession +" OS: " + osName);
     }
     
     private void testLoopLoadFunction(int normalLengthOfPage) throws InterruptedException {
@@ -158,8 +157,8 @@ public class TestOneUrlClass {
         } else if (typeOfTest == 2) {
             message = "STARTING TEST WITH NUMBER OF LOOPS:" + loops + "  AND PAUSES:" + millisecondsToWait + "MS";
         }
-        System.out.println(message);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, message);
+        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, message);
         String timeOfStart, timeAfterSleep;
         for (int i = 0; i < loops; i++ ){
                 timeOfStart = new SimpleDateFormat("HH.mm.ss.SSS").format(new java.util.Date());

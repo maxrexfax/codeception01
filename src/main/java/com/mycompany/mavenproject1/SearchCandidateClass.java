@@ -60,7 +60,6 @@ public class SearchCandidateClass {
         
         fileName = this.pathToLogFileFolder + "testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
         fileNameERRORS = this.pathToLogFileFolder + "testCandidatesSearchLogFile_ERRORS_" + dateTimeOfSession + ".txt";
-        System.out.println("Path to logfile:" + fileName);
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
@@ -72,8 +71,8 @@ public class SearchCandidateClass {
         }
         
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
-        System.out.println("Set number of loops - 1");
-        System.out.println("Dont set number of loops (by default=100) - 2");
+        System.out.println("1 - Set number of loops");
+        System.out.println("2 - Left default quantity (100)");
         isr = new InputStreamReader(System.in);
         br = new BufferedReader(isr);
         int res = tryToGetInt();
@@ -114,7 +113,6 @@ public class SearchCandidateClass {
             WebElement tableContainer = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
             Thread.sleep(500);
             List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
-            //System.out.println("listOfTableRows.size()=" + listOfTableRows.size());
             //find number of name and ID columns
             List<WebElement> listOfTableHeads = listOfTableRows.get(0).findElements(By.tagName("th"));
             for (int i = 0; i < listOfTableHeads.size(); i++) {
@@ -138,13 +136,14 @@ public class SearchCandidateClass {
             }
             
             isTestGoOn = true;
-            System.out.println("Results of testing will be stored in file " + fileName);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Results of testing will be stored in file " + fileName);
             checkDataOnThePage();
             
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");   
             Thread.sleep(5000);            
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of SearchCandidatesClass"); 
         } finally {
             webDriver.close();
             webDriver.quit();
@@ -188,8 +187,7 @@ public class SearchCandidateClass {
     }
 
     private void checkDataOnThePage() {
-        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
-        //System.out.println("Search testing starting now");
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Search testing starting at: " + dateTimeOfSession);
         WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
         WebElement containerOnThePage;
         List <WebElement> resultTrsOnThePage;
@@ -255,6 +253,5 @@ public class SearchCandidateClass {
             }
             counter++;
         } while (isTestGoOn); 
-    }
-    
+    }    
 }
