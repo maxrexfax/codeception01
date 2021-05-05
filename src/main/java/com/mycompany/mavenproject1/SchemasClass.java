@@ -51,7 +51,7 @@ public class SchemasClass {
         String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testShemasCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testShemasCreationLogFile_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = this.pathToLogFileFolder + "testShemasCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         
         
         try {

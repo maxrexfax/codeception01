@@ -36,6 +36,11 @@ public class SortCandidatesClass {
     public File fileToWriteLogsOfTesting;
     public File fileToWriteErrorLogOfTesting;
     public WebDriver webDriver = null;
+            
+    public SortCandidatesClass(String pathToFileFolderIn, String osNameIn) {
+        this.pathToLogFileFolder = pathToFileFolderIn;
+        this.osName = osNameIn;
+    }
     
     public void sortCandidates()
     {
@@ -45,8 +50,8 @@ public class SortCandidatesClass {
         String fileName = "";
         String fileNameERRORS = "";
         
-        fileName = this.pathToLogFileFolder + "testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";        
+        fileName = this.pathToLogFileFolder + "testCandidatesSortLogFile_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = this.pathToLogFileFolder + "testCandidatesSortLogFile_ERRORS_" + dateTimeOfSession + ".txt";        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);

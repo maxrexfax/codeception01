@@ -134,14 +134,15 @@ public class TestOneUrlClass {
     private void preLoader() {
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
-        //String fileNameERRORS = "";
+        String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testOneUrlLogFile_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = this.pathToLogFileFolder + "testOneUrlLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         System.out.println("Path to logfile:" + fileName);
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
-            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
             System.out.println("Error file creation, testing log will be only in terminal");

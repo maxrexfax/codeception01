@@ -18,6 +18,7 @@ import java.util.Arrays;
  */
 public class WorkClass {
     
+    public HelperClass helperClass = new HelperClass();
     public final String appName = "«Solid Sulutions automatic site testing»";
     public String pathToLogFile;
     final int ALL_CREATION = 0;
@@ -43,9 +44,13 @@ public class WorkClass {
     public static int CURRENT_BROWSER = 1;
     public InputStreamReader isr;
     public BufferedReader br;
+    public File fileToWriteLogsOfTesting;
+    public File fileToWriteErrorLogOfTesting;
+    public String dateTimeOfSession;
     
-    public void startWork() throws IOException {        
+    public void startWork() throws IOException { 
         fillClassData();
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Application starts at: " + dateTimeOfSession +" OS name: " + osName);
         int res = 0;
         // TODO code application logic here
         isr = new InputStreamReader(System.in);
@@ -84,7 +89,8 @@ public class WorkClass {
                 res = 1;
                 System.out.println("Error data, choise set to 1!");
             } else {
-                System.out.println("Chosen number:" + res + " and type of testing: " + typeNames[res]);
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Chosen number:" + res + " and type of testing is: " + typeNames[res]);
+                System.out.println();
             }
 
             try {
@@ -117,7 +123,7 @@ public class WorkClass {
                         deleteCandidatesClass.deleteUser();
                         break;
                     case SORT_USER:
-                        SortCandidatesClass sortCandidatesClass = new SortCandidatesClass();
+                        SortCandidatesClass sortCandidatesClass = new SortCandidatesClass(pathToLogFile, osName);
                         sortCandidatesClass.sortCandidates();
                         break;
                     case SEARCH_USER:
@@ -176,7 +182,8 @@ public class WorkClass {
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
-            }
+            }            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Test finished at " + helperClass.getDateInStringForWindowsLinux());
         } while (res != EXIT);
     }
     
@@ -186,19 +193,23 @@ public class WorkClass {
     }
     
     public void fillClassData() throws IOException
-    {
+    {          
+        String fileName = "";
+        String fileNameERRORS = "";
+        dateTimeOfSession = helperClass.getDateInStringForWindowsLinux(); 
+        
         osName = System.getProperty("os.name");
         File theDirectoryForLogFiles = null;
         if (osName.contains("Linux")) {
             System.out.println("OS Linux detected. Trying to create a folder for log files in the same folder as the executable file");
-            //System.out.println("Please make sure the appropriate chromedriver exists along the path /usr/bin/chromedriver"); 
+            System.out.println("Please make sure the appropriate chromedriver exists along the path /usr/bin/chromedriver");    
+            System.out.println("Please make sure the appropriate geckodriver exists along the path /usr/bin/geckodriver");  
             System.out.println("Please make sure the appropriate chromedriver exists in the folder with jar file"); 
-            System.out.println("Visit URL https://chromedriver.chromium.org/downloads to download if you have no chromedriver!"); 
-            pathToLogFile = "./logs/";            
+            System.out.println("Visit URL https://chromedriver.chromium.org/downloads to download if you have no chromedriver!");             
+            pathToLogFile = "./logs/";                        
             
-            //System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");  
-            System.setProperty("webdriver.chrome.driver", "./chromedriver");      
-            System.setProperty("webdriver.gecko.driver", "./geckodriver");
+            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");      
+            System.setProperty("webdriver.gecko.driver", "/usr/bin/geckodriver");
             
         } else if (osName.contains("Windows")) {
             System.out.println("Please make sure the appropriate chromedriver exists along the path C:\\users\\public\\documents\\chromedriver.exe"); 
@@ -218,6 +229,18 @@ public class WorkClass {
             System.out.println("Create folder for log files at path " + pathToLogFile);
         } catch (Exception ex) {
             System.out.println("ERROR with creation of the folder for log files at path " + pathToLogFile);            
+        }        
+        
+        fileName = pathToLogFile + "mainApplicationLog_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = pathToLogFile + "mainApplicationLog_ERRORS_" + dateTimeOfSession + ".txt";        
+        
+        try {
+            fileToWriteLogsOfTesting = new File(fileName);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            System.out.println("Path to logfile:" + fileName);
+        } catch (Exception exx) {
+            System.out.println(exx.getMessage());
+            System.out.println("Error file creation, test log will be only in terminal");
         }
        
         typeNames[0] = "ALL types of creation tests in a row";
@@ -239,6 +262,8 @@ public class WorkClass {
     }
 
     private void changeBrowserForTesting() {
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Changing of the current browser selected");
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Current browser for testing is " + ((CURRENT_BROWSER == 1) ? "Chrome browser" : "Firefox browser"));
         System.out.println("Current browser for testing is " + ((CURRENT_BROWSER == 1) ? "Chrome browser" : "Firefox browser"));
         System.out.println("1 - Select CHROME");
         System.out.println("2 - Select FIREFOX");
@@ -255,6 +280,6 @@ public class WorkClass {
         } else {
             CURRENT_BROWSER = 1;
         }
-        System.out.println("Current browser for testing is " + ((CURRENT_BROWSER == 1) ? "Chrome browser" : "Firefox browser"));
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "After changing browser for testing set to " + ((CURRENT_BROWSER == 1) ? "Chrome browser" : "Firefox browser"));        
     }
 }

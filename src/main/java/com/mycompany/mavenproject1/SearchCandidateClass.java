@@ -55,12 +55,21 @@ public class SearchCandidateClass {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();    
         String fileName = "";
+        String fileNameERRORS = "";
         counter = 1;
         
         fileName = this.pathToLogFileFolder + "testCandidatesSearchLogFile_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = this.pathToLogFileFolder + "testCandidatesSearchLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         System.out.println("Path to logfile:" + fileName);
         
-        fileToWriteLogsOfTesting = new File(fileName);
+        try {
+            fileToWriteLogsOfTesting = new File(fileName);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            System.out.println("Path to logfile:" + fileName);
+        } catch (Exception exx) {
+            System.out.println(exx.getMessage());
+            System.out.println("Error file creation, test log will be only in terminal");
+        }
         
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
         System.out.println("Set number of loops - 1");

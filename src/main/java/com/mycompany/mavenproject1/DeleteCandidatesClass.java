@@ -29,6 +29,7 @@ public class DeleteCandidatesClass {
     public CredentialsClass credentialsClass;
     
     public File fileToWriteLogsOfTesting;
+    public File fileToWriteErrorLogOfTesting;
     public String dateTimeOfSession;
     private String pathToLogFileFolder;
     private String osName;
@@ -43,12 +44,13 @@ public class DeleteCandidatesClass {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
-        String fileName = this.pathToLogFileFolder + "DeleteCandidateLogFile_" + dateTimeOfSession + ".txt";
+        String fileName = this.pathToLogFileFolder + "testDeleteCandidateLogFile_" + dateTimeOfSession + ".txt";
+        String fileNameERRORS = this.pathToLogFileFolder + "testDeleteCandidateLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         System.out.println("Path to logfile:" + fileName);
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
-            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
             System.out.println("Error file creation, testing log will be only in terminal");

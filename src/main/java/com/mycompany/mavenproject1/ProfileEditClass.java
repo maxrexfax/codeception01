@@ -52,7 +52,7 @@ public class ProfileEditClass {
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
         String fileName = this.pathToLogFileFolder + "EditProfileLogFile_" + dateTimeOfSession + ".txt";
-        String fileNameERRORS = this.pathToLogFileFolder + "ERRORS_EditProfileLogFile_" + dateTimeOfSession + ".txt";
+        String fileNameERRORS = this.pathToLogFileFolder + "EditProfileLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         
         
         try {

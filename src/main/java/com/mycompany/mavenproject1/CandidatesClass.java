@@ -55,7 +55,7 @@ public class CandidatesClass {
         String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";        
+        fileNameERRORS = this.pathToLogFileFolder + "testCandidatesCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);

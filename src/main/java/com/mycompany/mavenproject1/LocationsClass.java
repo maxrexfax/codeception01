@@ -44,7 +44,7 @@ public class LocationsClass {
         String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testLocationsCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testLocationsCreationLogFile_" + dateTimeOfSession + ".txt";
+        fileNameERRORS = this.pathToLogFileFolder + "testLocationsCreationLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         
         
         try {

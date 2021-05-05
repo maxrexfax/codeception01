@@ -24,6 +24,7 @@ public class CompaniesClass {
     public CredentialsClass credentialsClass;
     public WebDriver webDriver = null;
     public File fileToWriteLogsOfTesting;
+    public File fileToWriteErrorLogOfTesting;
     public String dateTimeOfSession;
     private String pathToLogFileFolder;
     private String osName;
@@ -40,11 +41,12 @@ public class CompaniesClass {
         credentialsClass = new CredentialsClass();
         dateTimeOfSession = helperClass.getDateInStringForWindowsLinux();  
         
-        String fileName = this.pathToLogFileFolder + "CreateCompanyLogFile_" + dateTimeOfSession + ".txt";
+        String fileName = this.pathToLogFileFolder + "testCreateCompanyLogFile_" + dateTimeOfSession + ".txt";
+        String fileNameERRORS = this.pathToLogFileFolder + "testCreateCompanyLogFile_ERRORS_" + dateTimeOfSession + ".txt";
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
-            //fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
+            fileToWriteErrorLogOfTesting = new File(fileNameERRORS);
             System.out.println("Path to logfile:" + fileName);
         } catch (Exception exx) {
             System.out.println(exx.getMessage());
