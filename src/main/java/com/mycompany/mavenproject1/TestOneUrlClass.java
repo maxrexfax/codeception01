@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
@@ -93,8 +94,12 @@ public class TestOneUrlClass {
     private void visitOneUrl() {
         preLoader();
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url " + urlToTest);

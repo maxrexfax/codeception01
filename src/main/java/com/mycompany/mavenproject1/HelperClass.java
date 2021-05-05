@@ -261,24 +261,24 @@ public class HelperClass {
         try {
                 result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
                 resultCleared = result.replaceAll("[X\r\n]", "");
-                System.out.println("Helper: found system message:  " + leftDemarkator + resultCleared + rightDemarkator);
+                System.out.println("Helper: 1st attempt, to found system message:  " + leftDemarkator + resultCleared + rightDemarkator);
             } catch(NoSuchElementException eex) {
-                System.out.println(eex.getMessage());
-                System.out.println("Error: system message div container not found");
+                //System.out.println(eex.getMessage());
+                System.out.println("Error: in 1st attempt in searching system message");
                 Thread.sleep(1000);
                 try {
                     result = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]")).getText();
-                    System.out.println("Helper: found system message:   " + leftDemarkator + resultCleared + rightDemarkator);
+                    System.out.println("Helper: 2nd attempt, to found system message:   " + leftDemarkator + resultCleared + rightDemarkator);
                     resultCleared = result.replaceAll("[X\r\n]", "");
                     } catch(NoSuchElementException eex1) {
-                        System.out.println(eex1.getMessage());
+                        System.out.println("Error: in 2nd attempt in searching system message");
                     }catch(Exception ex) {
                         System.out.println(ex.getMessage());
-                        System.out.println("Error: some error while trying to find message in div container");
+                        System.out.println("Error: some Exception while trying to find message in div container");
                     }
             } catch(Exception ex) {
                 System.out.println(ex.getMessage());
-                System.out.println("Error: some error while trying to find message in div container");
+                System.out.println("Error: some Exception while trying to find message in div container");
             } finally {
                 return resultCleared;
             }        
@@ -294,6 +294,7 @@ public class HelperClass {
         {
             strBuffer.append(s.getText()).append("\r");
         }
+        
         return strBuffer.toString();
     }
     
@@ -434,5 +435,10 @@ public class HelperClass {
             }
         }
         return strBuf.toString();
+    }
+    
+    public void printToFileAndConsoleInformation(File logFile, String message) {
+        writeStringToFile(logFile, message);
+        System.out.println(message);
     }
 }

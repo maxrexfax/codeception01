@@ -16,6 +16,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
@@ -25,6 +26,8 @@ public class SearchCandidateClass {
     
     public int numberOfLoops;
     public int counter;
+    private int indexOfIdsColumn = 0;
+    private int indexOfNamesColumn = 0;
     public HelperClass helperClass = new HelperClass();
     public WebDriver webDriver = null;
     public String[] iDs;
@@ -59,7 +62,7 @@ public class SearchCandidateClass {
         
         fileToWriteLogsOfTesting = new File(fileName);
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Candidate search testing starts at: " + dateTimeOfSession +" OS: " + osName);
         System.out.println("Set number of loops - 1");
         System.out.println("Dont set number of loops (by default=100) - 2");
         isr = new InputStreamReader(System.in);
@@ -74,8 +77,12 @@ public class SearchCandidateClass {
         }
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -100,47 +107,32 @@ public class SearchCandidateClass {
             List<WebElement> listOfTableRows = tableContainer.findElements(By.tagName("tr"));
             //System.out.println("listOfTableRows.size()=" + listOfTableRows.size());
             //find number of name and ID columns
-            int idNumber = 0, nameNumber = 0;
             List<WebElement> listOfTableHeads = listOfTableRows.get(0).findElements(By.tagName("th"));
             for (int i = 0; i < listOfTableHeads.size(); i++) {
                 if (listOfTableHeads.get(i).getText().contains("ID")) {
-                    idNumber = i;
-                    System.out.println("Number of ID column=" + idNumber);
+                    indexOfIdsColumn = i;
+                    System.out.println("Number of ID column=" + indexOfIdsColumn);
                 }
                 
                 if (listOfTableHeads.get(i).getText().contains("Name") || listOfTableHeads.get(i).getText().contains("Naam")) {
-                    nameNumber = i;
-                    System.out.println("Number of name column=" + nameNumber);
+                    indexOfNamesColumn = i;
+                    System.out.println("Number of name column=" + indexOfNamesColumn);
                 }
             }
             iDs = new String[listOfTableRows.size()];
             Names = new String[listOfTableRows.size()];
-//            Statuses = new String[listOfTableRows.size()];
-//            References = new String[listOfTableRows.size()];
-//            DatesOfBirth = new String[listOfTableRows.size()];
             
             for (int i = 1; i < listOfTableRows.size(); i++) {
                 List<WebElement> listOfTableDatas = listOfTableRows.get(i).findElements(By.tagName("td"));
-                iDs[i] = listOfTableDatas.get(idNumber).getText();
-                Names[i] = listOfTableDatas.get(nameNumber).getText();
-//                Statuses[i] = listOfTableDatas.get(3).getText();
-//                References[i] = listOfTableDatas.get(5).getText();
-//                DatesOfBirth[i] = listOfTableDatas.get(6).getText();
+                iDs[i] = listOfTableDatas.get(indexOfIdsColumn).getText();
+                Names[i] = listOfTableDatas.get(indexOfNamesColumn).getText();
             }
-            //printArray(Names);
             
             isTestGoOn = true;
-            //startThread(); 
             System.out.println("Results of testing will be stored in file " + fileName);
             checkDataOnThePage();
-//            
-//            System.out.println("Press Enter to quit");
-//            String answ = br.readLine();
-//            if (answ != null) {
-//                isTestGoOn = false;
-//            }
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");   
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");   
             Thread.sleep(5000);            
             } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -187,76 +179,73 @@ public class SearchCandidateClass {
     }
 
     private void checkDataOnThePage() {
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
-            //System.out.println("Search testing starting now");
-            WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
-            WebElement containerOnThePage;
-            List <WebElement> resultTrsOnThePage;
-            do {      
-                
-                if (counter > numberOfLoops) {
-                    isTestGoOn = false;
-                }
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Search testing starting at: " + dateTimeOfSession);
+        //System.out.println("Search testing starting now");
+        WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
+        WebElement containerOnThePage;
+        List <WebElement> resultTrsOnThePage;
+        do {      
+
+            if (counter > numberOfLoops) {
+                isTestGoOn = false;
+            }
+            try{
+                Thread.sleep(1000);
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
+            if(isTestGoOn){
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Test N:" + counter + " from:" + numberOfLoops);
+                int type = helperClass.getRandomDigit(1,2);
+                int index = helperClass.getRandomDigit(1, (iDs.length - 1));
+                String dataToSend = "";
+                if (type == 1) {
+                    dataToSend = iDs[index];
+                } else if (type == 2) {
+                    dataToSend = Names[index];
+                } else if (type == 3) {
+                    dataToSend = Statuses[index];
+                }  
+
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Running test search for data ---" + dataToSend + "---  time:" + getCurrentTime());
+                searchInput.sendKeys(Keys.CONTROL + "a");
                 try{
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
+                } catch(InterruptedException e){
+                    e.printStackTrace();
+                }                    
+                searchInput.sendKeys(Keys.DELETE);
+                //searchInput.clear();
+                try{
+                    Thread.sleep(500);
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 }
-                if(isTestGoOn){
-                    System.out.println("Test N:" + counter + " of:" + numberOfLoops);
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Test N:" + counter + " from:" + numberOfLoops);
-                    int type = helperClass.getRandomDigit(1,2);
-                    int index = helperClass.getRandomDigit(1, (iDs.length - 1));
-                    String dataToSend = "";
-                    if (type == 1) {
-                        dataToSend = iDs[index];
-                    } else if (type == 2) {
-                        dataToSend = Names[index];
-                    } else if (type == 3) {
-                        dataToSend = Statuses[index];
-                    }  
-                    
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Running test search for data ---" + dataToSend + "---  time:" + getCurrentTime());
-                    //System.out.println("Running test search for data=" + dataToSend);
-                    searchInput.sendKeys(Keys.CONTROL + "a");
-                    try{
-                        Thread.sleep(500);
-                    } catch(InterruptedException e){
-                        e.printStackTrace();
-                    }                    
-                    searchInput.sendKeys(Keys.DELETE);
-                    //searchInput.clear();
-                    try{
-                        Thread.sleep(500);
-                    } catch(InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    helperClass.safeFillInput(searchInput, dataToSend);
-                    try{
-                        Thread.sleep(2000);
-                    } catch(InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
-                    resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr")); 
-                    List<WebElement> listOfTableHeads = resultTrsOnThePage.get(0).findElements(By.tagName("th"));
-                    
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "For search request ---" + dataToSend + "--- site returns:" + (resultTrsOnThePage.size() - 1) + " results");
-                    //System.out.println("Results for ---" + dataToSend + "--- found:" + (resultTrsOnThePage.size() - 1));
-                    for (int i = 1; i < resultTrsOnThePage.size(); i++) {
-                        List<WebElement> listOfTableDatas = resultTrsOnThePage.get(i).findElements(By.tagName("td"));
-                        if (listOfTableDatas.get(type).getText().contains(dataToSend)) {
-                            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "CHECKING: String ---" + dataToSend + "---  in column ----" + listOfTableHeads.get(type).getText() + "--- was found on page. Success!");
-                            //System.out.println("String ---" + dataToSend + "--- used for search was found on page. Success!");
-                        } else {
-                            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "CHECKING: String ---" + dataToSend + "--- in column ---" + listOfTableHeads.get(type).getText() + "--- not found");
-                            //System.out.println("Data ---" + dataToSend + "--- not found");
-                        }
-                    }
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "\r");
+                helperClass.safeFillInput(searchInput, dataToSend);
+                try{
+                    Thread.sleep(2000);
+                } catch(InterruptedException e){
+                    e.printStackTrace();
                 }
-                counter++;
-              } while (isTestGoOn); 
+                containerOnThePage = helperClass.safeFindElement(webDriver, "v-data-table__wrapper", "className");
+                resultTrsOnThePage = containerOnThePage.findElements(By.tagName("tr")); 
+                List<WebElement> listOfTableHeads = resultTrsOnThePage.get(0).findElements(By.tagName("th"));
+
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "For search request ---" + dataToSend + "--- site returns:" + (resultTrsOnThePage.size() - 1) + " results");
+                //System.out.println("Results for ---" + dataToSend + "--- found:" + (resultTrsOnThePage.size() - 1));
+                for (int i = 1; i < resultTrsOnThePage.size(); i++) {
+                    List<WebElement> listOfTableDatas = resultTrsOnThePage.get(i).findElements(By.tagName("td"));
+                    if (listOfTableDatas.get(type).getText().contains(dataToSend)) {
+                        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "CHECKING: String ---" + dataToSend + "---  in column ----" + listOfTableHeads.get(type).getText() + "--- was found on page. Success!\r");
+                        //System.out.println("String ---" + dataToSend + "--- used for search was found on page. Success!");
+                    } else {
+                        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "CHECKING: String ---" + dataToSend + "--- in column ---" + listOfTableHeads.get(type).getText() + "--- not found\r");
+                        //System.out.println("Data ---" + dataToSend + "--- not found");
+                    }
+                }
+            }
+            counter++;
+        } while (isTestGoOn); 
     }
     
 }

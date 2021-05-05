@@ -55,8 +55,7 @@ public class CandidatesClass {
         String fileNameERRORS = "";
         
         fileName = this.pathToLogFileFolder + "testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";
-        
+        fileNameERRORS = this.pathToLogFileFolder + "_ERRORS_testCandidatesCreationLogFile_" + dateTimeOfSession + ".txt";        
         
         try {
             fileToWriteLogsOfTesting = new File(fileName);
@@ -67,11 +66,15 @@ public class CandidatesClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Candidate creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Candidate creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com");
@@ -85,12 +88,12 @@ public class CandidatesClass {
             login.sendKeys(credentialsClass.emailToLogin);
             passwd.sendKeys(credentialsClass.passwordToLogin);
             Thread.sleep(500);            
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: trying to login with email \"test2@pernexus.org\" and password \"***\" ");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: trying to login with email \"test2@pernexus.org\" and password \"***\" ");
             btnLogin.click();
             Thread.sleep(1500);  
             //login to site END
 
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com/candidates");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com/candidates");
             webDriver.get("https://perscriptum-dev.herokuapp.com/candidates");
             Thread.sleep(3000);
             webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]")).click();//create new candidate
@@ -110,15 +113,13 @@ public class CandidatesClass {
             } else if (numberOfCandidate < 1 || numberOfCandidate > 4) {
                 numberOfCandidate = 1;
             }
-            System.out.println("Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
             //  
             webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
             Thread.sleep(300);
             //System.out.println("Click to check if menu Add person contact info");
             try {
-                System.out.println("Work: Try to click on Add person contact info");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on Add person contact info");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Add person contact info");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[3]/div")).click();//menu Add person contact info
                 Thread.sleep(300);
             } catch (Exception ex) {
@@ -200,23 +201,23 @@ public class CandidatesClass {
             try {
                 //address 
                 WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling random address using external service");
-                System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filling random address using external service");
                 mapElement.click();
                 Thread.sleep(500);    
                 helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
                 Thread.sleep(300);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address(') is: " + helperClass.getAllAddressesOnPage(webDriver) + "\n");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filled address(') is: " + helperClass.getAllAddressesOnPage(webDriver) + "\n");
                 Thread.sleep(300);   
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill address", ex.getMessage());
             } 
-                    Thread.sleep(300);   
+            
+            Thread.sleep(300);   
             //Additional field in address
             dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
             try {           
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Additional field in address");     
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Additional field in address");     
                 helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -224,10 +225,9 @@ public class CandidatesClass {
             }            
             
             try {
-                //webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[5]/div")).click();//menu Add candidate info
                 WebElement thirdPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
                 WebElement thirdPunktOfMenySpan = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5) > div > span", "cssSelector");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + thirdPunktOfMenySpan.getText());
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on " + thirdPunktOfMenySpan.getText());
                 helperClass.safeClickOnElement(thirdPunktOfMenu);
                 Thread.sleep(500);
                 setInfoInThirdStage(numberOfCandidate, webDriver);
@@ -240,14 +240,13 @@ public class CandidatesClass {
                 Thread.sleep(500);
                 WebElement fourthPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7)", "cssSelector");
                 WebElement fourthPunktOfMenuDivText = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(7) > div", "cssSelector");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: click on " + fourthPunktOfMenuDivText.getText());
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on " + fourthPunktOfMenuDivText.getText());
                 helperClass.safeClickOnElement(fourthPunktOfMenu);
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on fourth part of menu", ex.getMessage());
             }
-            
-           // helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: label text " + webDriver.findElement(By.cssSelector("")).getText());
+                        
             try {
                 WebElement inputWithCompanies = webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[8]/div/div/div"));//dropdown with companies
                 inputWithCompanies.click();
@@ -268,8 +267,7 @@ public class CandidatesClass {
             try {
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--default")).click();
                 Thread.sleep(1500);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: pressed button save, waiting for system message");
-                System.out.println("Work: pressed button save, waiting for system message");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: pressed button save, waiting for system message");
                 Thread.sleep(1000);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click save button", ex.getMessage());
@@ -277,23 +275,21 @@ public class CandidatesClass {
             
              //find div container with message result of saving START
             String systemMessage = helperClass.getSystemMessage(webDriver);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
-            System.out.println("Work: system message: " + systemMessage);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
             //find div container with message result of saving END
             
             Thread.sleep(2500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "\r\nWork: Redirencting to " + mainUrl + candidateTypes[numberOfCandidate]);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: Redirencting to " + mainUrl + candidateTypes[numberOfCandidate]);
             goToCorrespondingUrl(numberOfCandidate);
             try {
                 WebElement searchInput = helperClass.safeFindElement(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div > div > header > div > div.v-toolbar__title > div > div > div > div.v-text-field__slot > input", "cssSelector");
                 Thread.sleep(500);
-                //System.out.println("searchInput.getAttribute(\"value\").length()=" + searchInput.getAttribute("value").length());
                 searchInput.sendKeys(Keys.CONTROL + "a");
                 Thread.sleep(500);
                 searchInput.sendKeys(Keys.DELETE);
                 Thread.sleep(500);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling user credentials:   " + helperClass.leftDemarkator + fullName + helperClass.rightDemarkator + " into the search field...");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Trying to find on page user with credentials: " + helperClass.leftDemarkator + fullName + helperClass.rightDemarkator + " to check is data saved id DB..."); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filling user credentials:   " + helperClass.leftDemarkator + fullName + helperClass.rightDemarkator + " into the search field...");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Trying to find on page user with credentials: " + helperClass.leftDemarkator + fullName + helperClass.rightDemarkator + " to check is data saved id DB..."); 
                 searchInput.sendKeys(fullName);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill date in Search input after saving user", ex.getMessage());
@@ -327,12 +323,12 @@ public class CandidatesClass {
             
             if (isUserDataFound){
                     System.out.println("Work: User saved successfully!");
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: User saved successfully!"); 
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: User saved successfully!"); 
                 } else {
                     System.out.println("Work: User saving FAILED!");
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: User saving FAILED!"); 
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: User saving FAILED!"); 
                 }
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");            
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -346,8 +342,7 @@ public class CandidatesClass {
     private void setInfoInThirdStage(int numberOfCandidate, WebDriver webDriver) throws InterruptedException {
         switch (numberOfCandidate) {
             case 1:
-                System.out.println("Work: function setInfoInThirdStage: case 1...");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 1..."); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 1..."); 
                 Thread.sleep(500);
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div:nth-child(1) > div > div.v-input__slot > div > input")).sendKeys("TestRefData_" + helperClass.getRandomDigit(99,999));
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.v-input--is-label-active.v-input--is-dirty.theme--light.v-text-field.v-text-field--is-booted.v-select")).click();
@@ -357,8 +352,7 @@ public class CandidatesClass {
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div.v-input.theme--light.v-input--selection-controls.v-input--switch > div > div.v-input__slot > label")).click();
                 break;
             case 2:
-                System.out.println("Work: function setInfoInThirdStage: case 2...");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 2..."); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 2..."); 
                 Thread.sleep(500);
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div")).click();
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
@@ -366,15 +360,13 @@ public class CandidatesClass {
                 Thread.sleep(500);
                 break;
             case 3:
-                System.out.println("Work: function setInfoInThirdStage: case 3...");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 3..."); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 3..."); 
                 Thread.sleep(500);
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div > div.v-input__slot > div > input")).sendKeys("TestData_" + helperClass.getRandomDigit(99,999));
                 Thread.sleep(500);
                 break;
             case 4:
-                System.out.println("Work: function setInfoInThirdStage: case 4...");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 4..."); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: function setInfoInThirdStage: case 4..."); 
                 Thread.sleep(500);
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(6) > div > div > div > div.v-input.mt-5.v-input--dense.theme--light.v-text-field.v-text-field--single-line.v-text-field--is-booted.v-text-field--enclosed.v-text-field--outlined.v-select.v-select--chips.v-select--chips--small.v-select--is-multi.v-autocomplete")).click();
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);

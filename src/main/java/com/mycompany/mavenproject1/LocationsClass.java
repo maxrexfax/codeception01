@@ -56,11 +56,16 @@ public class LocationsClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Location creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Location creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -81,7 +86,7 @@ public class LocationsClass {
             webDriver.get("https://perscriptum-dev.herokuapp.com/locations");
             Thread.sleep(1000);
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click \"Create new Location\" button");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click \"Create new Location\" button");
                 WebElement createBtn = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]"));
                 createBtn.click();
             } catch (Exception ex) {
@@ -90,7 +95,7 @@ public class LocationsClass {
             Thread.sleep(400);
             
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to fill First name");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill First name");
                 helperClass.editDataInTextInputWithLabel(webDriver, "TestNameLocation", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable click \"Create new Location\" button", ex.getMessage());
@@ -98,7 +103,7 @@ public class LocationsClass {
             
             Thread.sleep(400);
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click \"Save new Location\" button");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click \"Save new Location\" button");
                 webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > header > div > button.v-btn.v-btn--text.theme--dark.v-size--small")).click();
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to select Tag", ex.getMessage());
@@ -109,14 +114,14 @@ public class LocationsClass {
             try {
                 //address 
                 WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filling random address using external service");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filling random address using external service");
                 System.out.println("Work: filling random address using external service in element " + mapElement.getAttribute("placeholder"));
                 mapElement.click();
                 Thread.sleep(500);    
                 helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
                 Thread.sleep(300);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: filled address(') is: " + helperClass.getAllAddressesOnPage(webDriver) + "\n");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filled address(') is: " + helperClass.getAllAddressesOnPage(webDriver) + "\n");
                 Thread.sleep(300);   
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill address", ex.getMessage());
@@ -128,7 +133,7 @@ public class LocationsClass {
             //Additional field in address
             String dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Additional field in address");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Additional field in address");
                 helperClass.editDataInTextInputWithLabel(webDriver, dataToFillInInput, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -139,7 +144,7 @@ public class LocationsClass {
             try {
             //select tags START
             Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to select Tag");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to select Tag");
             WebElement tagsContainer = webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div[2]/div[1]"));
             tagsContainer.click();
             Thread.sleep(500);
@@ -153,7 +158,7 @@ public class LocationsClass {
             String allTags = "";
             try {
                 allTags = helperClass.getAllChosenTags(webDriver);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
                 System.out.println("Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find Tags!", ex.getMessage());
@@ -168,14 +173,14 @@ public class LocationsClass {
             
             //Description
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to fill Description");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill Description");
                 helperClass.editDataInTextInputWithLabel(webDriver, "Test Location Description", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div.v-input.v-textarea.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, "textarea");
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill address", ex.getMessage());
             } 
             //save button click
             webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > header > div > button.v-btn.v-btn--text.theme--light.v-size--small.primary--text")).click();
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END"); 
             System.out.println("Work: END");
             Thread.sleep(5000);
         } catch (Exception ex) {

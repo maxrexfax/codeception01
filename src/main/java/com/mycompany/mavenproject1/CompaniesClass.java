@@ -51,11 +51,16 @@ public class CompaniesClass {
             System.out.println("Error file creation, testing log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Create Company testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Create Company testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -78,13 +83,11 @@ public class CompaniesClass {
             //input name of company START
             String textLabel1 = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div.v-input.mt-5.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > label")).getText();
             String nameToFillInInput = "TestCompanyName_" + helperClass.getRandomDigit(99, 999);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to send data ---" + nameToFillInInput + "--- to input with label text: " + textLabel1); 
-            System.out.println("Work: try to send data ---" + nameToFillInInput + "--- to input with label text: " + textLabel1);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to send data ---" + nameToFillInInput + "--- to input with label text: " + textLabel1); 
             WebElement inputForName = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div.v-input.mt-5.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > input"));
             inputForName.sendKeys(nameToFillInInput);
             Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForName.getAttribute("value"));
-            System.out.println("Work: Data in the input:" + inputForName.getAttribute("value"));
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForName.getAttribute("value"));
             //input name of company END
             
             Thread.sleep(500);
@@ -93,12 +96,10 @@ public class CompaniesClass {
             String textLabel2 = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > label")).getText();
             String refToFillInInput = "Reference_" + helperClass.getRandomDigit(99, 999);
             WebElement inputForReference = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > input"));
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to send data ---" + refToFillInInput + "--- to input with label text: " + textLabel2); 
-            System.out.println("Work: try to send data ---" + refToFillInInput + "--- to input with label text: " + textLabel2);            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to send data ---" + refToFillInInput + "--- to input with label text: " + textLabel2); 
             inputForReference.sendKeys(refToFillInInput);
             Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForReference.getAttribute("value"));
-            System.out.println("Work: Data in the input:" + inputForReference.getAttribute("value"));
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForReference.getAttribute("value"));
             //input Reference END  
             
             Thread.sleep(500);
@@ -107,12 +108,10 @@ public class CompaniesClass {
             String textLabel3 = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > label")).getText();
             String randomPhomeNumber = "" + helperClass.getRandomDigit(99999999, 999999999);
             WebElement inputForNumber = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > input"));
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomPhomeNumber + "--- to input with label text: " + textLabel3); 
-            System.out.println("Work: try to send data ---" + randomPhomeNumber + "--- to input with label text: " + textLabel3); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomPhomeNumber + "--- to input with label text: " + textLabel3); 
             inputForNumber.sendKeys(randomPhomeNumber);
             Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForNumber.getAttribute("value"));
-            System.out.println("Work: Data in the input:" + inputForNumber.getAttribute("value"));
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForNumber.getAttribute("value"));
             //input Reference START
             
             Thread.sleep(500);
@@ -121,12 +120,10 @@ public class CompaniesClass {
             String textLabel4 = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > label")).getText();
             WebElement inputForFax = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div > div > form:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > input"));
             String randomFaxNumber = "" + helperClass.getRandomDigit(99, 9999);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomFaxNumber + "--- to input with label text: " + textLabel4); 
-            System.out.println("Work: try to send data ---" + randomFaxNumber + "--- to input with label text: " + textLabel4);             
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomFaxNumber + "--- to input with label text: " + textLabel4); 
             inputForFax.sendKeys(randomFaxNumber);
             Thread.sleep(500);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForFax.getAttribute("value"));
-            System.out.println("Work: Data in the input:" + inputForFax.getAttribute("value"));            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForFax.getAttribute("value"));
             //input FAX END
             
             Thread.sleep(500);
@@ -140,8 +137,7 @@ public class CompaniesClass {
             }            
             
             String allAddresses = helperClass.getAllAddressesOnPage(webDriver);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input Address:" + allAddresses);
-            System.out.println("Work: Data in the input Address:" + allAddresses);    
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input Address:" + allAddresses);
             //input Address END
             
             Thread.sleep(1500);
@@ -160,12 +156,10 @@ public class CompaniesClass {
             
             //find div container with message result of saving START
             String systemMessage = helperClass.getSystemMessage(webDriver);
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
-            System.out.println("Work: system message: " + systemMessage);
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
             //find div container with message result of saving END
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
-            System.out.println("Work: END");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END"); 
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -180,12 +174,10 @@ public class CompaniesClass {
         String textLabelAdd = webDriver.findElement(By.cssSelector(cssSelector + "label")).getText();
         WebElement inputForAdd = webDriver.findElement(By.cssSelector(cssSelector + "input"));
         String randomData = "Val_" + helperClass.getRandomDigit(99, 999);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomData + "--- to input with label text: " + textLabelAdd); 
-        System.out.println("Work: try to send data ---" + randomData + "--- to input with label text: " + textLabelAdd);             
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to send data ---" + randomData + "--- to input with label text: " + textLabelAdd); 
         inputForAdd.sendKeys(randomData);
         Thread.sleep(500);
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForAdd.getAttribute("value"));
-        System.out.println("Work: Data in the input:" + inputForAdd.getAttribute("value")); 
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Data in the input:" + inputForAdd.getAttribute("value"));
     }
     
 }

@@ -63,12 +63,16 @@ public class SchemasClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Shema creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Shema creation testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             webDriver.get("https://perscriptum-dev.herokuapp.com/");
@@ -100,7 +104,7 @@ public class SchemasClass {
             //Section name
             String dataToFillInInput = "" + helperClass.getRandomDigit(999,9999);
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Section Name");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Section Name");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaSectionName, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -109,7 +113,7 @@ public class SchemasClass {
             
             //Code        
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Code");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Code");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaCode, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(3) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -118,7 +122,7 @@ public class SchemasClass {
             
             //Number        
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Number");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Number");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaNumber, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div:nth-child(4) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -127,7 +131,7 @@ public class SchemasClass {
             
             //Validity        
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Validity");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Validity");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaValidity, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.row > div.col.col-2 > div > div > div.v-input__slot > div.v-text-field__slot > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -136,7 +140,7 @@ public class SchemasClass {
             
             //Description        
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill Description");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Description");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaDescription, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(1) > div.v-input.v-textarea.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, "textarea");
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -145,7 +149,7 @@ public class SchemasClass {
 
             //ExamName        
             try {          
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: try to fill ExamName");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill ExamName");
                 helperClass.editDataInTextInputWithLabel(webDriver, SchemaExamName, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(2) > div.v-input.theme--light.v-text-field.v-text-field--is-booted > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(500); 
             } catch (Exception ex) {
@@ -156,7 +160,7 @@ public class SchemasClass {
             Thread.sleep(500);
             //select tags START
             try {                
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to select Tag");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to select Tag");
                 WebElement tagsContainer = webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.v-tabs.theme--light > div.v-window.v-item-group.theme--light.v-tabs-items > div > div > div > div > div > div > div > div:nth-child(2) > div:nth-child(3) > div.v-input.mt-5.v-input--dense.theme--light.v-text-field.v-text-field--single-line.v-text-field--is-booted.v-text-field--enclosed.v-text-field--outlined.v-select.v-select--chips.v-select--chips--small.v-select--is-multi.v-autocomplete"));
                 tagsContainer.click();
                 Thread.sleep(500);
@@ -170,7 +174,7 @@ public class SchemasClass {
             String allTags = "";
             try {
                 allTags = helperClass.getAllChosenTags(webDriver);
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator + "\r\n");
                 System.out.println("Work: Found Tags: " + helperClass.leftDemarkator + allTags + helperClass.rightDemarkator);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find Tags!", ex.getMessage());
@@ -180,7 +184,7 @@ public class SchemasClass {
 
             //click to show dropdown
             try {                
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on Dropdown shemeowner");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Dropdown shemeowner");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[5]")).click();      
                 //Dropdown shemeowner
                 //helperClass.selectOneElementFromDropdownInHelper(webDriver);  //EMPTY!
@@ -193,7 +197,7 @@ public class SchemasClass {
             Thread.sleep(1500);
             //Dropdown examenbureau
             try {                
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on Dropdown examenbureau");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Dropdown examenbureau");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[6]")).click();        
                 Thread.sleep(400);
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
@@ -205,7 +209,7 @@ public class SchemasClass {
             
             //Dropdown Validity choise
             try {                
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on Validity choise");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Validity choise");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[7]")).click();
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
                 Thread.sleep(400);
@@ -217,7 +221,7 @@ public class SchemasClass {
 
             //end result
             try {                
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to click on end result");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on end result");
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[8]")).click();
                 Thread.sleep(400);
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
@@ -230,18 +234,16 @@ public class SchemasClass {
             //Optional field - exist only if END_RESULT is 1
             WebElement alternativeSertificateChoise = null;
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to find optional field TEMPLATE");                
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to find optional field TEMPLATE");                
                 System.out.println("Work: Try to find optional field TEMPLATE");
                 Thread.sleep(500);
                 alternativeSertificateChoise = helperClass.safeFindElement(webDriver, "/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div[9]", "xpath");
                 if (alternativeSertificateChoise != null) {
                     alternativeSertificateChoise.click();
                     helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);  
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Field TEMPLATE found!");                
-                    System.out.println("Work: Field TEMPLATE found!");
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Field TEMPLATE found!");  
                 } else {
-                    helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Field TEMPLATE NOT found!");                
-                    System.out.println("Work: Field TEMPLATE NOT found!");
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Field TEMPLATE NOT found!"); 
                 }
             }
             catch(NoSuchElementException nex) {
@@ -252,7 +254,7 @@ public class SchemasClass {
             }
 
             try {
-                helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: Try to fill iframe");  
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill iframe");  
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/iframe")).sendKeys("Test text to iframe");
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill iframe", ex.getMessage());
@@ -260,7 +262,7 @@ public class SchemasClass {
             
             Thread.sleep(1000);
             webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div/header/div/button[2]")).click();
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END");            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");            
             Thread.sleep(15000);
             } catch (Exception ex) {
             System.out.println(ex.getMessage());

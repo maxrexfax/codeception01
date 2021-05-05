@@ -16,6 +16,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
@@ -53,11 +54,16 @@ public class DeleteCandidatesClass {
             System.out.println("Error file creation, testing log will be only in terminal");
         }
         
-        helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Delete Candidate testing starts at: " + dateTimeOfSession +" OS: " + osName);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Delete Candidate testing starts at: " + dateTimeOfSession +" OS: " + osName);
         
         try {
-            webDriver = new ChromeDriver();
-            //WebDriver webDriver = new FirefoxDriver();
+            
+            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+                webDriver = new ChromeDriver();
+            } else {
+                webDriver = new FirefoxDriver();
+            }
+            
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
@@ -90,7 +96,7 @@ public class DeleteCandidatesClass {
                     break;
             }
             
-            helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: END"); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END"); 
             System.out.println("Work: END");
             Thread.sleep(5000);
             

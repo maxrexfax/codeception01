@@ -64,8 +64,11 @@ public class TestClass {
 //        }
 //        WebDriver webDriver = null;
 //        try {
-//            webDriver = new ChromeDriver();
-//            //WebDriver webDriver = new FirefoxDriver();
+//            if(WorkClass.CURRENT_BROWSER == WorkClass.CHANGE_CHROME_BROWSER) {
+//                webDriver = new ChromeDriver();
+//            } else {
+//                webDriver = new FirefoxDriver();
+//            }
 //            JavascriptExecutor js = (JavascriptExecutor)webDriver;
 //            webDriver.manage().window().maximize();
 //            webDriver.get("https://perscriptum-dev.herokuapp.com/"); 
