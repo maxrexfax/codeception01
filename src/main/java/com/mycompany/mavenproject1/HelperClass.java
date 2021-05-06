@@ -37,6 +37,17 @@ public class HelperClass {
         return String.valueOf(alphabet.charAt(randomNumberOfChar));
     }
     
+    public String getRandomLengthString(int lengthOfString) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("");
+        
+        for (int i = 0; i < lengthOfString; i++) {
+            stringBuilder.append(getRandChar());
+        }
+        
+        return stringBuilder.toString();
+    }
+    
     public static void startThread(String commandJs, JavascriptExecutor js)
     {
         Thread thread = new Thread(){
@@ -284,6 +295,39 @@ public class HelperClass {
             }        
     }
     
+    public String[] getSystemMessageWithClasses(WebDriver webDriver) {
+        WebElement divWithMessage = null;
+        String[] arrayWithMessageAndClasses = null;
+        try {
+                divWithMessage = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]"));
+                arrayWithMessageAndClasses = new String[2];
+                arrayWithMessageAndClasses[0] = divWithMessage.getText().replaceAll("[X\r\n]", "");
+                arrayWithMessageAndClasses[1] = divWithMessage.getAttribute("class");
+                System.out.println("Helper: 1st attempt, to found system message:  " + leftDemarkator + arrayWithMessageAndClasses[0] + rightDemarkator);
+            } catch(NoSuchElementException eex) {
+                //System.out.println(eex.getMessage());
+                System.out.println("Error: in 1st attempt in searching system message");
+                Thread.sleep(1000);
+                try {
+                    divWithMessage = webDriver.findElement(By.xpath("//*[contains(@class,'toasted toasted-primary')]"));
+                    arrayWithMessageAndClasses = new String[2];
+                    arrayWithMessageAndClasses[0] = divWithMessage.getText().replaceAll("[X\r\n]", "");
+                    arrayWithMessageAndClasses[1] = divWithMessage.getAttribute("class");
+                    System.out.println("Helper: 2nd attempt, to found system message:  " + leftDemarkator + arrayWithMessageAndClasses[0] + rightDemarkator);
+                    } catch(NoSuchElementException eex1) {
+                        System.out.println("Error: in 2nd attempt in searching system message");
+                    }catch(Exception ex) {
+                        System.out.println(ex.getMessage());
+                        System.out.println("Error: some Exception while trying to find message in div container");
+                    }
+            } catch(Exception ex) {
+                System.out.println(ex.getMessage());
+                System.out.println("Error: some Exception while trying to find message in div container");
+            } finally {
+                return arrayWithMessageAndClasses;
+            }  
+    }
+    
     public String getAllAddressesOnPage(WebDriver webDriver) throws InterruptedException
     {
         Thread.sleep(500);
@@ -441,4 +485,6 @@ public class HelperClass {
         writeStringToFile(logFile, message);
         System.out.println(message);
     }
+    
+    
 }

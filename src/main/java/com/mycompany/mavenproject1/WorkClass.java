@@ -21,22 +21,22 @@ public class WorkClass {
     public HelperClass helperClass = new HelperClass();
     public final String appName = "«Solid Sulutions automatic site testing»";
     public String pathToLogFile;
-    final int ALL_CREATION = 0;
-    final int CANDIDATES = 1;
-    final int ALL_CANDIDATES = 2;
-    final int LOCATIONS = 3;
-    final int COMPANIES = 4;
-    final int SCHEMAS = 5;
-    final int DELETE_USER = 6;
-    final int SORT_USER = 7;
-    final int SEARCH_USER = 8;
-    final int PROFILE_EDIT = 9;
-    final int MANY_REQUESTS_TO_PAGE = 10;
-    final int TEST_ONE_URL = 11;
-    final int TEST_ONE_URL_CONSOLE = 12;
-    final int TESTS = 18;
-    final int EXIT = 19;
-    final int CHANGE_BROWSER = 20;
+    final String ALL_CREATION = "0";
+    final String CANDIDATES = "1";
+    final String ALL_CANDIDATES = "2";
+    final String LOCATIONS = "3";
+    final String COMPANIES = "4";
+    final String SCHEMAS = "5";
+    final String DELETE_USER = "6";
+    final String SORT_USER = "7";
+    final String SEARCH_USER = "8";
+    final String PROFILE_EDIT = "9";
+    final String MANY_REQUESTS_TO_PAGE = "10";
+    final String TEST_ONE_URL = "11";
+    final String TEST_ONE_URL_CONSOLE = "12";
+    final String TESTS = "18";
+    final String EXIT = "19";
+    final String CHANGE_BROWSER = "20";
     public String[] typeNames = new String[50]; 
     public String osName;
     public static final int CHANGE_CHROME_BROWSER = 1;
@@ -51,14 +51,15 @@ public class WorkClass {
     public void startWork() throws IOException { 
         fillClassData();
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Application starts at: " + dateTimeOfSession +" OS name: " + osName);
-        int res = 0;
+        String res = "";
         // TODO code application logic here
         isr = new InputStreamReader(System.in);
         br = new BufferedReader(isr);
-        do {            
+        do {
             System.out.println();
             System.out.println("0 - Testing of of ALL creation types (1, 2, 3, 4, 5)");
             System.out.println("1 - Testing of One random Candidate creation");
+            System.out.println("1.1 - Testing of One random Candidate creation PLUS all inputs SCANNING");
             System.out.println("2 - Testing of ALL 4 TYPES Candidates creation");
             System.out.println("3 - Testing of Locations creation");
             System.out.println("4 - Testing of Company creation");
@@ -76,28 +77,35 @@ public class WorkClass {
             System.out.println("Enter digit and press Enter");
             
             try {
-                res = Integer.parseInt(br.readLine());
+                res = br.readLine();
             } catch (Exception ex) {
                 System.out.println("Error");
                 System.out.println(ex.getMessage());
-                res = 0;
+                res = "1";
             }
             
-            int[] allowedNumbers  = {ALL_CREATION, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, ALL_CANDIDATES, MANY_REQUESTS_TO_PAGE, TEST_ONE_URL, TEST_ONE_URL_CONSOLE, TESTS, EXIT, CHANGE_BROWSER};
+//            String[] allowedNumbers  = {ALL_CREATION, LOCATIONS, SCHEMAS, CANDIDATES, COMPANIES, PROFILE_EDIT, DELETE_USER, SORT_USER, SEARCH_USER, ALL_CANDIDATES, MANY_REQUESTS_TO_PAGE, TEST_ONE_URL, TEST_ONE_URL_CONSOLE, TESTS, EXIT, CHANGE_BROWSER};
+//            
+//            boolean isInArray = Arrays.asList(allowedNumbers).contains(res);
+//            if (!isInArray) {
+//                res = "1";
+//                System.out.println("Error data, choise set to 1!");
+//            } else {
+//                int index = Integer.parseInt(res);
+//                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Chosen number:" + res + " and type of testing is: " + typeNames[index]);
+//                System.out.println();
+//            }
 
-            if (!contains(allowedNumbers, res)) {
-                res = 1;
-                System.out.println("Error data, choise set to 1!");
-            } else {
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Chosen number:" + res + " and type of testing is: " + typeNames[res]);
-                System.out.println();
-            }
-
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work started at " + helperClass.getDateInStringForWindowsLinux());
             try {
                 switch (res){
-                    case CANDIDATES:
+                    case "1":
                         CandidatesClass candidatesClass = new CandidatesClass(pathToLogFile, osName);
                         candidatesClass.createCandidate();
+                        break;
+                    case "1.1":
+                        CandidatesCreateFormCheckClass candidatesCycleClass = new CandidatesCreateFormCheckClass(pathToLogFile, osName);
+                        candidatesCycleClass.startCheckValidation();
                         break;
                     case ALL_CANDIDATES:
                         CandidatesClass[] candidatesClassArr = new CandidatesClass[4];
@@ -146,7 +154,7 @@ public class WorkClass {
                         JavaCheckWebPageLoadClass javaWebRequestClass = new JavaCheckWebPageLoadClass(pathToLogFile, osName);
                         javaWebRequestClass.checkWebPage();
                         break;
-                    case 0:
+                    case "0":
                         CandidatesClass candidatesClass0 = new CandidatesClass(pathToLogFile, osName);
                         candidatesClass0.createCandidate(); 
                         
@@ -165,19 +173,19 @@ public class WorkClass {
                         SchemasClass schemasClass0 = new SchemasClass(pathToLogFile, osName);
                         schemasClass0.createSchema();
                         break;
-                    case 18:
+                    case "18":
                         TestClass testClass = new TestClass();
-                        testClass.testFunction();                        
+                        testClass.testFunction();     
                         break;
-                    case 19:
+                    case "19":
                         helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "The application " + appName + " is shutting down"); 
                         helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "Exiting, BYE..."); 
                         break;
-                    case 20:
+                    case "20":
                         changeBrowserForTesting();
                         break;
                     default:
-                        helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "Something went wrong in WorkClass switch..."); 
+                        helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "Incorrect choice..."); 
                         break;
                 }
             } catch (Exception ex) {
@@ -185,7 +193,7 @@ public class WorkClass {
                 helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in SWITCH try block of WorkClass"); 
             }            
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work finished at " + helperClass.getDateInStringForWindowsLinux());
-        } while (res != EXIT);
+        } while (!res.contains("19"));
     }
     
     public boolean contains(final int[] arr, final int key) 
@@ -244,22 +252,22 @@ public class WorkClass {
             System.out.println("Error file creation, test log will be only in terminal");
         }
        
-        typeNames[0] = "ALL types of creation tests in a row";
-        typeNames[1] = "Candidate create";
-        typeNames[2] = "ALL Candidates(s) create";
-        typeNames[3] = "Locations create";
-        typeNames[4] = "Company create";
-        typeNames[5] = "Schema create";
-        typeNames[6] = "Delete user(s)";
-        typeNames[7] = "Sort user(s)";
-        typeNames[8] = "Search user(s)";
-        typeNames[9] = "Profile editing";
-        typeNames[10] = "Many requests with login";
-        typeNames[11] = "Many requests on ONE URL";
-        typeNames[12] = "Many requests TERMINAL";
-        typeNames[18] = "Testing";
-        typeNames[19] = "EXIT!";
-        typeNames[20] = "Change browser for testing";
+//        typeNames[0] = "ALL types of creation tests in a row";
+//        typeNames[1] = "Candidate create";
+//        typeNames[2] = "ALL Candidates(s) create";
+//        typeNames[3] = "Locations create";
+//        typeNames[4] = "Company create";
+//        typeNames[5] = "Schema create";
+//        typeNames[6] = "Delete user(s)";
+//        typeNames[7] = "Sort user(s)";
+//        typeNames[8] = "Search user(s)";
+//        typeNames[9] = "Profile editing";
+//        typeNames[10] = "Many requests with login";
+//        typeNames[11] = "Many requests on ONE URL";
+//        typeNames[12] = "Many requests TERMINAL";
+//        typeNames[18] = "Testing";
+//        typeNames[19] = "EXIT!";
+//        typeNames[20] = "Change browser for testing";
     }
 
     private void changeBrowserForTesting() {

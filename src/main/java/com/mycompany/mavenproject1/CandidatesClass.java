@@ -74,7 +74,7 @@ public class CandidatesClass {
             } else {
                 webDriver = new FirefoxDriver();
             }
-            
+            //login to site START
             JavascriptExecutor js = (JavascriptExecutor)webDriver;
             webDriver.manage().window().maximize();
             helperClass.writeStringToFile(fileToWriteLogsOfTesting, "Work: go to url https://perscriptum-dev.herokuapp.com");
@@ -322,7 +322,7 @@ public class CandidatesClass {
                 } else {
                     helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: User saving FAILED!"); 
                 }
-            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");            
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");
             Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
