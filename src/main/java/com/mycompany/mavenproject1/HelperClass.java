@@ -33,8 +33,19 @@ public class HelperClass {
     public String getRandChar() 
     {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int randomNumberOfChar = (int)(Math.random() * alphabet.length());
-        return String.valueOf(alphabet.charAt(randomNumberOfChar));
+        int randomNumberOfChar1 = (int)(Math.random() * alphabet.length());
+        int randomNumberOfChar2 = (int)(Math.random() * alphabet.length());
+        int randomNumberOfChar3 = (int)(Math.random() * alphabet.length());
+        int randomNumberOfChar4 = (int)(Math.random() * alphabet.length());
+        int randomNumberOfChar5 = (int)(Math.random() * alphabet.length());
+        int extraRandom = (randomNumberOfChar1 + randomNumberOfChar2 + randomNumberOfChar3 + randomNumberOfChar4 + randomNumberOfChar5) / 5;
+        if (extraRandom < 0) {
+            extraRandom = (int)(Math.random() * alphabet.length());
+        }
+        if (extraRandom >= alphabet.length()) {
+            extraRandom = (int)(Math.random() * alphabet.length());
+        }
+        return String.valueOf(alphabet.charAt(extraRandom));
     }
     
     public String getRandomLengthString(int lengthOfString) {

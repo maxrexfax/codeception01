@@ -564,7 +564,9 @@ public class CandidatesCreateFormCheckClass {
                 Thread.sleep(500); 
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field forbidden symbol: " + helperClass.leftDemarkator + arrayOfForbiddenSymbols[i] + helperClass.rightDemarkator);                
                 fillInputWithMinimalLenghtAndOneForbiddenSymbol(labelOfTheElementToFillWithTestData, elementToFillWithTestData, (minimalStringToFillLength + 1), arrayOfForbiddenSymbols[i]);
-                Thread.sleep(500); 
+                Thread.sleep(500);
+                clickOnSaveButton();
+                Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test filling with forbidden symbol " + helperClass.leftDemarkator + arrayOfForbiddenSymbols[i] + helperClass.rightDemarkator, ex.getMessage());
             }   
@@ -616,8 +618,7 @@ public class CandidatesCreateFormCheckClass {
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " with forbidden symbol  " + helperClass.leftDemarkator + oneForbiddenSymbol + helperClass.rightDemarkator);
         elementToFillWithTestData.sendKeys(dataWithDefinedLength);        
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: After sending data to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " found such data "  + helperClass.leftDemarkator + elementToFillWithTestData.getAttribute("value") + helperClass.rightDemarkator);
-        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on SAVE BUTTON, awaiting save refusal");
-        clickOnSaveButton();
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on SAVE BUTTON, awaiting save refusal");        
     }
 
     private void clickOnAddPersonalData() throws InterruptedException {
