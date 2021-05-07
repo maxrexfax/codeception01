@@ -2,6 +2,7 @@ com/mycompany/mavenproject1/CompaniesClass.class
 com/mycompany/mavenproject1/CredentialsClass.class
 com/mycompany/mavenproject1/SortCandidatesClass.class
 com/mycompany/mavenproject1/SchemasClass.class
+com/mycompany/mavenproject1/CandidatesCreateFormCheckClass.class
 com/mycompany/mavenproject1/HelperClass.class
 com/mycompany/mavenproject1/WorkClass.class
 com/mycompany/mavenproject1/HelperClass$1.class
@@ -17,5 +18,4 @@ com/mycompany/mavenproject1/SearchCandidateClass$1.class
 com/mycompany/mavenproject1/DdosClass.class
 com/mycompany/mavenproject1/LocationsClass.class
 com/mycompany/mavenproject1/ProfileEditClass.class
-com/mycompany/mavenproject1/CandidatesCycleClass.class
 com/mycompany/mavenproject1/StartClass.class

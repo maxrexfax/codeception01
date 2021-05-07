@@ -8,6 +8,7 @@ package com.mycompany.mavenproject1;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -35,6 +36,9 @@ public class CandidatesClass {
     public CredentialsClass credentialsClass;
     private String pathToLogFileFolder;
     private String osName;
+    private String firstName = "FN_" + UUID.randomUUID().toString() + "_" + helperClass.getRandomDigit(99,999);
+    private String lastName = "LN_" + UUID.randomUUID().toString() + "_" + helperClass.getRandomDigit(99,999);
+    String fullName = lastName + ", " + firstName;
     
     public CandidatesClass(String pathToFileFolderIn, String osNameIn) {
         this.pathToLogFileFolder = pathToFileFolderIn;
@@ -126,7 +130,6 @@ public class CandidatesClass {
             }
             
             //first name
-            String firstName = "FirstName_" + helperClass.getRandomDigit(99,999);
             try {                
                 helperClass.editDataInTextInputWithLabel(webDriver, firstName, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(300); 
@@ -144,7 +147,6 @@ public class CandidatesClass {
             }
            
             //last name
-            String lastName = "LastName_" + helperClass.getRandomDigit(99,999);
             try {                
                 helperClass.editDataInTextInputWithLabel(webDriver, lastName, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > ", fileToWriteLogsOfTesting, null);
                 Thread.sleep(300); 
@@ -187,18 +189,10 @@ public class CandidatesClass {
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill phone", ex.getMessage());
             } 
-                    
-            //email
-            dataToFillInInput = "email_" + helperClass.getRandomDigit(99,999) + "@mail.com";
-            try {                
-                helperClass.fillOneInput(webDriver, dataToFillInInput, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input", fileToWriteLogsOfTesting, "Email");
-                Thread.sleep(500); 
-            } catch (Exception ex) {
-                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill email", ex.getMessage());
-            } 
             
             try {
                 //address 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill Address");   
                 WebElement mapElement = helperClass.safeFindElement(webDriver, "map", "id");
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to fill element  " + helperClass.leftDemarkator + mapElement.getAttribute("placeholder") + helperClass.rightDemarkator);            
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: filling random address using external service");
@@ -221,7 +215,33 @@ public class CandidatesClass {
                 Thread.sleep(500); 
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill Additional field in address", ex.getMessage());
-            }            
+            }   
+                    
+            //email
+            dataToFillInInput = "email_" + helperClass.getRandomDigit(99,999) + "@mail.com";  
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: fill EMAIL " + dataToFillInInput);
+            try {
+                //email
+                WebElement inputForEmail = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div.v-input.v-input--has-state.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder.error--text > div.v-input__control > div.v-input__slot > div > input", "cssSelector");
+                String placeholderInEmailInput = inputForEmail.getAttribute("placeholder");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: (EMAIL) fill data " + helperClass.leftDemarkator + dataToFillInInput + helperClass.rightDemarkator + " in element " + placeholderInEmailInput); 
+                inputForEmail.sendKeys(dataToFillInInput);
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: after filling found data " + helperClass.leftDemarkator + inputForEmail.getAttribute("value") + helperClass.rightDemarkator + "\r\n"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to click on SAVE EMAIL BUTTON"); 
+                Thread.sleep(500);
+                try {
+                    WebElement buttonToSaveEmail = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div.v-input__append-outer > div > button"));
+                    buttonToSaveEmail.click();
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on SAVE EMAIL BUTTON"); 
+                } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on SAVE EMAIL BUTTON", ex.getMessage());
+            }
+                Thread.sleep(500);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill input for email", ex.getMessage());
+            }
+            
+                     
             
             try {
                 WebElement thirdPunktOfMenu = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(5)", "cssSelector");
@@ -257,10 +277,8 @@ public class CandidatesClass {
                 webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[7]/div")).click();//menu attach_to_companies
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill Companies", ex.getMessage());
-            }            
+            }
             
-            Thread.sleep(1000);//
-            String fullName = lastName + ", " + firstName;
             Thread.sleep(1000); 
             
             try {

@@ -486,5 +486,11 @@ public class HelperClass {
         System.out.println(message);
     }
     
-    
+    public void clearTextInsideInput(WebElement inputToClear) throws InterruptedException {
+        System.out.println("Work: clear data in element");
+        inputToClear.sendKeys(Keys.CONTROL + "a");
+        Thread.sleep(500);
+        inputToClear.sendKeys(Keys.DELETE);
+        Thread.sleep(500);
+    }
 }

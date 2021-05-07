@@ -8,6 +8,7 @@ package com.mycompany.mavenproject1;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -34,15 +35,16 @@ public class CandidatesCreateFormCheckClass {
     private String[] candidateTypes = {"", "candidates", "assessors", "employees", "contacts"};
     private String pathToLogFileFolder;
     private String osName;
-    private String firstName = "FirstName_" + helperClass.getRandomDigit(99,999);
-    private String lastName = "LastName_" + helperClass.getRandomDigit(99,999);
+    private String firstName = "FN_" + UUID.randomUUID().toString() + "_" + helperClass.getRandomDigit(99,999);
+    private String lastName = "LN_" + UUID.randomUUID().toString() + "_" + helperClass.getRandomDigit(99,999);
     String fullName = lastName + ", " + firstName;
     
     boolean isMainCycleWorks = true;//условие выхода из цикла проверок инпутов
     
     public CandidatesCreateFormCheckClass(String pathToFileFolderIn, String osNameIn) {
         this.pathToLogFileFolder = pathToFileFolderIn;
-        this.osName = osNameIn;
+        this.osName = osNameIn;        
+        this.numberOfCandidate = helperClass.getRandomDigit(1, 4);        
     }
     
     
@@ -50,6 +52,13 @@ public class CandidatesCreateFormCheckClass {
         this.numberOfCandidate = typeOfUser;
         this.pathToLogFileFolder = pathToFileFolderIn;
         this.osName = osNameIn;
+        if (numberOfCandidate == 0) {//if is not set then random
+            this.numberOfCandidate = helperClass.getRandomDigit(1, 4);
+        } else if (numberOfCandidate < 1 || numberOfCandidate > 4) {
+            this.numberOfCandidate = 1;
+        } else {
+            this.numberOfCandidate = helperClass.getRandomDigit(1, 4);
+        }
     }
     
     public void startCheckValidation() {
@@ -81,12 +90,57 @@ public class CandidatesCreateFormCheckClass {
             
             loginOnSite();
             goToWorkUrl();
-            fillAllInputsWithNormalData();
-            String resultOfSave = tryToSaveAndFindErrorMessage();//if "error" - data was not saved, if "success" or "EMPTY" - user saving worked
+            fillAllInputsWithNormalData();            
             Thread.sleep(1000);
             //теперь надо по очереди пытаться сохранить нового юзера с неправильными данными.
-            checkMinMaxAndInvalidDataSaveToElement(3, 33, "!@#$%^&*()[]{}", "div > div > lalala", "typeOfIdentifier", webDriver);
-            
+            //First name
+            try {                
+                checkMinMaxAndInvalidDataSaveToElement(3, 333, "!@#$%^&*()[]{}", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > input", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(2) > div > div.v-input__slot > div > label", "cssSelector", webDriver);
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
+            //Insertion
+            try {                
+                checkMinMaxAndInvalidDataSaveToElement(3, 333, "!@#$%^&*()[]{}", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > input", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(3) > div > div.v-input__slot > div > label", "cssSelector", webDriver);
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
+            //Last name
+            try {                
+                checkMinMaxAndInvalidDataSaveToElement(3, 333, "!@#$%^&*()[]{}", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > input", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(4) > div > div.v-input__slot > div > label", "cssSelector", webDriver);
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
+            //Place of birth
+            try {                
+                checkMinMaxAndInvalidDataSaveToElement(3, 333, "!@#$%^&*()[]{}", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > input", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div:nth-child(7) > div > div.v-input__slot > div > label", "cssSelector", webDriver);
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
+            //Additional field in address
+            try {                
+                checkMinMaxAndInvalidDataSaveToElement(3, 333, "!@#$%^&*()[]{}", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > input", "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > form > div.row > div.col-sm-4.col-md-2.col-12 > div > div > div.v-input__slot > div > label", "cssSelector", webDriver);
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
+            //EMAIL
+            try {                
+                checkEmailSaving();
+                Thread.sleep(300); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to perform test with First name", ex.getMessage());
+            }             
+            Thread.sleep(500);
             //find userID by user fullName START
 //            String currentUrl = webDriver.getCurrentUrl();
 //            final int idOfCreatedUser = findIdOfUserByFullName();
@@ -110,7 +164,7 @@ public class CandidatesCreateFormCheckClass {
         Thread.sleep(5000);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of CandidatesCycleClass"); 
+            helperClass.printToFileAndConsoleInformation(fileToWriteErrorLogOfTesting, "ERROR: Error in main try block of CandidatesCycleClass");
         } finally {
             helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: END");
             webDriver.close();
@@ -250,7 +304,7 @@ public class CandidatesCreateFormCheckClass {
         } catch (Exception ex) {
             helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill Companies", ex.getMessage());
         }  
-            
+        Thread.sleep(500);  
     }
     
     private void setInfoInThirdStage(int numberOfCandidate, WebDriver webDriver) throws InterruptedException {
@@ -318,22 +372,16 @@ public class CandidatesCreateFormCheckClass {
         webDriver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div/header/div/button[2]")).click();//create new candidate
         Thread.sleep(500);
         //Click on 4 types of candidates START
-        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[2]/label")).click();
-        Thread.sleep(500);
-        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[3]/label")).click();
-        Thread.sleep(500);
-        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[4]/label")).click();
-        Thread.sleep(500);
-        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[1]/label")).click();
+//        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[2]/label")).click();
+//        Thread.sleep(500);
+//        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[3]/label")).click();
+//        Thread.sleep(500);
+//        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[4]/label")).click();
+//        Thread.sleep(500);
+//        webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div[1]/label")).click();
         //Click on 4 types of candidates END
-        Thread.sleep(1500);
-        if (numberOfCandidate == 0) {//if is not set then random
-            numberOfCandidate = helperClass.getRandomDigit(1, 4);
-        } else if (numberOfCandidate < 1 || numberOfCandidate > 4) {
-            numberOfCandidate = 1;
-        }
+        
         helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: start to create type of user: " + candidateTypes[numberOfCandidate]);
-        //  
         webDriver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div/div[2]/div/div/div/div/div[1]/div/div["+ numberOfCandidate +"]/label")).click();
         Thread.sleep(300);
         try {
@@ -429,7 +477,7 @@ public class CandidatesCreateFormCheckClass {
         webDriver.get(mainUrl + postfixUrl);
     }
 
-    private String tryToSaveAndFindErrorMessage() throws InterruptedException {
+    private String tryToSaveAndGetErrorOrSuccessMessage() throws InterruptedException {
         clickOnSaveButton();
         Thread.sleep(1000);
         String[] dataArrayMessage = helperClass.getSystemMessageWithClasses(webDriver);
@@ -445,12 +493,183 @@ public class CandidatesCreateFormCheckClass {
         }
         return "EMPTY";    
     }
-
-    private void checkMinMaxAndInvalidDataSaveToElement(int minimalDataLength, int maximumDataLength, String forbiddenSymbols, String xpathOrSelectorOrTag, String typeOfIdentifier, WebDriver webDriver) {
-        //тут цикл с заполнением инпута данными минимальными, попытка сохранить, если сохранило, то вернуть на страницу создания еще одного юзера и опять тест
-        //теперь с максимальными данными
-        //теперь с недопустимыми данными - вот тут может быть весьма большой цикл
+    
+    private String tryToGetErrorOrSuccessMessage() throws InterruptedException {
+        Thread.sleep(1000);
+        String[] dataArrayMessage = helperClass.getSystemMessageWithClasses(webDriver);
+        if (dataArrayMessage != null) {
+            System.out.println("Message=" + dataArrayMessage[0] +  "  classes=" + dataArrayMessage[1]);
+            if (dataArrayMessage[1].contains("success")) {
+                System.out.println("Class success was found");
+                return "success";
+            } else if (dataArrayMessage[1].contains("error"))  {
+                System.out.println("Class error was found");
+                return "error";
+            }
+        }
+        return "EMPTY";    
     }
 
-    
+    private void checkMinMaxAndInvalidDataSaveToElement(int minimalStringToFillLength, int maximumStringToFillLength, String forbiddenSymbols, 
+        String xpathOrSelectorOrTagForInput, String xpathOrSelectorOrTagForLabel, String typeOfIdentifier, WebDriver webDriver) throws InterruptedException {
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: Start test of validation");   
+        clickOnAddPersonalData();
+        Thread.sleep(500); 
+        //Tests of ONE input validation. All other inputs are filled with normal data. Tested input would be filled with minimum, maximum and invalid data
+        WebElement elementToFillWithTestData = helperClass.safeFindElement(this.webDriver, xpathOrSelectorOrTagForInput, typeOfIdentifier);
+        WebElement labelOfTheElementToFillWithTestData = helperClass.safeFindElement(this.webDriver, xpathOrSelectorOrTagForLabel, typeOfIdentifier);
+        String textOnLabel = labelOfTheElementToFillWithTestData.getText();
+        //тут цикл с заполнением инпута данными минимальными, попытка сохранить, если сохранило, то вернуть на страницу создания еще одного юзера и опять тест
+        try {           
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: try to test filling with less than minimal data");   
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " string data that is shorter than allowed (" + minimalStringToFillLength + " symbols)");
+            testFillingInputWithData(labelOfTheElementToFillWithTestData, elementToFillWithTestData, (minimalStringToFillLength - 1));
+            Thread.sleep(500); 
+        } catch (Exception ex) {
+            helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test filling with less than minimal length of data", ex.getMessage());
+        }   
+        Thread.sleep(500);
+        try {           
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to check if saving work");   
+            checkIfSavingWorked();
+        } catch (Exception ex) {
+            helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test if saving work", ex.getMessage());
+        }
+        Thread.sleep(500);
+        
+        
+        //теперь с максимальными данными
+        try {           
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: try to test filling with more than maximal length of data");   
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " string data that is longer than allowed (" + maximumStringToFillLength + " symbols)");
+            testFillingInputWithData(labelOfTheElementToFillWithTestData, elementToFillWithTestData, (maximumStringToFillLength + 1));
+            Thread.sleep(500); 
+        } catch (Exception ex) {
+            helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test filling with less than maximal length of data", ex.getMessage());
+        }   
+        Thread.sleep(500);
+        try {           
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to check if saving work");   
+            checkIfSavingWorked();
+        } catch (Exception ex) {
+            helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test if saving work", ex.getMessage());
+        }
+        Thread.sleep(500); 
+        
+        //теперь с недопустимыми данными - вот тут может быть большой цикл
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: Start test with forbidden symbols: " + forbiddenSymbols);
+        String[] arrayOfForbiddenSymbols = forbiddenSymbols.split("");
+        for (int i = 0; i < arrayOfForbiddenSymbols.length; i++) {
+            try {           
+                Thread.sleep(500); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field forbidden symbol: " + helperClass.leftDemarkator + arrayOfForbiddenSymbols[i] + helperClass.rightDemarkator);                
+                fillInputWithMinimalLenghtAndOneForbiddenSymbol(labelOfTheElementToFillWithTestData, elementToFillWithTestData, (minimalStringToFillLength + 1), arrayOfForbiddenSymbols[i]);
+                Thread.sleep(500); 
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test filling with forbidden symbol " + helperClass.leftDemarkator + arrayOfForbiddenSymbols[i] + helperClass.rightDemarkator, ex.getMessage());
+            }   
+            Thread.sleep(500);
+            try {           
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to check if saving work");   
+                checkIfSavingWorked();
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to test if saving work", ex.getMessage());
+            }
+            Thread.sleep(500); 
+        }
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: End of test with input " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + "\r\n");
+    }
+
+    private void checkIfSavingWorked() throws InterruptedException {
+        WebElement divContainerWithInput = helperClass.safeFindElement(webDriver, "v-dialog--active", "className");
+        if (divContainerWithInput == null) {//сохранение отработало - валидация НЕ СРАБОТАЛА!!! - логируем этот фейл
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: ERROR! Data was saved, error validation!!");
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Return on user creation page");
+            goToWorkUrl();
+            Thread.sleep(500);
+            fillAllInputsWithNormalData();
+            Thread.sleep(500);    
+            clickOnAddPersonalData();
+            Thread.sleep(500); 
+        } else {
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Save refusale! Validation success! Try to get system message: " + helperClass.getSystemMessage(webDriver));
+        }
+    }
+
+    private void testFillingInputWithData(WebElement labelOfTheElementToFillWithTestData, WebElement elementToFillWithTestData, int lengthOfStringToFill) throws InterruptedException {
+        String textOnLabel = labelOfTheElementToFillWithTestData.getText();
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Start tests with field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + "  and clear all data in it");
+        helperClass.clearTextInsideInput(elementToFillWithTestData);
+        String dataWithDefinedLength = helperClass.getRandomLengthString(lengthOfStringToFill);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " string data with length (" + lengthOfStringToFill + " symbols)    " + helperClass.leftDemarkator + dataWithDefinedLength + helperClass.rightDemarkator);
+        elementToFillWithTestData.sendKeys(dataWithDefinedLength);        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: After sending data to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " found such data "  + helperClass.leftDemarkator + elementToFillWithTestData.getAttribute("value") + helperClass.rightDemarkator);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on SAVE BUTTON, awaiting save refusal");
+        clickOnSaveButton();
+    }
+
+    private void fillInputWithMinimalLenghtAndOneForbiddenSymbol(WebElement labelOfTheElementToFillWithTestData, WebElement elementToFillWithTestData, int lengthOfMessage, String oneForbiddenSymbol) throws InterruptedException {
+        String textOnLabel = labelOfTheElementToFillWithTestData.getText();
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Start tests with field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + "  and clear all data in it");
+        helperClass.clearTextInsideInput(elementToFillWithTestData);
+        String dataWithDefinedLength = helperClass.getRandomLengthString(lengthOfMessage) + oneForbiddenSymbol;
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " with forbidden symbol  " + helperClass.leftDemarkator + oneForbiddenSymbol + helperClass.rightDemarkator);
+        elementToFillWithTestData.sendKeys(dataWithDefinedLength);        
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: After sending data to field   " + helperClass.leftDemarkator + textOnLabel + helperClass.rightDemarkator + " found such data "  + helperClass.leftDemarkator + elementToFillWithTestData.getAttribute("value") + helperClass.rightDemarkator);
+        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on SAVE BUTTON, awaiting save refusal");
+        clickOnSaveButton();
+    }
+
+    private void clickOnAddPersonalData() throws InterruptedException {
+        Thread.sleep(500);
+        try {
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to click on Add person contact info");
+            webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(3)")).click();//menu Add person contact info
+        } catch (Exception ex) {
+            helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on Add person contact info", ex.getMessage());
+        }
+        Thread.sleep(1000);
+    }
+
+    private void checkEmailSaving() {
+        String dataToFillInInput = "email_" + helperClass.getRandomDigit(99,999) + "@mail.com";  
+            helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: fill EMAIL " + dataToFillInInput);
+            try {
+                //email
+                WebElement inputForEmail = helperClass.safeFindElement(webDriver, "#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div.v-input.v-input--has-state.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder.error--text > div.v-input__control > div.v-input__slot > div > input", "cssSelector");
+                String placeholderInEmailInput = inputForEmail.getAttribute("placeholder");System.out.println("224");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: (EMAIL) fill data " + helperClass.leftDemarkator + dataToFillInInput + helperClass.rightDemarkator + " in element " + placeholderInEmailInput); 
+                inputForEmail.sendKeys(dataToFillInInput);
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: after filling found data " + helperClass.leftDemarkator + inputForEmail.getAttribute("value") + helperClass.rightDemarkator + "\r\n"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to click on SAVE EMAIL BUTTON"); 
+                Thread.sleep(500);
+                try {
+                    WebElement buttonToSaveEmail = webDriver.findElement(By.cssSelector("#materialpro > div.v-dialog__content.v-dialog__content--active > div > div > div > div:nth-child(4) > div > div > div.row > div > form > div.v-input.theme--light.v-text-field.v-text-field--is-booted.v-text-field--placeholder > div.v-input__append-outer > div > button"));
+                    buttonToSaveEmail.click();
+                    helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: click on SAVE EMAIL BUTTON"); 
+                    //теперь надо проверять что данные появились на странице
+                    if(checkIfOnPageAppearedFilledEmail(dataToFillInInput)) {
+                        helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: email " + helperClass.leftDemarkator + dataToFillInInput + helperClass.rightDemarkator + " was saved"); 
+                    }
+                } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on SAVE EMAIL BUTTON", ex.getMessage());
+            }
+                Thread.sleep(500);
+            } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill input for email", ex.getMessage());
+            }
+    }
+
+    private boolean checkIfOnPageAppearedFilledEmail(String emailToFindOnPage) {
+        List<WebElement> listOfElements = webDriver.findElements(By.className("value"));
+        boolean isOnPageSavedEmail = false;
+        if (listOfElements.size() > 0) {
+            for (int i = 0; i < listOfElements.size(); i++) {
+                if(listOfElements.get(i).getText().contains(emailToFindOnPage)) {
+                    isOnPageSavedEmail = true;
+                }
+            }
+        }
+        return isOnPageSavedEmail;
+    }
 }

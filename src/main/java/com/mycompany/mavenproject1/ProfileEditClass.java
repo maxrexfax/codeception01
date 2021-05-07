@@ -161,11 +161,19 @@ public class ProfileEditClass {
             
             try {
                 //email
-                WebElement inputForEmail = webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input"));
+                WebElement inputForEmail = webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.row > div > form > div > div.v-input__control > div.v-input__slot > div > input"));                
                 String placeholderInEmailInput = inputForEmail.getAttribute("placeholder");
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: fill data ---test2@pernexus.org--- in element " + placeholderInEmailInput); 
                 inputForEmail.sendKeys("test2@pernexus.org");
                 helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: after filling found data ---" + inputForEmail.getAttribute("value") + "---\r\n"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: try to click on SAVE EMAIL BUTTON"); 
+                Thread.sleep(500);
+                try {
+                    WebElement buttonToSaveEmail = webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div.row > div > form > div > div.v-input__append-outer > div > button"));
+                    buttonToSaveEmail.click();
+                } catch (Exception ex) {
+                helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to click on SAVE EMAIL BUTTON", ex.getMessage());
+            }
                 Thread.sleep(500);
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to fill input for email", ex.getMessage());
@@ -173,7 +181,7 @@ public class ProfileEditClass {
             
             //address - click and dropdown            
             try {                
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: Try to fill input Address");
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: Try to fill input Address");
                 helperClass.selectOneElementFromDropdownAddressInHelper(webDriver);
                 Thread.sleep(1500);  
                 webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-item-group.theme--light.v-slide-group.v-tabs-bar.primary--text > div.v-slide-group__wrapper > div > div:nth-child(3)")).click();                                         
@@ -195,7 +203,7 @@ public class ProfileEditClass {
             
             try {
                 //country of birth  - click and dropdown
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: attempt to change country of birth"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: attempt to change country of birth"); 
                 helperClass.workWithDropdownElementCitiesNation(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(6)", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(6) > div > div.v-input__slot > div.v-select__slot > ", fileToWriteLogsOfTesting);
                 Thread.sleep(500);  
             } catch (Exception ex) {
@@ -212,7 +220,7 @@ public class ProfileEditClass {
             
             try {
                 //nationality  - click and dropdown
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: attempt to change nationality"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: attempt to change nationality"); 
                 helperClass.workWithDropdownElementCitiesNation(webDriver, "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(8)", "#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(8) > div > div.v-input__slot > div.v-select__slot > ", fileToWriteLogsOfTesting);
                 Thread.sleep(500);
             } catch (Exception ex) {
@@ -230,7 +238,7 @@ public class ProfileEditClass {
             try {
                 //gender  - click and dropdown
                 webDriver.findElement(By.cssSelector("#inspire > div > main > div > div > div > div:nth-child(2) > div > div > div.row > div:nth-child(2) > div > div.v-window.v-item-group.theme--light.v-tabs-items > div > div.v-window-item.v-window-item--active > div > div > div > div > div:nth-child(10)")).click();
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: attempt to change gender"); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: attempt to change gender"); 
                 Thread.sleep(500); 
                 helperClass.selectOneElementFromDropdownInHelper(webDriver, fileToWriteLogsOfTesting);
                 Thread.sleep(500); 
@@ -252,7 +260,7 @@ public class ProfileEditClass {
             try {
                 //find div container with message result of saving START
                 String systemMessage = helperClass.getSystemMessage(webDriver);
-                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "Work: system message: " + systemMessage); 
+                helperClass.printToFileAndConsoleInformation(fileToWriteLogsOfTesting, "\r\nWork: system message: " + systemMessage); 
                 //find div container with message result of saving END
             } catch (Exception ex) {
                 helperClass.writeErrorsToFiles(fileToWriteLogsOfTesting, fileToWriteErrorLogOfTesting, "ERROR: Unable to find message from site", ex.getMessage());
